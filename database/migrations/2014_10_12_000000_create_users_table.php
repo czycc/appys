@@ -16,8 +16,13 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('phone', 11)->unique();
             $table->string('password');
+            $table->string('code')->nullbale()->commit('推荐码');
+            $table->string('nickname')->nullable()->commit('昵称');
+            $table->text('avatar')->nullable()->commit('头像');
+            $table->string('wx_openid', 100)->nullable()->index()->commit('微信openid');
+            $table->string('wx_unionid', 100)->nullable()->index()->commit('微信unionid');
             $table->rememberToken();
             $table->timestamps();
         });
