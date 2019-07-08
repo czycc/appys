@@ -20,5 +20,8 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($api) {
+    //返回分类列表
     $api->get('categories', 'CategoryController@index');
+    //返回标签列表
+    $api->get('tags', 'TagController@index');
 });
