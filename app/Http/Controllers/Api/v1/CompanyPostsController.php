@@ -41,9 +41,10 @@ class CompanyPostsController extends Controller
 
 	}
 
-    public function show(CompanyPost $company_post)
+    public function show($id)
     {
-        return view('company_posts.show', compact('company_post'));
+        $post = CompanyPost::find($id);
+        return $this->response->item($post, new CompanyPostTransformer());
     }
 
 	public function create(CompanyPost $company_post)
