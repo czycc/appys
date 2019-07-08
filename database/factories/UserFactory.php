@@ -13,11 +13,18 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Models\User::class, function (Faker $faker) {
+    static $password;
+    $now = \Carbon\Carbon::now()->toDateTimeString();
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'nickname' => $faker->name,
+        'phone' => $faker->numberBetween(10000000000, 99999999999),
+        'password' => $password ?: $password = bcrypt('secret'), // secret
         'remember_token' => str_random(10),
+        'code' => uniqid(),
+        'wx_openid' => str_random(20),
+        'wx_unionid' => str_random(20),
+        'created_at' => $now,
+        'updated_at' => $now
     ];
 });

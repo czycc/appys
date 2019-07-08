@@ -21,7 +21,9 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($api) {
     //返回分类列表
-    $api->get('categories', 'CategoryController@index');
+    $api->get('categories', 'CategoryController@index')->name('api.categories.index');
     //返回标签列表
-    $api->get('tags', 'TagController@index');
+    $api->get('tags', 'TagController@index')->name('api.tags.index');
+    //返回公司简介列表
+    $api->resource('company_posts', 'CompanyPostsController', ['only' => ['index']]);
 });
