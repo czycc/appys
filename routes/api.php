@@ -26,4 +26,5 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
     $api->get('tags', 'TagController@index')->name('api.tags.index');
     //返回公司简介列表
     $api->resource('company_posts', 'CompanyPostsController', ['only' => ['index', 'show']]);
+    $api->resource('news', 'NewsController', ['only' => ['index', 'show']]);
 });

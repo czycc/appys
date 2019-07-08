@@ -33,6 +33,7 @@ class CompanyPostsController extends Controller
 //        }
         if ($request->input('recent')) {
             //是否按照最新时间排序
+            $query->recent();
         }
         $paginate = $request->input('paginate') ?? 20;
         $posts = $query->paginate($paginate);
