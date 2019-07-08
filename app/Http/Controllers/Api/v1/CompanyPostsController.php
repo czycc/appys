@@ -27,10 +27,10 @@ class CompanyPostsController extends Controller
             //按权重排序
             $query->ordered();
         }
-        if ($request->input('zan')) {
-            //按点赞数排序
-            $query->zan();
-        }
+//        if ($request->input('zan')) {
+//            //按点赞数排序
+//            $query->zan();
+//        }
         if ($request->input('recent')) {
             //是否按照最新时间排序
         }
