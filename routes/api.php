@@ -39,4 +39,6 @@ $api->version('v1', [
     $api->get('banners', 'BannerController@index');
     //讲师相关
     $api->resource('teachers', 'TeachersController', ['only' => ['show']]);
+    //返回课程分类列表
+    $api->get('course_categories', 'CourseCategoryController@index');
 });
