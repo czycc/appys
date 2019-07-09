@@ -21,10 +21,11 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($api) {
     //返回分类列表
-    $api->get('company_categories', 'CompanyCategoryController@index')->name('api.company_categories.index');
+    $api->get('company_categories', 'CompanyCategoryController@index')->name('company_categories.index');
     //返回标签列表
-    $api->get('tags', 'TagController@index')->name('api.tags.index');
+    $api->get('tags', 'TagController@index')->name('tags.index');
     //返回公司简介列表
     $api->resource('company_posts', 'CompanyPostsController', ['only' => ['index', 'show']]);
     $api->resource('news', 'NewsController', ['only' => ['index', 'show']]);
+    $api->get('material_categories', 'MaterialCategoryController@index')->name('material_categories.index');
 });
