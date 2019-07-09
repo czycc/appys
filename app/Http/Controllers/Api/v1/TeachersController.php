@@ -23,7 +23,6 @@ class TeachersController extends Controller
 
     public function show(Teacher $teacher)
     {
-        dd($teacher);
         return $this->response->item($teacher, new TeacherTransformer());
     }
 
