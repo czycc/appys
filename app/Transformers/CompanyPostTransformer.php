@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-use App\Models\Category;
+use App\Models\CompanyCategory;
 use App\Models\CompanyPost;
 use League\Fractal\TransformerAbstract;
 class CompanyPostTransformer extends TransformerAbstract {
@@ -28,6 +28,6 @@ class CompanyPostTransformer extends TransformerAbstract {
 
     public function includeCategory(CompanyPost $post)
     {
-        return $this->item($post->category, new CategoryTransformer());
+        return $this->item($post->category, new CompanyCategoryTransformer());
     }
 }

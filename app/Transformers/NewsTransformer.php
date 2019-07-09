@@ -2,7 +2,6 @@
 
 namespace App\Transformers;
 
-use App\Models\Category;
 use App\Models\News;
 use League\Fractal\TransformerAbstract;
 class NewsTransformer extends TransformerAbstract {

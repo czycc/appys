@@ -16,7 +16,7 @@ class CompanyPostsTableSeeder extends Seeder
             'https://cdn.learnku.com/uploads/images/201710/14/1/ZqM7iaP4CR.png?imageView2/1/w/200/h/200',
             'https://cdn.learnku.com/uploads/images/201710/14/1/NDnzMutoxX.png?imageView2/1/w/200/h/200',
         ];
-        $cateids = \App\Models\Category::where('parent_id', 1)
+        $cateids = \App\Models\CompanyCategory::where('parent_id', 1)
             ->get()
             ->pluck('id')
             ->toArray();

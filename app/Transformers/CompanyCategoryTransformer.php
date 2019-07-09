@@ -2,10 +2,10 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Models\Category;
+use App\Models\CompanyCategory;
 
-class CategoryTransformer extends  TransformerAbstract {
-    public function transform(Category $category)
+class CompanyCategoryTransformer extends  TransformerAbstract {
+    public function transform(CompanyCategory $category)
     {
         return [
             'id' => $category->id,
