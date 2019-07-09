@@ -19,7 +19,10 @@ use Illuminate\Http\Request;
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($api) {
+$api->version('v1', [
+    'namespace' => 'App\Http\Controllers\Api\v1',
+    'middleware' => ['bindings']
+], function ($api) {
     //返回分类列表
     $api->get('company_categories', 'CompanyCategoryController@index')->name('company_categories.index');
     //返回标签列表
@@ -34,4 +37,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
     $api->resource('materials', 'MaterialsController', ['only'=>['index', 'show']]);
     //banner轮播图
     $api->get('banners', 'BannerController@index');
+    //讲师相关
+    $api->resource('teachers', 'TeachersController', ['only' => ['show']]);
 });
