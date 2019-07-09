@@ -32,4 +32,6 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
     $api->get('material_categories', 'MaterialCategoryController@index')->name('material_categories.index');
     //平台素材库
     $api->resource('materials', 'MaterialsController', ['only'=>['index', 'show']]);
+    //banner轮播图
+    $api->get('banners', 'BannerController@index');
 });
