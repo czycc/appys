@@ -17,6 +17,7 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('desc')->nullable()->commit('标签描述');
+            $table->integer('post_count')->default(0)->commit('标签下文章数量用于热度');
             $table->timestamps();
         });
     }

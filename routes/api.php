@@ -26,6 +26,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api\v1'], function ($a
     $api->get('tags', 'TagController@index')->name('tags.index');
     //返回公司简介列表
     $api->resource('company_posts', 'CompanyPostsController', ['only' => ['index', 'show']]);
+    //最新资讯
     $api->resource('news', 'NewsController', ['only' => ['index', 'show']]);
+    //平台素材库分类
     $api->get('material_categories', 'MaterialCategoryController@index')->name('material_categories.index');
+    //平台素材库
+    $api->resource('materials', 'MaterialsController', ['only'=>['index', 'show']]);
 });
