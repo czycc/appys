@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyCategory extends Model
 {
     protected $fillable = [
-        'name', 'desc', 'parent_id'
+        'name', 'desc'
     ];
     public $timestamps = false;
 }

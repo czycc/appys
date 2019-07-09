@@ -6,7 +6,7 @@ use App\Models\CompanyCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+class CompanyCategoryController extends Controller
 {
     public function index()
     {
