@@ -15,6 +15,7 @@ class SeedBuynotesData extends Migration
     {
         $note = [
             [
+                'desc' => '课程购买须知',
                 'body' => '<p>这是一段购买须知</p>'
             ]
         ];

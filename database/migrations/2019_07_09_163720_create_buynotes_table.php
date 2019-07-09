@@ -15,6 +15,7 @@ class CreateBuynotesTable extends Migration
     {
         Schema::create('buynotes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('desc');
             $table->text('body');
             $table->timestamps();
         });
