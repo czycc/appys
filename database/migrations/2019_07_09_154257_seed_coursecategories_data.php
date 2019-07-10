@@ -39,6 +39,6 @@ class SeedCoursecategoriesData extends Migration
      */
     public function down()
     {
-        DB::table('course_category')->truncate();
+        DB::table('course_categories')->truncate();
     }
 }

@@ -41,4 +41,6 @@ $api->version('v1', [
     $api->resource('teachers', 'TeachersController', ['only' => ['show']]);
     //返回课程分类列表
     $api->get('course_categories', 'CourseCategoryController@index');
+    //课程列表
+    $api->resource('courses', 'CoursesController', ['only' => ['index', 'show']]);
 });

@@ -29,6 +29,6 @@ class SeedBuynotesData extends Migration
      */
     public function down()
     {
-        \Illuminate\Support\Facades\DB::truncate();
+        \Illuminate\Support\Facades\DB::table('buynotes')->truncate();
     }
 }

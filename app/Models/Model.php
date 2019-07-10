@@ -21,4 +21,9 @@ class Model extends EloquentModel
         return $query->orderBy('zan_count', 'desc');
     }
 
+    public function ScopeViewed($query)
+    {
+        //按查看数量
+        return $query->orderBy('view_count', 'desc');
+    }
 }
