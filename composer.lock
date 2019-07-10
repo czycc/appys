@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edfd3e3bdb0e306fbb009a38de7a05f1",
+    "content-hash": "9e9bf4034cf7c215dbee1befe080b8f0",
     "packages": [
         {
             "name": "dingo/api",
-            "version": "v2.3.0",
+            "version": "v2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dingo/api.git",
-                "reference": "e67c722b1a6a6ace0ab27332c3d446e98acacd05"
+                "reference": "f77539eb1ae972a1a8fe9fab9be387bd3951a93f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dingo/api/zipball/e67c722b1a6a6ace0ab27332c3d446e98acacd05",
-                "reference": "e67c722b1a6a6ace0ab27332c3d446e98acacd05",
+                "url": "https://api.github.com/repos/dingo/api/zipball/f77539eb1ae972a1a8fe9fab9be387bd3951a93f",
+                "reference": "f77539eb1ae972a1a8fe9fab9be387bd3951a93f",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -92,7 +92,7 @@
                 "laravel",
                 "restful"
             ],
-            "time": "2019-06-20T13:49:15+00:00"
+            "time": "2019-03-24T13:39:12+00:00"
         },
         {
             "name": "dingo/blueprint",
@@ -1270,16 +1270,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.45",
+            "version": "v5.5.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "52c79ecf54b6168a54730ccb6c4c9f3561732a80"
+                "reference": "85b2a5218088b0f60bf6e8c3a62891ba275a7269"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/52c79ecf54b6168a54730ccb6c4c9f3561732a80",
-                "reference": "52c79ecf54b6168a54730ccb6c4c9f3561732a80",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/85b2a5218088b0f60bf6e8c3a62891ba275a7269",
+                "reference": "85b2a5218088b0f60bf6e8c3a62891ba275a7269",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1406,7 +1406,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-01-28T20:53:19+00:00"
+            "time": "2019-07-09T14:00:53+00:00"
         },
         {
             "name": "laravel/tinker",

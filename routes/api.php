@@ -43,4 +43,6 @@ $api->version('v1', [
     $api->get('course_categories', 'CourseCategoryController@index');
     //课程列表
     $api->resource('courses', 'CoursesController', ['only' => ['index', 'show']]);
+    //发送验证码
+    $api->post('verification_codes', 'VerificationCodesController@store');
 });
