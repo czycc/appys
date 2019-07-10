@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('phone',11)->unique();
             $table->string('password');
-            $table->string('code')->nullbale()->commit('推荐码');
+            $table->string('code', 50)->nullbale()->unique()->commit('推荐码');
             $table->string('nickname')->nullable()->commit('昵称');
             $table->text('avatar')->nullable()->commit('头像');
             $table->string('wx_openid', 100)->nullable()->index()->commit('微信openid');

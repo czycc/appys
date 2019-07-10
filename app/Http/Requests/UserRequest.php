@@ -2,19 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class UserRequest extends Request
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +14,23 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'password' => 'required|string|min:6',
+            'verify_key' => 'required|string',
+            'verify_code' => 'required|string',
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'verify_key' => '短信验证码 key',
+            'verify_code' => '短信验证码',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+           'password.min' => '密码至少6位',
         ];
     }
 }

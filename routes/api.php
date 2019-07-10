@@ -45,4 +45,6 @@ $api->version('v1', [
     $api->resource('courses', 'CoursesController', ['only' => ['index', 'show']]);
     //发送验证码
     $api->post('verification_codes', 'VerificationCodesController@store');
+    //用户相关
+    $api->resource('users', 'UsersController', ['only' => ['show', 'store']]);
 });
