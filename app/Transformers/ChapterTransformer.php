@@ -24,10 +24,10 @@ class ChapterTransformer extends TransformerAbstract
             'permit' => true, //是否有权限
             'media_url' => $item->media_url
         ];
-//        if ($this->simple) {
-//            unset($data['media_url']);
-//            unset($data['permit']);
-//        }
+        if ($this->simple) {
+            unset($data['media_url']);
+            unset($data['permit']);
+        }
         return $data;
     }
 }
