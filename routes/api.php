@@ -26,14 +26,21 @@ $api->version('v1', [
 
     $api->group([
         'middleware' => 'api.throttle',
-        'limit' => 4,
+        'limit' => 10,
         'expires' => 2
     ], function ($api) {
         //发送验证码
         $api->post('verification_codes', 'VerificationCodesController@store');
-        //用户相关
+        //用户注册
         $api->resource('users', 'UsersController', ['only' => ['store']]);
+        //第三方授权登陆
         $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore');
+        //手机号密码登陆
+        $api->post('authorizations', 'AuthorizationsController@store');
+        //刷新token
+        $api->put('authorizations/current', 'AuthorizationsController@update');
+        //删除token
+        $api->delete('authorizations/current', 'AuthorizationsController@destory');
     });
 
     $api->group([

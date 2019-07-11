@@ -13,7 +13,8 @@
         "laravel/tinker": "~1.0",
         "overtrue/easy-sms": "^1.1",
         "phpdocumentor/reflection-docblock": " 3.3.2",
-        "socialiteproviders/weixin": "^4.0"
+        "socialiteproviders/weixin": "^4.0",
+        "tymon/jwt-auth": "1.0.0-rc.2"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
