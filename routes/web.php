@@ -11,4 +11,6 @@
 |
 */
 
-
+Route::get('/', function () {
+   return 'true';
+});
