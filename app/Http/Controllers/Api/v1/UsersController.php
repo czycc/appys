@@ -39,11 +39,25 @@ class UsersController extends Controller
         if (!hash_equals($verifyData['code'], $request->verify_code)) {
             return $this->response->errorUnauthorized('验证码错误');
         }
-        $user = User::create([
+
+        $data = [
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
-            'code' => uniqid()
-        ]);
+            'code' => uniqid(),
+            'nickname' => str_random(5)
+        ];
+
+        //提取微信注册数据
+        if ($request->wx_id) {
+            $wx = \Cache::get($request->wx_id);
+            if ($wx) {
+                $data = array_merge($data, $wx);
+                \Cache::forget($request->wx_id);
+            }
+
+        }
+
+        $user = User::create($data);
 
         //清除验证码
         \Cache::forget($request->verify_key);

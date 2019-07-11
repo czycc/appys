@@ -33,7 +33,7 @@ $api->version('v1', [
         $api->post('verification_codes', 'VerificationCodesController@store');
         //用户相关
         $api->resource('users', 'UsersController', ['only' => ['store']]);
-
+        $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore');
     });
 
     $api->group([

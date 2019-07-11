@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->text('avatar')->nullable()->commit('头像');
             $table->string('wx_openid', 100)->nullable()->index()->commit('微信openid');
             $table->string('wx_unionid', 100)->nullable()->index()->commit('微信unionid');
+            $table->integer('gold')->default(0)->commit('金币');
+            $table->integer('silver')->default(0)->commit('银币');
+            $table->integer('copper')->default(0)->commit('铜币');
             $table->rememberToken();
             $table->timestamps();
         });

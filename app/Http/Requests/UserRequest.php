@@ -17,6 +17,7 @@ class UserRequest extends Request
             'password' => 'required|string|min:6',
             'verify_key' => 'required|string',
             'verify_code' => 'required|string',
+            'wx_id' => 'string'
         ];
     }
     public function attributes()
@@ -24,6 +25,7 @@ class UserRequest extends Request
         return [
             'verify_key' => '短信验证码 key',
             'verify_code' => '短信验证码',
+            'wx_id' => '微信openid或unionid',
         ];
     }
 
