@@ -6,7 +6,7 @@ use App\Models\Course;
 use League\Fractal\TransformerAbstract;
 class CourseTransformer extends TransformerAbstract {
 
-    protected $availableIncludes = ['category', 'buynote', 'teacher'];
+    protected $availableIncludes = ['category', 'buynote', 'teacher', 'chapter'];
 
     public function transform(Course $post)
     {
@@ -41,5 +41,10 @@ class CourseTransformer extends TransformerAbstract {
     public function includeBuynote(Course $post)
     {
         return $this->item($post->buynote, new BuynoteTransformer());
+    }
+
+    public function includeChapter(Course $post)
+    {
+        return $this->collection($post->chapter, new ChapterTransformer(true));
     }
 }

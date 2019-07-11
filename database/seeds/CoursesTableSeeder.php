@@ -18,7 +18,7 @@ class CoursesTableSeeder extends Seeder
         $cates = \App\Models\CourseCategory::all()->pluck('id')->toArray();
         $teachers = \App\Models\Teacher::all()->pluck('id')->toArray();
         $courses = factory(Course::class)
-            ->times(50)
+            ->times(10)
             ->make()
             ->each(function ($course, $index) use ($faker, $banner, $teachers, $cates) {
             $course->banner = $faker->randomElement($banner);

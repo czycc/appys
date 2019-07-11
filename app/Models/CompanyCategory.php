@@ -10,4 +10,9 @@ class CompanyCategory extends Model
         'name', 'desc'
     ];
     public $timestamps = false;
+
+    public function post()
+    {
+        return $this->hasMany(CompanyPost::class, 'category_id');
+    }
 }
