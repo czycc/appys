@@ -78,5 +78,7 @@ $api->version('v1', [
     ], function ($api) {
         //当前用户数据
         $api->get('user', 'UsersController@me');
+        //上传媒体文件
+        $api->post('media/{type}', 'MediaController@store');
     });
 });
