@@ -21,7 +21,7 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api\v1',
-    'middleware' => ['bindings']
+    'middleware' => ['bindings', 'serializer:array']
 ], function ($api) {
 
     $api->group([
@@ -77,6 +77,6 @@ $api->version('v1', [
         'expires' => 1,
     ], function ($api) {
         //当前用户数据
-        $api->get('user', 'UserController@me');
+        $api->get('user', 'UsersController@me');
     });
 });
