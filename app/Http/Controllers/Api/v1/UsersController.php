@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -108,5 +109,14 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    /**
+     * @return \Dingo\Api\Http\Response
+     * 返回当前用户信息
+     */
+    public function me()
+    {
+        return $this->response->item($this->user(), new UserTransformer());
     }
 }

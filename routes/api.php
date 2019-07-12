@@ -45,7 +45,7 @@ $api->version('v1', [
 
     $api->group([
         'middleware' => 'api.throttle',
-        'limit' => 120,
+        'limit' => 100,
         'expires' => 1
     ], function ($api) {
         //返回分类列表
@@ -71,4 +71,12 @@ $api->version('v1', [
         $api->resource('chapters', 'ChaptersController', ['only' => ['show']]);
     });
 
+    $api->group([
+        'middleware' => 'api.auth',
+        'limit' => 100,
+        'expires' => 1,
+    ], function ($api) {
+        //当前用户数据
+        $api->get('user', 'UserController@me');
+    });
 });
