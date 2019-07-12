@@ -82,6 +82,7 @@ $api->version('v1', [
         $api->patch('user', 'UsersController@update');
         //上传媒体文件
         $api->post('media/{type}', 'MediaController@store');
-
+        //当前用户会员价格
+        $api->get('vip/price', 'VipController@price');
     });
 });
