@@ -78,7 +78,10 @@ $api->version('v1', [
     ], function ($api) {
         //当前用户数据
         $api->get('user', 'UsersController@me');
+        //修改用户信息
+        $api->patch('user', 'UsersController@update');
         //上传媒体文件
         $api->post('media/{type}', 'MediaController@store');
+
     });
 });

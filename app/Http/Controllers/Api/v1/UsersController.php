@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Media;
 use App\Models\User;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
@@ -93,16 +94,19 @@ class UsersController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
+
+    public function update(UserRequest $request)
     {
-        //
+        $user = $this->user();
+
+        $attr = $request->only(['nickname', 'avatar_id']);
+        if ($request->avatar_id) {
+            $img = Media::find($request->avatar_id);
+            $attr['avatar'] = $img->media_url;
+        }
+        $user->update($attr);
+
+        return $this->response->item($user, new UserTransformer());
     }
 
     /**
