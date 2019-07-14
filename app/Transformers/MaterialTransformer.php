@@ -21,7 +21,7 @@ class MaterialTransformer extends TransformerAbstract
             'media_type' => $post->media_type,
             'media_url' => $post->media_url,
             'category_id' => $post->category_id,
-            'view_count' => $post->view_count,
+            'view_count' => (int)$post->view_count,
             //            'zan_count' => $post->zan_count,
             'crated_at' => $post->created_at->toDateTimeString(),
             'updated_at' => $post->updated_at->toDateTimeString(),

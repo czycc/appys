@@ -21,7 +21,12 @@ function orderByRequest($request, $query)
         $query->recent();
     }
     if ($request->input('viewed')) {
+        //是否按查看数量排序
         $query->viewed();
+    }
+    if ($request->input('zan')) {
+        //是否按点赞数排序
+        $query->zan();
     }
     $paginate = $request->input('paginate') ?? 20;
     $query = $query->paginate($paginate);

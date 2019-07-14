@@ -5,7 +5,9 @@ namespace App\Transformers;
 use App\Models\CompanyCategory;
 use App\Models\CompanyPost;
 use League\Fractal\TransformerAbstract;
-class CompanyPostTransformer extends TransformerAbstract {
+
+class CompanyPostTransformer extends TransformerAbstract
+{
 
     protected $availableIncludes = ['category'];
 
@@ -18,8 +20,8 @@ class CompanyPostTransformer extends TransformerAbstract {
             'thumbnail' => $post->thumbnail,
             'media_type' => $post->media_type,
             'media_url' => $post->media_url,
-            'category_id' => $post->category_id,
-            'view_count' => $post->view_count,
+            'category_id' => (int)$post->category_id,
+            'view_count' => (int)$post->view_count,
 //            'zan_count' => $post->zan_count,
             'crated_at' => $post->created_at->toDateTimeString(),
             'updated_at' => $post->updated_at->toDateTimeString(),

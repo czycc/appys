@@ -84,5 +84,7 @@ $api->version('v1', [
         $api->post('media/{type}', 'MediaController@store');
         //当前用户会员价格
         $api->get('vip/price', 'VipController@price');
+        //用户文章
+        $api->resource('articles', 'ArticlesController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
     });
 });

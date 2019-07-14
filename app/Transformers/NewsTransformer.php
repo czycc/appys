@@ -4,7 +4,9 @@ namespace App\Transformers;
 
 use App\Models\News;
 use League\Fractal\TransformerAbstract;
-class NewsTransformer extends TransformerAbstract {
+
+class NewsTransformer extends TransformerAbstract
+{
 
     public function transform(News $item)
     {
@@ -16,8 +18,8 @@ class NewsTransformer extends TransformerAbstract {
             'media_type' => $item->media_type,
             'media_url' => $item->media_url,
 //            'category_id' => $item->category_id,
-            'view_count' => $item->view_count,
-            'zan_count' => $item->zan_count,
+            'view_count' => (int)$item->view_count,
+            'zan_count' => (int)$item->zan_count,
             'crated_at' => $item->created_at->toDateTimeString(),
             'updated_at' => $item->updated_at->toDateTimeString(),
         ];
