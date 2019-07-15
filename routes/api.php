@@ -86,5 +86,7 @@ $api->version('v1', [
         $api->get('vip/price', 'VipController@price');
         //用户文章
         $api->resource('articles', 'ArticlesController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
+        //用户评论
+        $api->resource('comments', 'CommentsController', ['only' => ['index', 'store']]);
     });
 });

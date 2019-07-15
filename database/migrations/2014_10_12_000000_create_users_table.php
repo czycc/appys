@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('gold')->default(0)->commit('金币');
             $table->integer('silver')->default(0)->commit('银币');
             $table->integer('copper')->default(0)->commit('铜币');
+            $table->integer('notification_count')->unsigned()->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
