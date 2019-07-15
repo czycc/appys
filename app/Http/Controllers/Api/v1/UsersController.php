@@ -128,4 +128,15 @@ class UsersController extends Controller
     {
         return $this->response->item($this->user(), new UserTransformer());
     }
+
+    /**
+     * @return \Dingo\Api\Http\Response
+     *
+     * 返回我的团队
+     */
+    public function team()
+    {
+        $team = User::where('bound_id', $this->user()->id)->get();
+        return $this->response->collection($team, new UserTransformer());
+    }
 }

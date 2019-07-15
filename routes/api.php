@@ -80,6 +80,8 @@ $api->version('v1', [
         $api->get('user', 'UsersController@me');
         //修改用户信息
         $api->patch('user', 'UsersController@update');
+        //返回我的团队
+        $api->get('team', 'UsersController@team');
         //上传媒体文件
         $api->post('media/{type}', 'MediaController@store');
         //当前用户会员价格

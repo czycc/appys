@@ -24,6 +24,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'code' => uniqid(),
         'wx_openid' => str_random(20),
         'wx_unionid' => str_random(20),
+        'vip' => $faker->numberBetween(0, 2),
         'created_at' => $now,
         'updated_at' => $now
     ];
