@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ChaptersTableSeeder::class);
         $this->call(ArticlesTableSeeder::class);
         $this->call(CommentsTableSeeder::class);
+        $this->call(ShopsTableSeeder::class);
 
 
     }

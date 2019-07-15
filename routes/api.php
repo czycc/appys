@@ -78,6 +78,8 @@ $api->version('v1', [
     ], function ($api) {
         //当前用户数据
         $api->get('user', 'UsersController@me');
+        //按id查询用户信息
+        $api->get('user/{user}', 'UsersController@show');
         //修改用户信息
         $api->patch('user', 'UsersController@update');
         //返回我的团队
@@ -90,5 +92,7 @@ $api->version('v1', [
         $api->resource('articles', 'ArticlesController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
         //用户评论
         $api->resource('comments', 'CommentsController', ['only' => ['index', 'store']]);
+        //店铺相关
+        $api->resource('shops', 'ShopsController', ['only' => ['store', 'update']]);
     });
 });

@@ -7,6 +7,8 @@ use App\Models\User;
 
 class UserTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['shop'];
+
     public function transform(User $item)
     {
         $data = [
@@ -30,5 +32,10 @@ class UserTransformer extends TransformerAbstract
         }
 
         return $data;
+    }
+
+    public function includeShop(User $user)
+    {
+        return $this->item($user->shop, new ShopTransformer());
     }
 }
