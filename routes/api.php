@@ -94,5 +94,8 @@ $api->version('v1', [
         $api->resource('comments', 'CommentsController', ['only' => ['index', 'store']]);
         //店铺相关
         $api->resource('shops', 'ShopsController', ['only' => ['store', 'update']]);
+        //用户关注
+        $api->resource('attentions', 'AttentionController', ['only' => ['store', 'index', 'destroy']]);
+
     });
 });
