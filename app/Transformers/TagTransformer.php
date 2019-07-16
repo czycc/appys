@@ -7,6 +7,7 @@ use League\Fractal\TransformerAbstract;
 
 class TagTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['courses'];
     public function transform(Tag $item)
     {
         return [
@@ -14,5 +15,10 @@ class TagTransformer extends TransformerAbstract
             'name' => $item->name,
             'post_count' => (int)$item->post_count
         ];
+    }
+
+    public function includeCourses(Tag $item)
+    {
+
     }
 }
