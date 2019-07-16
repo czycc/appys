@@ -20,6 +20,18 @@ class AuthorizationsController extends Controller
             return $this->response->errorUnauthorized('用户名或密码错误');
         }
 
+        //提取微信注册数据
+        if ($request->wx_id) {
+            $wx = \Cache::get($request->wx_id);
+            if ($wx) {
+                //更新微信信息
+                $user = User::where('phone',$cerd['phone'])->first();
+                $user->update($wx);
+                \Cache::forget($request->wx_id);
+            }
+
+        }
+
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
