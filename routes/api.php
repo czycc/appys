@@ -96,6 +96,8 @@ $api->version('v1', [
         $api->resource('shops', 'ShopsController', ['only' => ['store', 'update']]);
         //用户关注
         $api->resource('attentions', 'AttentionController', ['only' => ['store', 'index', 'destroy']]);
-
+        //用户点赞
+        $api->post('zan/{type}/up/{id}', 'ZanController@store');
+        $api->delete('zan/{type}/down/{id}', 'ZanController@delete');
     });
 });

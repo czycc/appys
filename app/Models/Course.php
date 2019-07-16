@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use Jcc\LaravelVote\CanBeVoted;
+
 class Course extends Model
 {
+    use CanBeVoted;
+    protected $vote = User::class;
+
     protected $fillable = ['title', 'banner', 'ori_price', 'now_price', 'body', 'show', 'recommend', 'order', 'buynote_id', 'teacher_id'];
 
     public function scopeRecommend($query)
