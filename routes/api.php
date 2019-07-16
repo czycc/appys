@@ -26,12 +26,19 @@ $api->version('v1', [
 
     $api->group([
         'middleware' => 'api.throttle',
-        'limit' => 10,
-        'expires' => 2
+        'limit' => 1,
+        'expires' => 1
     ], function ($api) {
         //发送验证码
         $api->post('verification_codes', 'VerificationCodesController@store');
-        //用户注册
+   });
+
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => 10,
+        'expires' => 2
+    ], function ($api) {
+         //用户注册
         $api->resource('users', 'UsersController', ['only' => ['store']]);
         //第三方授权登陆
         $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore');
