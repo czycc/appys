@@ -2,13 +2,11 @@
 
 namespace App\Transformers;
 
-use App\Models\CompanyCategory;
 use App\Models\CompanyPost;
 use League\Fractal\TransformerAbstract;
 
 class CompanyPostTransformer extends TransformerAbstract
 {
-
     protected $availableIncludes = ['category'];
 
     public function transform(CompanyPost $post)
@@ -22,7 +20,6 @@ class CompanyPostTransformer extends TransformerAbstract
             'media_url' => $post->media_url,
             'category_id' => (int)$post->category_id,
             'view_count' => (int)$post->view_count,
-//            'zan_count' => $post->zan_count,
             'crated_at' => $post->created_at->toDateTimeString(),
             'updated_at' => $post->updated_at->toDateTimeString(),
         ];

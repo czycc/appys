@@ -12,7 +12,6 @@ class CompanyPostsController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
 	public function index(Request $request, CompanyPost $post)
@@ -27,10 +26,6 @@ class CompanyPostsController extends Controller
             //按权重排序
             $query->ordered();
         }
-//        if ($request->input('zan')) {
-//            //按点赞数排序
-//            $query->zan();
-//        }
         if ($request->input('recent')) {
             //是否按照最新时间排序
             $query->recent();
