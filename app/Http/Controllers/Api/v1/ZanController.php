@@ -73,6 +73,9 @@ class ZanController extends Controller
         if ($this->user()->hasDownVoted($item)) {
             return $this->response->errorBadRequest('已经取消过点赞啦！');
         }
+        if (!$this->user()->hasUpVoted($item)) {
+            return $this->response->errorBadRequest('用户没有点赞啦！');
+        }
         $this->user()->downVote($item);
         $item->decrement('zan_count', 1);
         if ($request->type == 'article') {
