@@ -18,6 +18,7 @@ class ShopTransformer extends TransformerAbstract
             'shop_imgs' => $item->shop_imgs,
             'longitude' => $item->longitude,
             'latitude' => $item->latitude,
+            'province' => $item->province,
             'city' => $item->city,
             'district' => $item->district,
             'address' => $item->address,
@@ -30,7 +31,7 @@ class ShopTransformer extends TransformerAbstract
             //店铺本人
             $data['idcard'] = $item->idcard;
             $data['license'] = $item->license;
-            $data['status'] = (int)$item->status;
+            $data['status'] = $item->status === 2 ? '认证中' : $item->status === 1 ? '认证通过' : '认证失败';
             $data['user_id'] = (int)$item->user_id;
             return $data;
         }

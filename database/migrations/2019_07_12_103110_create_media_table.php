@@ -17,7 +17,6 @@ class CreateMediaTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
             $table->enum('type', ['avatar', 'article', 'shop']);
-            $table->enum('media_type', ['audio', 'video', 'image']);
             $table->string('media_url');
             $table->timestamps();
 

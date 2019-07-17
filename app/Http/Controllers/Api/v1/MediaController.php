@@ -18,23 +18,22 @@ class MediaController extends Controller
         //根据不同场景处理不同逻辑
         switch ($type) {
             case 'avatar':
-                $img = $request->file('image');
+                $img = $request->file('file');
                 $path = Storage::putFile("avatars/{$user->id}", $img);
                 break;
             case 'article':
-                $file = $request->file($request->media_type);
+                $file = $request->file('file');
                 $date = date('Ym/d', time());
                 $path =Storage::putFile("articles/{$user->id}/{$date}", $file);
                 break;
             case 'shop':
-                $path = Storage::putFile("shops/{$user->id}", $request->file('image'));
+                $path = Storage::putFile("shops/{$user->id}", $request->file('file'));
                 break;
             default:
                 return $this->response->errorBadRequest();
         }
         $media->user_id = $user->id;
         $media->type = $type;
-        $media->media_type = $request->media_type;
         $media->media_url = Storage::url($path);
         $media->save();
 

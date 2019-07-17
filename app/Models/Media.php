@@ -5,7 +5,7 @@ namespace App\Models;
 
 class Media extends Model
 {
-    protected $fillable = ['type', 'media_type'];
+    protected $fillable = ['type'];
 
     public function user()
     {

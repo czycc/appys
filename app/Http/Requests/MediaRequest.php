@@ -12,16 +12,14 @@ class MediaRequest extends Request
     public function rules()
     {
         $rules = [
-            'media_type' => 'required|string|in:image,audio,video',
+//            'media_type' => 'required|string|in:image,audio,video',
         ];
         if ($this->type == 'avatar') {
-            $rules['image'] = 'required|mimes:jpeg,png,jpg|dimensions:min_width:200,min_height:200';
+            $rules['file'] = 'required|mimes:jpeg,png,jpg|dimensions:min_width:200,min_height:200';
         } elseif ($this->type == 'shop') {
-            $rules['image'] = 'required|mimes:jpeg,png,jpg';
+            $rules['file'] = 'required|mimes:jpeg,png,jpg';
         } else {
-            $rules['image'] = 'required_without_all:video,audio|mimes:jpeg,png,jpg';
-            $rules['video'] = 'required_without_all:image,audio|mimes:video/mp4,video/x-msvideo';
-            $rules['audio'] = 'required_without_all:video,image|audio/mpeg,audio/ogg';
+            $rules['file'] = 'required|mimes:jpeg,png,jpg,video/mp4,video/x-msvideo,audio/mpeg,audio/ogg';
         }
         return $rules;
     }
