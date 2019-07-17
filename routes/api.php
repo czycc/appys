@@ -67,8 +67,12 @@ $api->version('v1', [
         $api->get('material_categories', 'MaterialCategoryController@index')->name('material_categories.index');
         //平台素材库
         $api->resource('materials', 'MaterialsController', ['only' => ['index', 'show']]);
+
+        /* 首页配置 */
         //banner轮播图
         $api->get('banners', 'BannerController@index');
+        $api->get('menu', 'ConfigureController@menu');
+
         //讲师相关
         $api->resource('teachers', 'TeachersController', ['only' => ['show']]);
         //返回课程分类列表
@@ -106,5 +110,6 @@ $api->version('v1', [
         //用户点赞
         $api->post('zan/{type}/up/{id}', 'ZanController@store');
         $api->delete('zan/{type}/down/{id}', 'ZanController@delete');
+
     });
 });

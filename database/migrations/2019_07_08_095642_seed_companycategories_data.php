@@ -15,12 +15,73 @@ class SeedCompanyCategoriesData extends Migration
     {
         $category = [
             [
+                'name' => '公司简介',
+                'desc' => '主分类',
+                'parent_id' => 0,
+                'level' => 0,
+                'is_directory' => 1
+            ],
+            [
+                'name' => '最新资讯',
+                'desc' => '主分类',
+                'parent_id' => 0,
+                'level' => 0,
+                'is_directory' => 0
+            ],
+            [
+                'name' => '平台素材库',
+                'desc' => '主分类',
+                'parent_id' => 0,
+                'level' => 0,
+                'is_directory' => 1
+            ],
+
+            [
                 'name' => '公司动态',
                 'desc' => '公司简介分类下的子分类',
+                'parent_id' => 1,
+                'level' => 1,
+                'is_directory' => 0
             ],
             [
                 'name' => '公司展示',
                 'desc' => '公司简介分类下的子分类',
+                'parent_id' => 1,
+                'level' => 1,
+                'is_directory' => 0
+            ],
+
+            [
+                'name' => '微营销',
+                'desc' => '平台素材库分类下的子分类',
+                'parent_id' => 3,
+                'level' => 1,
+                'is_directory' => 0
+            ],
+            [
+                'name' => '男性健康',
+                'desc' => '平台素材库分类下的子分类',
+                'parent_id' => 3,
+                'level' => 1,
+                'is_directory' => 0
+            ], [
+                'name' => '女性健康',
+                'desc' => '平台素材库分类下的子分类',
+                'parent_id' => 3,
+                'level' => 1,
+                'is_directory' => 0
+            ], [
+                'name' => '国学',
+                'desc' => '平台素材库分类下的子分类',
+                'parent_id' => 3,
+                'level' => 1,
+                'is_directory' => 0
+            ], [
+                'name' => '心理健康',
+                'desc' => '平台素材库分类下的子分类',
+                'parent_id' => 3,
+                'level' => 1,
+                'is_directory' => 0
             ]
 
         ];

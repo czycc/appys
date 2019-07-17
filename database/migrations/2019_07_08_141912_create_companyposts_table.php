@@ -14,10 +14,10 @@ class CreateCompanyPostsTable extends Migration
             $table->text('thumbnail')->nullable()->commit('缩略图');
             $table->enum('media_type', ['video', 'audio'])->default('audio')->commit('媒体类型');
             $table->text('media_url')->nullable()->commit('媒体路径');
-            $table->integer('category_id')->unsigned();
             $table->integer('view_count')->default(0)->unsigned();
             $table->integer('zan_count')->index()->default(0);
             $table->integer('order')->default(0)->commit('权重');
+            $table->integer('category_id')->unsigned();
             $table->timestamps();
         });
 	}
