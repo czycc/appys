@@ -19,7 +19,7 @@ class MediaRequest extends Request
         } elseif ($this->type == 'shop') {
             $rules['file'] = 'required|mimes:jpeg,png,jpg';
         } else {
-            $rules['file'] = 'required|mimes:jpeg,png,jpg,video/mp4,video/x-msvideo,audio/mpeg,audio/ogg';
+            $rules['file'] = 'required|mimes:jpeg,png,jpg,audio/mpeg,audio/mpga,mp4,ogg';
         }
         return $rules;
     }
