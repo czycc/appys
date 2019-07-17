@@ -46,7 +46,8 @@ class UsersController extends Controller
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
             'code' => uniqid(),
-            'nickname' => str_random(5)
+            'nickname' => str_random(5),
+            'bound_id' => $request->bound_id,
         ];
 
         //提取微信注册数据

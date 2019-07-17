@@ -19,7 +19,8 @@ class UserRequest extends Request
                     'password' => 'required|string|min:6',
                     'verify_key' => 'required|string',
                     'verify_code' => 'required|string',
-                    'wx_id' => 'string'
+                    'wx_id' => 'string',
+                    'bound_id' => 'exists:users,id'
                 ];
                 break;
             case 'PATCH':
