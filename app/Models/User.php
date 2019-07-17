@@ -53,4 +53,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }

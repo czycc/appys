@@ -15,7 +15,7 @@ class CommentTransformer extends TransformerAbstract
             'id' => $item->id,
             'user_id' => (int)$item->user_id,
             'article_id' => (int)$item->article_id,
-            'comment_id' => (int)$item->comment_id,
+            'comment_id' => $item->comment_id,
             'content' => $item->content,
             'created_at' => $item->created_at->toDateTimeString(),
         ];

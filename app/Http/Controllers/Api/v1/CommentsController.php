@@ -18,16 +18,13 @@ class CommentsController extends Controller
 
 	public function index(Request $request)
 	{
-        if ($request->user_id) {
-            //查询用户id下的所有回复
-            $user = User::find($request->user_id);
-            $comments = $user->comments()->paginate(20);
-        }elseif ($request->article_id) {
+        if ($request->article_id) {
             //查询文章下所有回复
             $article = Article::find($request->article_id);
-            $comments = $article->comments()->paginate(20);
+            $comments = $article->comments()->orderBy('id', 'desc')->paginate(20);
         } else {
-            return $this->response->array([]);
+            $articles = $this->user()->articles()->get()->pluck('id');
+            $comments = Comment::whereIn('article_id', $articles)->orderBy('id', 'desc')->paginate(20);
         }
 
         return $this->response->paginator($comments, new CommentTransformer());

@@ -25,4 +25,9 @@ class Tag extends Model
     {
         return $this->morphedByMany(Course::class, 'taggable');
     }
+
+    public function CompanyPosts()
+    {
+        return $this->morphedByMany(CompanyPost::class, 'taggable');
+    }
 }

@@ -11,7 +11,8 @@ class TeacherTransformer extends  TransformerAbstract {
             'id' => $teacher->id,
             'name' => $teacher->name,
             'video_url' => $teacher->video_url,
-            'imgs' => $teacher->imgs
+            'imgs' => $teacher->imgs,
+            'desc' => $teacher->desc,
         ];
     }
 }

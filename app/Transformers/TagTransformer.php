@@ -7,7 +7,8 @@ use League\Fractal\TransformerAbstract;
 
 class TagTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['courses'];
+    protected $availableIncludes = ['courses', 'users', 'news', 'audio', 'video', 'topic'];
+
     public function transform(Tag $item)
     {
         return [
@@ -19,6 +20,29 @@ class TagTransformer extends TransformerAbstract
 
     public function includeCourses(Tag $item)
     {
+        return $this->collection($item->courses, new CourseTransformer());
+    }
+    public function includeNews(Tag $item)
+    {
+        return $this->collection($item->news, new NewsTransformer());
+    }
+    public function includeUsers(Tag $item)
+    {
+        return $this->collection($item->users, new UserTransformer());
+    }
 
+    public function includeAudio(Tag $item)
+    {
+        return $this->collection($item->articles, new ArticleTransformer());
+    }
+
+    public function includeVideo(Tag $item)
+    {
+        return $this->collection($item->articles, new ArticleTransformer());
+    }
+
+    public function includeTopic(Tag $item)
+    {
+        return $this->collection($item->articles, new CourseTransformer());
     }
 }

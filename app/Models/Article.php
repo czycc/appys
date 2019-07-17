@@ -26,6 +26,10 @@ class Article extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function getComments()
+    {
+
+    }
     public function shop()
     {
         return $this->hasManyThrough(User::class, Shop::class);

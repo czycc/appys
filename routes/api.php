@@ -31,14 +31,14 @@ $api->version('v1', [
     ], function ($api) {
         //发送验证码
         $api->post('verification_codes', 'VerificationCodesController@store');
-   });
+    });
 
     $api->group([
         'middleware' => 'api.throttle',
         'limit' => 10,
         'expires' => 2
     ], function ($api) {
-         //用户注册
+        //用户注册
         $api->resource('users', 'UsersController', ['only' => ['store']]);
         //第三方授权登陆
         $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore');
@@ -58,7 +58,7 @@ $api->version('v1', [
         //返回分类列表
         $api->get('company_categories', 'CompanyCategoryController@index')->name('company_categories.index');
         //返回标签列表
-        $api->get('tags', 'TagController@index')->name('tags.index');
+        $api->resource('tags', 'TagController', ['only' => ['index', 'show']]);
         //返回公司简介列表
         $api->resource('company_posts', 'CompanyPostsController', ['only' => ['index', 'show']]);
         //最新资讯
