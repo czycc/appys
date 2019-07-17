@@ -15,6 +15,7 @@
         "liyu/dingo-serializer-switch": "^0.3.1",
         "overtrue/easy-sms": "^1.1",
         "phpdocumentor/reflection-docblock": " 3.3.2",
+        "predis/predis": "^1.1",
         "socialiteproviders/weixin": "^4.0",
         "tymon/jwt-auth": "1.0.0-rc.2"
     },
