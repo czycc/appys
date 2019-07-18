@@ -26,7 +26,7 @@ $api->version('v1', [
 
     $api->group([
         'middleware' => 'api.throttle',
-        'limit' => 1,
+        'limit' => 2,
         'expires' => 1
     ], function ($api) {
         //发送验证码
