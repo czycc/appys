@@ -10,7 +10,7 @@ class CreateChaptersTable extends Migration
 		Schema::create('chapters', function(Blueprint $table) {
             $table->increments('id');
             $table->string('title')->index();
-            $table->integer('price')->unsigned()->default(0);
+            $table->decimal('price', 9, 2)->unsigned()->default(0);
             $table->string('media_type');
             $table->text('media_url');
             $table->integer('course_id')->unsigned();

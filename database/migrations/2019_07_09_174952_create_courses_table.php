@@ -11,8 +11,8 @@ class CreateCoursesTable extends Migration
             $table->increments('id');
             $table->string('title')->index();
             $table->text('banner');
-            $table->decimal('ori_price', 5, 2)->unsigned()->default(0);
-            $table->decimal('now_price', 5, 2)->unsigned()->default(0);
+            $table->decimal('ori_price', 9, 2)->unsigned()->default(0);
+            $table->decimal('now_price', 9, 2)->unsigned()->default(0);
             $table->text('body');
             $table->integer('view_count')->default(0);
             $table->integer('buy_count')->index()->default(0);

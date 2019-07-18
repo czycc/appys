@@ -30,6 +30,14 @@ class ArticlesTableSeeder extends Seeder
             });
 
         Article::insert($articles->toArray());
+
+        //添加标签
+        $tags = \App\Models\Tag::all()->pluck('id');
+
+        $articles = Article::all();
+        foreach ($articles as $article) {
+            $article->tags()->attach($faker->randomElements($tags));
+        }
     }
 
 }

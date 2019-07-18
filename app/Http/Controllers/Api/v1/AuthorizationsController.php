@@ -25,19 +25,7 @@ class AuthorizationsController extends Controller
             if (!$token = \Auth::guard('api')->attempt($cerd)) {
                 return $this->response->errorUnauthorized('用户名或密码错误');
             }
-            //提取微信注册数据
-            if ($request->wx_id) {
-                $wx = \Cache::get($request->wx_id);
-                if ($wx) {
-                    //更新微信信息
-                    $user = User::where('phone',$cerd['phone'])->first();
-                    $user->update($wx);
-                    \Cache::forget($request->wx_id);
-                }
 
-            }
-
-            return $this->respondWithToken($token)->setStatusCode(201);
         } else {
             //验证码登陆
             $cerd = \Cache::get($request->verify_key);
@@ -56,26 +44,23 @@ class AuthorizationsController extends Controller
             if (is_null($user)) {
                 return $this->response->error('手机号不存在', 422);
             }
-            $token = [
-                'access_token' => \Auth::guard('api')->fromUser($user),
-                'token_type' => 'Bearer',
-                'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
-            ];
-            //提取微信注册数据
-            if ($request->wx_id) {
-                $wx = \Cache::get($request->wx_id);
-                if ($wx) {
-                    //更新微信信息
-                    $user = User::where('phone',$cerd['phone'])->first();
-                    $user->update($wx);
-                    \Cache::forget($request->wx_id);
-                }
+            $token = \Auth::guard('api')->fromUser($user);
 
+
+        }
+        //提取微信注册数据
+        if ($request->wx_id) {
+            $wx = \Cache::get($request->wx_id);
+            if ($wx) {
+                //更新微信信息
+                $user = User::where('phone',$cerd['phone'])->first();
+                $user->update($wx);
+                \Cache::forget($request->wx_id);
             }
-            return $this->response->array($token)->setStatusCode(201);
 
         }
 
+        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
     /**

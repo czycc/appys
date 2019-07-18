@@ -15,7 +15,7 @@ class CreateArticlesTable extends Migration
             $table->enum('type', ['video', 'topic', 'audio']);
             $table->text('media_url')->nullable();
             $table->json('multi_imgs')->nullable();
-            $table->integer('price')->default(0);
+            $table->decimal('price', 9, 2)->default(0);
             $table->integer('zan_count')->index()->default(0);
             $table->integer('user_id')->unsigned();
             $table->tinyInteger('status')->default(2);

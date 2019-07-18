@@ -22,23 +22,50 @@ class TagTransformer extends TransformerAbstract
     {
         return $this->collection($item->courses, new CourseTransformer());
     }
+
     public function includeShop(Tag $item)
     {
         return $this->collection($item->users, new UserTransformer());
     }
 
+    /**
+     * @param Tag $item
+     * @return \League\Fractal\Resource\Collection
+     *
+     * 包含用户音频
+     */
     public function includeAudio(Tag $item)
     {
-        return $this->collection($item->articles, new ArticleTransformer());
+        return $this->collection($this->getArticles($item, 'audio'), new ArticleTransformer());
     }
 
+    /**
+     * @param Tag $item
+     * @return \League\Fractal\Resource\Collection
+     * 包含用户视频
+     */
     public function includeVideo(Tag $item)
     {
-        return $this->collection($item->articles, new ArticleTransformer());
+        return $this->collection($this->getArticles($item, 'video'), new ArticleTransformer());
     }
 
+    /**
+     * @param Tag $item
+     * @return \League\Fractal\Resource\Collection
+     * 包含用户文章
+     */
     public function includeTopic(Tag $item)
     {
-        return $this->collection($item->articles, new CourseTransformer());
+        return $this->collection($this->getArticles($item, 'topic'), new ArticleTransformer());
+    }
+
+    public function getArticles($item, $type)
+    {
+        return $item->articles()
+            ->where('type', $type)
+            ->where('status', 1)
+            ->orderBy('zan_count', 'desc')
+            ->limit(5)
+            ->get();
     }
 }
