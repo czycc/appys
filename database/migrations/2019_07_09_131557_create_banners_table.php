@@ -17,7 +17,7 @@ class CreateBannersTable extends Migration
             $table->increments('id');
             $table->text('img_url')->commit('banner图链接');
             $table->text('desc')->nullable()->commit('banner描述');
-            $table->enum('type', ['courses', 'news', 'company_posts'])->default('courses');
+            $table->enum('type', ['courses', 'company_posts'])->default('courses');
             $table->integer('type_id')->unsigned();
             $table->timestamps();
         });
