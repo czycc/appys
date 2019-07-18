@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Configure;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class VipController extends Controller
 {

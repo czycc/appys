@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\CompanyCategory;
 use App\Models\CourseCategory;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ConfigureController extends Controller
 {

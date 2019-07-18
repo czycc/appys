@@ -7,7 +7,6 @@ use App\Models\Attention;
 use App\Transformers\AttentionTransformer;
 use Encore\Admin\Form\Field\Password;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class AttentionController extends Controller
 {

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Exception;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,9 +23,29 @@ class AppServiceProvider extends ServiceProvider
 		\App\Models\Teacher::observe(\App\Observers\TeacherObserver::class);
 		\App\Models\Material::observe(\App\Observers\MaterialObserver::class);
 		\App\Models\CompanyPost::observe(\App\Observers\CompanyPostObserver::class);
+        app('Dingo\Api\Exception\Handler')->register(function (\Dingo\Api\Exception\ResourceException $exception) {
+            return \Illuminate\Support\Facades\Response::make([
+                'message' => $exception->getErrors()->getMessageBag()->first(),
+                'errors' => $exception->getErrors(),
+                'status_code' => $exception->getStatusCode(),
+            ], $exception->getStatusCode());
+        });
 
-        //
-    }
+        app('Dingo\Api\Exception\Handler')->register(function (\Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception) {
+            return \Illuminate\Support\Facades\Response::make([
+                'message' => '没有权限访问',
+                'status_code' => $exception->getStatusCode(),
+            ],$exception->getStatusCode());
+        });
+
+
+        app('Dingo\Api\Exception\Handler')->register(function (\Dingo\Api\Exception\RateLimitExceededException $exception) {
+            return \Illuminate\Support\Facades\Response::make([
+                'message' => '请求次数过多，请稍后再试',
+                'status_code' => $exception->getStatusCode(),
+            ],$exception->getStatusCode());
+        });
+	}
 
     /**
      * Register any application services.

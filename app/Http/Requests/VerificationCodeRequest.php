@@ -24,8 +24,8 @@ class VerificationCodeRequest extends Request
     public function messages()
     {
         return [
-            'phone.regex' => '手机格式错误。',
-            'phone.unique' => '手机号已经被注册。',
+            'phone.regex' => '手机格式错误',
+            'phone.unique' => '手机号已经被注册',
         ];
     }
 }

@@ -6,7 +6,6 @@ use App\Models\CompanyCategory;
 use App\Transformers\CommentTransformer;
 use App\Transformers\CompanyCategoryTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class CompanyCategoryController extends Controller
 {

@@ -8,7 +8,6 @@ use App\Models\Material;
 use App\Models\News;
 use App\Models\Shop;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ZanController extends Controller
 {

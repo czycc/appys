@@ -7,7 +7,6 @@ use App\Models\Media;
 use App\Models\User;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Overtrue\EasySms\EasySms;
 use App\Http\Requests\VerificationCodeRequest;
 use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
@@ -13,6 +12,7 @@ class VerificationCodesController extends Controller
     public function store(VerificationCodeRequest $request, EasySms $easySms)
     {
         $phone = $request->phone;
+
         if (!app()->environment('production')) {
             //测试环境不发送验证码
             $code = '1234';
@@ -24,7 +24,7 @@ class VerificationCodesController extends Controller
                 ]);
             } catch (NoGatewayAvailableException $exception) {
                 $msg = $exception->getException('yunpian')->getMessage();
-                return $this->response->errorInternal($msg ?: '短信发送异常');
+                return $this->response->errorBadRequest($msg ?: '短信网络发送异常');
             }
         }
 

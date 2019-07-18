@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Chapter;
 use App\Transformers\ChapterTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ChapterRequest;
 
 class ChaptersController extends Controller

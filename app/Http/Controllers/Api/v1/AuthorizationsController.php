@@ -6,7 +6,6 @@ use App\Http\Requests\AuthorizationRequest;
 use App\Http\Requests\SocialAuthorizationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthorizationsController extends Controller

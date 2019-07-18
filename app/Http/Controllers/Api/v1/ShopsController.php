@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Shop;
 use App\Transformers\ShopTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ShopRequest;
 
 class ShopsController extends Controller

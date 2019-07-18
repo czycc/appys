@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\News;
 use App\Transformers\NewsTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class NewsController extends Controller
 {

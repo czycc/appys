@@ -7,7 +7,6 @@ use App\Models\Comment;
 use App\Transformers\CommentTransformer;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 
 class CommentsController extends Controller

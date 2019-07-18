@@ -6,7 +6,6 @@ use App\Http\Requests\MediaRequest;
 use App\Models\Media;
 use App\Transformers\MediaTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller

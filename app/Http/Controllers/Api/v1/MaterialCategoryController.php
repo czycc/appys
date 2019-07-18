@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\MaterialCategory;
 use App\Transformers\MaterialCategoryTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class MaterialCategoryController extends Controller
 {

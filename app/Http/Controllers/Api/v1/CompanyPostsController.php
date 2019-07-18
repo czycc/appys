@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\CompanyPost;
 use App\Transformers\CompanyPostTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyPostRequest;
 
 class CompanyPostsController extends Controller

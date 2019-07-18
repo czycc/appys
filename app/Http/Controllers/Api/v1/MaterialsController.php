@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Material;
 use App\Transformers\MaterialTransformer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MaterialRequest;
 
 class MaterialsController extends Controller
