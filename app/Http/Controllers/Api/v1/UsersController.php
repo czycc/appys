@@ -30,7 +30,10 @@ class UsersController extends Controller
         //
     }
 
-
+    /**
+     * @param UserRequest $request
+     * 用户注册接口
+     */
     public function store(UserRequest $request)
     {
         $verifyData = \Cache::get($request->verify_key);
@@ -64,12 +67,11 @@ class UsersController extends Controller
         //清除验证码
         \Cache::forget($request->verify_key);
 
-        return $this->response->item($user, new UserTransformer())
-            ->setMeta([
-                'access_token' => \Auth::guard('api')->fromUser($user),
-                'token_type' => 'Bearer',
-                'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
-            ])->setStatusCode(201);
+        return $this->response->array([
+            'access_token' => \Auth::guard('api')->fromUser($user),
+            'token_type' => 'Bearer',
+            'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
+        ])->setStatusCode(201);
     }
 
     /**

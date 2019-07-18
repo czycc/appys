@@ -30,7 +30,7 @@ $api->version('v1', [
         'expires' => 1
     ], function ($api) {
         //发送验证码
-        $api->post('verification_codes', 'VerificationCodesController@store');
+        $api->post('verification_codes/{type}', 'VerificationCodesController@store');
     });
 
     $api->group([

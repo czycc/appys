@@ -18,7 +18,7 @@ class ArticlesTableSeeder extends Seeder
             } elseif ($article->type == 'audio') {
                 $article->media_url = 'https://unitytouch.oss-cn-shanghai.aliyuncs.com/Zzc/Projects/ZhaDaBank/0102121131.mp3';
             } else {
-                $article->media_url = null;
+                $article->media_url = '';
             }
             $article->multi_imgs = json_encode($faker->randomElements([
                 'https://h5-touch.oss-cn-shanghai.aliyuncs.com/project/abbott/A37.JPG',
