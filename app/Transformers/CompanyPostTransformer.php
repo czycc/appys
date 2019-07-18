@@ -7,7 +7,7 @@ use League\Fractal\TransformerAbstract;
 
 class CompanyPostTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['category'];
+    protected $availableIncludes = [];
 
     public function transform(CompanyPost $post)
     {
@@ -18,8 +18,11 @@ class CompanyPostTransformer extends TransformerAbstract
             'thumbnail' => $post->thumbnail,
             'media_type' => $post->media_type,
             'media_url' => $post->media_url,
-            'category_id' => (int)$post->category_id,
             'view_count' => (int)$post->view_count,
+            'zan_count' => (int)$post->zan_count,
+            'category_id' => (int)$post->category_id,
+            'category' => $post->category->name,
+            'tags' => $post->getTags(),
             'crated_at' => $post->created_at->toDateTimeString(),
             'updated_at' => $post->updated_at->toDateTimeString(),
         ];

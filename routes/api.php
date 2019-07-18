@@ -71,7 +71,11 @@ $api->version('v1', [
         /* 首页配置 */
         //banner轮播图
         $api->get('banners', 'BannerController@index');
+        //首页菜单栏名称
         $api->get('menu', 'ConfigureController@menu');
+        //用户发布文章可选价格
+        $api->get('price/article', 'ConfigureController@articlePrice');
+
 
         //讲师相关
         $api->resource('teachers', 'TeachersController', ['only' => ['show']]);

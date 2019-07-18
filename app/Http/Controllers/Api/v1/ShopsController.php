@@ -39,6 +39,7 @@ class ShopsController extends Controller
 
 	    $shop->fill($request->all());
 	    $shop->user_id = $userId;
+	    $shop->status = 2; //防止transformer返回null
 	    $shop->save();
 
         if ($request->tags) {

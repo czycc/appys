@@ -36,6 +36,14 @@ class CompanyPostsTableSeeder extends Seeder
             });
 
         CompanyPost::insert($company_posts->toArray());
+
+        //添加标签
+        $tags = \App\Models\Tag::all()->pluck('id');
+
+        $company_posts = CompanyPost::all();
+        foreach ($company_posts as $item) {
+            $item->tags()->attach($faker->randomElements($tags));
+        }
     }
 
 }

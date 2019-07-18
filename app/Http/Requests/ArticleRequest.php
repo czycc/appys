@@ -16,9 +16,9 @@ class ArticleRequest extends Request
                     // CREATE ROLES
                     'title' => 'required|string',
                     'body' => 'required|string',
-                    'price' => 'required|integer',
-                    'multi_imgs' => 'json',
-                    'top_img' => 'required|string',
+                    'price_id' => 'required|exists:article_prices,id',
+                    'multi_imgs' => 'required|json',
+//                    'top_img' => 'required|string',
                     'type' => 'required|in:article,shop,video',
                     'media_url' => 'string',
                     'tags' => 'json'

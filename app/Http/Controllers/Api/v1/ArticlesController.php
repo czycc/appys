@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Article;
+use App\Models\ArticlePrice;
 use App\Models\Media;
 use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
@@ -39,6 +40,12 @@ class ArticlesController extends Controller
 	{
 	    $article->fill($request->all());
 	    $article->user_id = $this->user()->id;
+	    $article->status = 2; //避免transformer返回null
+        $article->top_img = json_decode($request->multi_imgs)[0];//第一张作为头图
+
+        //根据后台设置价格
+        $price = ArticlePrice::find($request->price_id);
+        $article->price = $price->price;
 	    $article->save();
 
 	    if ($request->tags) {

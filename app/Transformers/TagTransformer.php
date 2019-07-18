@@ -7,7 +7,7 @@ use League\Fractal\TransformerAbstract;
 
 class TagTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['courses', 'shop', 'audio', 'video', 'topic'];
+    protected $availableIncludes = ['company_posts','courses', 'shops', 'audios', 'videos', 'topics'];
 
     public function transform(Tag $item)
     {
@@ -23,7 +23,7 @@ class TagTransformer extends TransformerAbstract
         return $this->collection($item->courses, new CourseTransformer());
     }
 
-    public function includeShop(Tag $item)
+    public function includeShops(Tag $item)
     {
         return $this->collection($item->users, new UserTransformer());
     }
@@ -34,7 +34,7 @@ class TagTransformer extends TransformerAbstract
      *
      * 包含用户音频
      */
-    public function includeAudio(Tag $item)
+    public function includeAudios(Tag $item)
     {
         return $this->collection($this->getArticles($item, 'audio'), new ArticleTransformer());
     }
@@ -44,7 +44,7 @@ class TagTransformer extends TransformerAbstract
      * @return \League\Fractal\Resource\Collection
      * 包含用户视频
      */
-    public function includeVideo(Tag $item)
+    public function includeVideos(Tag $item)
     {
         return $this->collection($this->getArticles($item, 'video'), new ArticleTransformer());
     }
@@ -54,11 +54,19 @@ class TagTransformer extends TransformerAbstract
      * @return \League\Fractal\Resource\Collection
      * 包含用户文章
      */
-    public function includeTopic(Tag $item)
+    public function includeTopics(Tag $item)
     {
         return $this->collection($this->getArticles($item, 'topic'), new ArticleTransformer());
     }
 
+    public function includeCompanyPosts(Tag $item)
+    {
+        return $this->collection($item->CompanyPosts()
+            ->orderBy('order', 'desc')
+            ->orderBy('zan_count', 'desc')
+            ->limit(5)
+            ->get(), new CompanyPostTransformer());
+    }
     public function getArticles($item, $type)
     {
         return $item->articles()

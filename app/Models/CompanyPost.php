@@ -10,4 +10,19 @@ class CompanyPost extends Model
     {
         return $this->belongsTo(CompanyCategory::class, 'category_id');
     }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     *
+     * 返回标签列表
+     */
+    public function getTags()
+    {
+        return $this->tags()->select(['id', 'name'])->get();
+    }
 }

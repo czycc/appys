@@ -15,20 +15,30 @@ class CompanyPostsController extends Controller
 
 	public function index(Request $request, CompanyPost $post)
 	{
-	    $query = $post->query();
-
+	    $query = $post->query()->with('tags', 'category');
 	    if ($categoryId = $request->input('category_id')) {
 	        //查询固定分类，非父分类
 	        $query->where('category_id', $categoryId);
+        }
+        if ($tag_id = $request->input('tag_id')) {
+            //根据标签id查询
+            $query->whereHas('tags', function ($query) use($tag_id){
+                $query->where('id', $tag_id);
+            });
         }
         if ($request->input('order')) {
             //按权重排序
             $query->ordered();
         }
+        if ($request->input('zan')) {
+            //按权重排序
+            $query->zan();
+        }
         if ($request->input('recent')) {
             //是否按照最新时间排序
             $query->recent();
         }
+
         $paginate = $request->input('paginate') ?? 20;
         $posts = $query->paginate($paginate);
 

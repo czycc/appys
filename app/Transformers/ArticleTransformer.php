@@ -11,7 +11,7 @@ class ArticleTransformer extends TransformerAbstract
 
     protected $permission;
 
-    public function __construct($permission = false)
+    public function __construct($permission = true)
     {
         $this->permission = $permission;
 
@@ -28,16 +28,16 @@ class ArticleTransformer extends TransformerAbstract
             'title' => $item->title,
             'top_img' => $item->top_img,
             'type' => $item->type,
-            'price' => (int)$item->price,
+            'price' => $item->price,
             'zan_count' => (int)$item->zan_count,
-            'status' => $item->status === 2 ? '待审核' : $item->status === 1 ? '已通过' : '未通过',
+            'status' => (int)$item->status == 2 ? '待审核' : ($item->status == 1 ? '已通过' : '未通过'),
             'crated_at' => $item->created_at->toDateTimeString(),
 //            'updated_at' => $item->updated_at->toDateTimeString(),
             'permission' => $this->permission,
             'details' => [
                 'body' => $this->permission ? $item->body : '',
-                'media_url' => $this->permission ? $item->media_url : '',
-                'multi_imgs' => $this->permission ? $item->multi_imgs : '',
+                'media_url' => $this->permission && !is_null($item->media_url) ? $item->media_url : '',
+                'multi_imgs' => $this->permission && !is_null($item->multi_imgs) ? $item->multi_imgs : [],
             ], //有权限才可以查看
             'user' => $item->userBrief(),
             'tags' => $item->getTags()
