@@ -81,7 +81,10 @@ class ConfigureController extends Controller
                             'article_audio' => '用户文章/用户音频'
                         ],
                         'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id', 'order'])->get(),
-                        'hots' => $hots
+                        'hots' => $hots,
+                        'notify' => [
+                            '这是一段通知，有问题请联系123456789'
+                        ]
                     ]]);
     }
 }
