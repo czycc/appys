@@ -19,6 +19,7 @@ class CourseTransformer extends TransformerAbstract {
             'now_price' => $post->now_price,
             'view_count' => (int)$post->view_count,
             'buy_count'=> (int)$post->buy_count,
+            'zan_count'=> (int)$post->zan_count,
             'recommend' => (int)$post->recommend,
             'category_id' => $post->category_id,
             'category' => $post->category->name,

@@ -15,6 +15,7 @@ class CreateCoursesTable extends Migration
             $table->decimal('now_price', 9, 2)->unsigned()->default(0);
             $table->text('body');
             $table->integer('view_count')->default(0);
+            $table->integer('zan_count')->default(0);
             $table->integer('buy_count')->index()->default(0);
             $table->boolean('show')->default(1);
             $table->boolean('recommend')->default(0);

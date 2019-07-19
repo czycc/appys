@@ -13,6 +13,7 @@ $factory->define(App\Models\Course::class, function (Faker $faker) {
         'body' => $faker->text,
         'view_count' => $faker->numberBetween(0,1000),
         'buy_count' => $faker->numberBetween(0,1000),
+        'zan_count' => $faker->numberBetween(0,1000),
         'recommend' => $faker->boolean(),
         'created_at' => $created_at,
         'updated_at' => $updated_at,

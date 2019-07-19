@@ -48,6 +48,7 @@ $api->version('v1', [
         $api->put('authorizations/current', 'AuthorizationsController@update');
         //删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destory');
+        $api->get('home', 'ConfigureController@home');
     });
 
     $api->group([
