@@ -70,6 +70,8 @@ class ConfigureController extends Controller
             $hot->crated_at = $hot->created_at->toDateTimeString();
             $hot->updated_at = $hot->updated_at->toDateTimeString();
         }
+
+        //首页栏目名称
         $menu[0] = $course_categories[0]->name;
         $menu[1] = $course_categories[1]->name;
         $menu[2] = $course_categories[2]->name;

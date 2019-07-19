@@ -18,7 +18,7 @@ class AuthorizationsController extends Controller
     public function store(AuthorizationRequest $request)
     {
         $token = '';
-        if ($request->password) {
+        if ($request->password && is_null($request->verify_code)) {
             //密码登陆
             $cerd['phone'] = $request->phone;
             $cerd['password'] = $request->password;
@@ -44,6 +44,12 @@ class AuthorizationsController extends Controller
             if (is_null($user)) {
                 return $this->response->error('手机号不存在', 422);
             }
+            //录入新密码
+            if ($password = $request->password) {
+                $user->password = bcrypt($password);
+                $user->save();
+            }
+
             $token = \Auth::guard('api')->fromUser($user);
 
 

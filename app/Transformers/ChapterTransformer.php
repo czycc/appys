@@ -7,11 +7,11 @@ use League\Fractal\TransformerAbstract;
 
 class ChapterTransformer extends TransformerAbstract
 {
-    protected $simple;
+    protected $permission;
 
-    public function __construct($simple = false)
+    public function __construct($permission = false)
     {
-        $this->simple = $simple;
+        $this->permission = $permission;
     }
 
     public function transform(Chapter $item)
@@ -21,14 +21,10 @@ class ChapterTransformer extends TransformerAbstract
             'title' => $item->title,
             'price' => $item->price,
             'media_type' => $item->media_type,
-            'permit' => true, //是否有权限
-            'media_url' => $item->media_url,
+            'permission' => $this->permission, //是否有权限
+            'media_url' => $this->permission ? $item->media_url : '',
             'created_at' => $item->created_at->toDateTimeString()
         ];
-        if ($this->simple) {
-            unset($data['media_url']);
-            unset($data['permit']);
-        }
         return $data;
     }
 }
