@@ -21,8 +21,10 @@ class CourseTransformer extends TransformerAbstract {
             'buy_count'=> (int)$post->buy_count,
             'recommend' => (int)$post->recommend,
             'category_id' => $post->category_id,
-            'buynote_id' => $post->buynote_id,
-            'teacher_id' => $post->teacher_id,
+            'category' => $post->category->name,
+            'buynote' => $post->buynote->body,
+            'teacher' => $post->teacher()->select(['id', 'name', 'desc'])->first(),
+            'tags' => $post->getTags(),
             'crated_at' => $post->created_at->toDateTimeString(),
             'updated_at' => $post->updated_at->toDateTimeString(),
         ];

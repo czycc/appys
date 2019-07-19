@@ -46,4 +46,14 @@ class Course extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     *
+     * 返回标签列表
+     */
+    public function getTags()
+    {
+        return $this->tags()->select(['id', 'name'])->get();
+    }
 }

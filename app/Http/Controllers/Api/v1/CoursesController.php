@@ -16,7 +16,7 @@ class CoursesController extends Controller
 
 	public function index(Request $request, Course $course)
 	{
-        $query = $course->query();
+        $query = $course->query()->with('teacher', 'buynote', 'tags');
         $query->where('show', 1);
         if ($request->input('recommend')) {
             //查询推荐
@@ -25,6 +25,12 @@ class CoursesController extends Controller
         if ($request->input('bought')) {
             //按购买人数
             $query->bought();
+        }
+        if ($tag_id = $request->input('tag_id')) {
+            //根据标签id查询
+            $query->whereHas('tags', function ($query) use($tag_id){
+                $query->where('id', $tag_id);
+            });
         }
         $posts = orderByRequest($request, $query);
 
