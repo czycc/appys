@@ -8,7 +8,7 @@ $factory->define(App\Models\Article::class, function (Faker $faker) {
     $created_at = $faker->dateTimeThisMonth($updated_at);
     return [
         'title' => $sentence,
-        'body' => $faker->text(200),
+        'body' => $faker->randomHtml(),
         'top_img' => 'https://h5-touch.oss-cn-shanghai.aliyuncs.com/project/abbott/a011.JPG',
         'zan_count' => $faker->numberBetween(0, 1000),
         'price' => $faker->numberBetween(0, 5),

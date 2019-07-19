@@ -10,7 +10,7 @@ $factory->define(App\Models\Course::class, function (Faker $faker) {
         'title' => $faker->sentence,
         'ori_price' => $price,
         'now_price' => random_int(0, $price),
-        'body' => $faker->text,
+        'body' => $faker->randomHtml(),
         'view_count' => $faker->numberBetween(0,1000),
         'buy_count' => $faker->numberBetween(0,1000),
         'zan_count' => $faker->numberBetween(0,1000),

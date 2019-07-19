@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Article;
 use App\Models\ArticlePrice;
 use App\Models\CompanyCategory;
+use App\Models\CompanyPost;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\Shop;
 use App\Transformers\CourseTransformer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Banner;
 
@@ -54,22 +57,41 @@ class ConfigureController extends Controller
             ->get();
         $course_categories = CourseCategory::select(['id', 'name'])
             ->get();
-        $hots = Course::
-//            ->select([
-//                'id','title','body','banner','ori_price','now_price', 'view_count', 'buy_count','zan_count','recommend','category_id','category',
-//            ])
-            where('recommend', 1)
+
+        //热门推荐课程
+        $hots = Course::with(['teacher' => function ($query) {
+            $query->select(['id', 'name', 'desc']);
+        }])->select([
+            'id', 'title', 'body', 'banner', 'ori_price', 'now_price', 'buy_count', 'category_id', 'created_at', 'teacher_id',
+        ])->where('recommend', 1)
             ->orderBy('id', 'desc')
             ->limit(10)
             ->get();
         foreach ($hots as $hot) {
-            $hot->buynote = $hot->buynote()->select('body')->first()->body;
-            $hot->teacher = $hot->teacher()->select(['id', 'name', 'desc'])->first();
-            $hot->tags = $hot->getTags();
-            $hot->category = $hot->category()->select('name')->first()->name;
-            $hot->crated_at = $hot->created_at->toDateTimeString();
-            $hot->updated_at = $hot->updated_at->toDateTimeString();
+            $hot->body = make_excerpt($hot->body);
         }
+
+        //最新资讯
+        $news = CompanyPost::select(['id', 'title', 'body', 'thumbnail', 'created_at'])
+            ->where('category_id', 2)
+            ->orderByDesc('id')
+            ->limit(10)
+            ->get();
+        foreach ($news as $new) {
+            $new->body = make_excerpt($new->body);
+        }
+
+        //推荐店铺
+        $shops = Shop::with(['user' => function ($query) {
+            $query->select(['id', 'nickname', 'avatar']);
+        }])
+            ->select(['id', 'user_id', 'updated_at'])
+            ->where('recommend', 1)
+            ->where('expire_at', '>',Carbon::now())
+            ->orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get();
+
 
         //首页栏目名称
         $menu[0] = $course_categories[0]->name;
@@ -88,10 +110,12 @@ class ConfigureController extends Controller
                     [
                         'menu' => $menu,
                         'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id'])->get(),
+                        'shops' => $shops,
                         'hots' => $hots,
+                        'news' => $news,
                         'notify' => [
                             '这是一段通知，有问题请联系123456789'
-                        ]
+                        ],
                     ]]);
     }
 }

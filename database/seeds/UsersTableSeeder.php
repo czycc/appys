@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'https://cdn.learnku.com/uploads/images/201710/14/1/NDnzMutoxX.png?imageView2/1/w/200/h/200',
         ];
         $users = factory(\App\Models\User::class)
-            ->times(20)
+            ->times(100)
             ->make()
             ->each(function ($user, $index) use ($faker, $avatars) {
                 $user->avatar = $faker->randomElement($avatars);

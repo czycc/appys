@@ -17,7 +17,9 @@ class CreateShopsTable extends Migration
             $table->json('shop_imgs');
             $table->decimal('longitude', 10, 7);
             $table->decimal('latitude', 10, 7);
-            $table->tinyinteger('status')->default(2);
+            $table->tinyinteger('status')->default(2)->comment('审核状态');
+            $table->dateTime('expire_at')->nullable();
+            $table->tinyInteger('recommend')->default(0);
             $table->string('province');
             $table->string('city');
             $table->string('district');

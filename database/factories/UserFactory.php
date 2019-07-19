@@ -25,6 +25,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'wx_openid' => str_random(20),
         'wx_unionid' => str_random(20),
         'vip' => $faker->numberBetween(0, 2),
+        'expire_at' => $faker->dateTimeThisMonth(Carbon\Carbon::now()->addDays(20)),
         'created_at' => $now,
         'updated_at' => $now
     ];

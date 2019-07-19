@@ -30,6 +30,7 @@ $factory->define(App\Models\Shop::class, function (Faker $faker) {
         'city' => '合肥市',
         'district' => '蜀山区',
         'address' => '西湖国际广场',
+        'recommend' => $faker->boolean,
         'created_at' => $created_at,
         'updated_at' => $updated_at,
     ];

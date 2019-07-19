@@ -8,7 +8,7 @@ $factory->define(App\Models\News::class, function (Faker $faker) {
     $created_at = $faker->dateTimeThisMonth($updated_at);
     return [
         'title' => $sentence,
-        'body' => $faker->text(200),
+        'body' => $faker->randomHtml(),
         'zan_count' => $faker->numberBetween(0,1000),
         'view_count' => $faker->numberBetween(0,1000),
         'created_at' => $created_at,
