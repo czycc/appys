@@ -17,8 +17,7 @@ class AuthorizationsController extends Controller
      */
     public function store(AuthorizationRequest $request)
     {
-        $token = '';
-        if ($request->password && is_null($request->verify_code)) {
+        if ($request->password && is_null($request->verify_code) && is_null($request->verify_key)) {
             //密码登陆
             $cerd['phone'] = $request->phone;
             $cerd['password'] = $request->password;
@@ -59,7 +58,7 @@ class AuthorizationsController extends Controller
             $wx = \Cache::get($request->wx_id);
             if ($wx) {
                 //更新微信信息
-                $user = User::where('phone',$cerd['phone'])->first();
+                $user = User::where('phone', $cerd['phone'])->first();
                 $user->update($wx);
                 \Cache::forget($request->wx_id);
             }
@@ -137,7 +136,7 @@ class AuthorizationsController extends Controller
 
     /**
      * @return mixed
-     * 
+     *
      * 刷新令牌
      */
     public function update()
@@ -158,7 +157,7 @@ class AuthorizationsController extends Controller
 
         return $this->response->noContent();
     }
-    
+
     public function respondWithToken($token)
     {
         return $this->response->array([

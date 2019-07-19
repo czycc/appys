@@ -87,7 +87,7 @@ class ConfigureController extends Controller
                 'data' =>
                     [
                         'menu' => $menu,
-                        'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id', 'order'])->get(),
+                        'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id'])->get(),
                         'hots' => $hots,
                         'notify' => [
                             '这是一段通知，有问题请联系123456789'
