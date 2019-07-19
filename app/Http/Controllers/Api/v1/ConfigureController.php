@@ -70,16 +70,21 @@ class ConfigureController extends Controller
             $hot->crated_at = $hot->created_at->toDateTimeString();
             $hot->updated_at = $hot->updated_at->toDateTimeString();
         }
+        $menu[0] = $course_categories[0]->name;
+        $menu[1] = $course_categories[1]->name;
+        $menu[2] = $course_categories[2]->name;
+        $menu[3] = $course_categories[3]->name;
+        $menu[4] = $company_categories[0]->name;
+        $menu[5] = '用户文章/音频';
+        $menu[6] = '用户视频';
+        $menu[7] = $company_categories[1]->name;
+
+
         return $this->response->array(
             [
                 'data' =>
                     [
-                        'menu' => [
-                            'company_categories' => $company_categories,
-                            'course_categories' => $course_categories,
-                            'video' => '用户视频',
-                            'article_audio' => '用户文章/用户音频'
-                        ],
+                        'menu' => $menu,
                         'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id', 'order'])->get(),
                         'hots' => $hots,
                         'notify' => [

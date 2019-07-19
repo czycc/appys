@@ -15,16 +15,16 @@ class SeedCoursecategoriesData extends Migration
     {
         $category = [
             [
-                'name' => 'A',
+                'name' => '课程A',
                 'desc' => '课程分类'
             ],[
-                'name' => 'B',
+                'name' => '课程B',
                 'desc' => '课程分类'
             ],[
-                'name' => 'C',
+                'name' => '课程C',
                 'desc' => '课程分类'
             ],[
-                'name' => 'D',
+                'name' => '课程D',
                 'desc' => '课程分类'
             ],
         ];

@@ -25,7 +25,7 @@ class SeedCompanyCategoriesData extends Migration
                 'name' => '最新资讯',
                 'desc' => '主分类',
                 'parent_id' => 0,
-                'level' => 0,
+                'level' => 1,
                 'is_directory' => 0
             ],
             [
