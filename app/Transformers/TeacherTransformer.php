@@ -10,9 +10,9 @@ class TeacherTransformer extends  TransformerAbstract {
         return [
             'id' => $teacher->id,
             'name' => $teacher->name,
-            'video_url' => $teacher->video_url,
+            'video_url' => (string)$teacher->video_url,
             'imgs' => $teacher->imgs,
-            'desc' => $teacher->desc,
+            'desc' => (string)$teacher->desc,
         ];
     }
 }

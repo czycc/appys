@@ -22,6 +22,7 @@ class TagTransformer extends TransformerAbstract
     {
         $query = $item->courses()
             ->list()
+            ->where('show', 1)
             ->ordered()
             ->zan()
             ->limit(5)

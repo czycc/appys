@@ -16,6 +16,14 @@ class ChapterTransformer extends TransformerAbstract
 
     public function transform(Chapter $item)
     {
+        //判断有没有权限
+        if ($item->price === 0) {
+            //免费
+            $this->permission =true;
+        } elseif (\Auth::guard('api')->user()->vip !== 0) {
+            //会员或代理可以直接观看
+        }
+
         $data = [
             'id' => $item->id,
             'title' => $item->title,

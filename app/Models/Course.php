@@ -49,7 +49,7 @@ class Course extends Model
        return $this->belongsTo(Teacher::class);
     }
 
-    public function chapter()
+    public function chapters()
     {
         return $this->hasMany(Chapter::class);
     }

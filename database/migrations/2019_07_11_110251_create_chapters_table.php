@@ -14,6 +14,7 @@ class CreateChaptersTable extends Migration
             $table->string('media_type');
             $table->text('media_url');
             $table->integer('course_id')->unsigned();
+            $table->unsignedInteger('order')->default(0);
             $table->timestamps();
         });
 	}
