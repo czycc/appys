@@ -20,7 +20,13 @@ class TagTransformer extends TransformerAbstract
 
     public function includeCourses(Tag $item)
     {
-        return $this->collection($item->courses, new CourseTransformer());
+        $query = $item->courses()
+            ->list()
+            ->ordered()
+            ->zan()
+            ->limit(20)
+            ->get();
+        return $this->collection($query, new CourseTransformer(true));
     }
 
     public function includeShops(Tag $item)

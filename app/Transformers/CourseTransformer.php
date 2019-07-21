@@ -8,8 +8,32 @@ class CourseTransformer extends TransformerAbstract {
 
     protected $availableIncludes = ['category', 'buynote', 'teacher', 'chapter'];
 
+    protected $list; //列表显示
+    protected $permission; //权限控制
+
+    public function __construct($list=false, $permission=false)
+    {
+        $this->permission = $permission;
+        $this->list = $list;
+    }
+
     public function transform(Course $post)
     {
+        if ($this->list) {
+            return [
+                'id' => $post->id,
+                'title' => $post->title,
+                'body' => make_excerpt($post->body),
+                'banner' => $post->banner,
+                'ori_price' => $post->ori_price,
+                'now_price' => $post->now_price,
+                'buy_count'=> (int)$post->buy_count,
+                'category_id' => $post->category_id,
+                'teacher_id' => $post->teacher_id,
+                'teacher' => $post->teacher()->select(['id', 'name', 'desc'])->first(),
+                'crated_at' => $post->created_at->toDateTimeString(),
+            ];
+        }
         return [
             'id' => $post->id,
             'title' => $post->title,

@@ -17,6 +17,18 @@ class Course extends Model
         return $query->where('recommend', 1);
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * 列表显示部分字段
+     */
+    public function scopeList($query)
+    {
+        return $query->select([
+            'id', 'title', 'body', 'banner', 'ori_price', 'now_price', 'buy_count', 'category_id', 'created_at', 'teacher_id',
+        ]);
+    }
     public function scopeBought($query)
     {
         //按购买数量

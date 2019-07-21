@@ -61,9 +61,8 @@ class ConfigureController extends Controller
         //热门推荐课程
         $hots = Course::with(['teacher' => function ($query) {
             $query->select(['id', 'name', 'desc']);
-        }])->select([
-            'id', 'title', 'body', 'banner', 'ori_price', 'now_price', 'buy_count', 'category_id', 'created_at', 'teacher_id',
-        ])->where('recommend', 1)
+        }])->list()
+            ->where('recommend', 1)
             ->orderBy('id', 'desc')
             ->limit(10)
             ->get();
@@ -73,7 +72,7 @@ class ConfigureController extends Controller
 
         //最新资讯
         $news = CompanyPost::select(['id', 'title', 'body', 'thumbnail', 'created_at'])
-            ->where('category_id', 2)
+            ->where('category_id', 2)//固定id为2
             ->orderByDesc('id')
             ->limit(10)
             ->get();
