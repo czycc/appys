@@ -24,7 +24,7 @@ class TagTransformer extends TransformerAbstract
             ->list()
             ->ordered()
             ->zan()
-            ->limit(20)
+            ->limit(5)
             ->get();
         return $this->collection($query, new CourseTransformer(true));
     }
@@ -71,7 +71,7 @@ class TagTransformer extends TransformerAbstract
             ->orderBy('order', 'desc')
             ->orderBy('zan_count', 'desc')
             ->limit(5)
-            ->get(), new CompanyPostTransformer());
+            ->get(), new CompanyPostTransformer(true));
     }
     public function getArticles($item, $type)
     {

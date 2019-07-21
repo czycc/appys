@@ -9,12 +9,30 @@ class CompanyPostTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [];
 
+    protected $list;
+
+    public function __construct($list = false)
+    {
+        $this->list = $list;
+    }
+
     public function transform(CompanyPost $post)
     {
+        if ($this->list) {
+            return [
+                'id' => $post->id,
+                'title' => $post->title,
+                'body' => make_excerpt($post->body),
+                'thumbnail' => $post->thumbnail,
+                'category_id' => (int)$post->category_id,
+                'category' => $post->category->name,
+                'crated_at' => $post->created_at->toDateTimeString(),
+            ];
+        }
         return [
             'id' => $post->id,
             'title' => $post->title,
-            'body' => $post->body,
+            'body' => make_excerpt($post->body),
             'thumbnail' => $post->thumbnail,
             'media_type' => $post->media_type,
             'media_url' => $post->media_url,
