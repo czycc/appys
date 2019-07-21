@@ -30,7 +30,7 @@ class ArticlesController extends Controller
 
         if ($user_id = $request->user_id) {
             //查询指定用户店铺下通过审核的文章
-            $query->where('user_id', $user_id)->where('status', 1)
+            $query->where('user_id', $user_id)->where('status', 1);
         }
         if ($request->type) {
             //查询指定类型
