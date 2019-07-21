@@ -11,7 +11,6 @@ class CompanyCategoryTransformer extends  TransformerAbstract {
             'id' => $category->id,
             'name' => $category->name,
             'is_directory' => (boolean)$category->is_directory,
-            'level' => $category->level,
             'parent_id' => $category->parent_id,
         ];
     }

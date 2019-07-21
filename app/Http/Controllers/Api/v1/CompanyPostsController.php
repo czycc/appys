@@ -42,7 +42,7 @@ class CompanyPostsController extends Controller
         $paginate = $request->input('paginate') ?? 20;
         $posts = $query->paginate($paginate);
 
-        return $this->response->paginator($posts, new CompanyPostTransformer());
+        return $this->response->paginator($posts, new CompanyPostTransformer(true));
 
     }
 
