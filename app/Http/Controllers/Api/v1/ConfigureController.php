@@ -71,13 +71,14 @@ class ConfigureController extends Controller
         }
 
         //最新资讯
-        $news = CompanyPost::select(['id', 'title', 'body', 'thumbnail', 'created_at'])
+        $news = CompanyPost::select(['id', 'title', 'body', 'thumbnail','category_id', 'created_at'])
             ->where('category_id', 2)//固定id为2
             ->orderByDesc('id')
             ->limit(10)
             ->get();
         foreach ($news as $new) {
             $new->body = make_excerpt($new->body);
+            $new->category = $new->category()->first()->name;
         }
 
         //推荐店铺

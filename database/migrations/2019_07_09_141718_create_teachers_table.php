@@ -13,7 +13,7 @@ class CreateTeachersTable extends Migration
             $table->string('password');
             $table->text('desc')->nullable();
             $table->text('video_url')->nullable();
-            $table->json('imgs')->nullable();
+            $table->json('imgs');
             $table->rememberToken();
             $table->timestamps();
         });

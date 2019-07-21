@@ -78,13 +78,7 @@ $api->version('v1', [
         $api->get('price/article', 'ConfigureController@articlePrice');
 
 
-        //讲师相关
-        $api->resource('teachers', 'TeachersController', ['only' => ['show']]);
-        //返回课程分类列表
-        $api->get('course_categories', 'CourseCategoryController@index');
-        //课程列表
-        $api->resource('courses', 'CoursesController', ['only' => ['index', 'show']]);
-        $api->resource('chapters', 'ChaptersController', ['only' => ['show']]);
+
     });
 
     $api->group([
@@ -92,6 +86,14 @@ $api->version('v1', [
         'limit' => 100,
         'expires' => 1,
     ], function ($api) {
+        //讲师相关
+        $api->resource('teachers', 'TeachersController', ['only' => ['show']]);
+        //返回课程分类列表
+        $api->get('course_categories', 'CourseCategoryController@index');
+        //课程列表
+        $api->resource('courses', 'CoursesController', ['only' => ['index', 'show']]);
+        $api->resource('chapters', 'ChaptersController', ['only' => ['show']]);
+
         //当前用户数据
         $api->get('user', 'UsersController@me');
         //按id查询用户信息

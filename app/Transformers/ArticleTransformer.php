@@ -10,17 +10,33 @@ class ArticleTransformer extends TransformerAbstract
     protected $availableIncludes = [];
 
     protected $permission;
+    protected $list;
 
-    public function __construct($permission = true)
+    public function __construct($list = false, $permission = false)
     {
         $this->permission = $permission;
-
+        $this->list = $list;
     }
 
     public function transform(Article $item)
     {
+        if ($this->list) {
+            //列表形式
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+                'top_img' => $item->top_img,
+                'type' => $item->type,
+                'price' => $item->price,
+                'zan_count' => (int)$item->zan_count,
+                'status' => (int)$item->status == 2 ? '待审核' : ($item->status == 1 ? '已通过' : '未通过'),
+                'crated_at' => $item->created_at->toDateTimeString(),
+                'user' => $item->userBrief(),
+            ];
+        }
+
         //当前用户为自己时拥有权限查看
-        if (\Auth::guard('api')->id() === $item->id) {
+        if (\Auth::guard('api')->id() === $item->user_id) {
             $this->permission = true;
         }
         $data = [
@@ -32,15 +48,13 @@ class ArticleTransformer extends TransformerAbstract
             'zan_count' => (int)$item->zan_count,
             'status' => (int)$item->status == 2 ? '待审核' : ($item->status == 1 ? '已通过' : '未通过'),
             'crated_at' => $item->created_at->toDateTimeString(),
-//            'updated_at' => $item->updated_at->toDateTimeString(),
             'permission' => $this->permission,
-            'details' => [
-                'body' => $this->permission ? $item->body : '',
-                'media_url' => $this->permission && !is_null($item->media_url) ? $item->media_url : '',
-                'multi_imgs' => $this->permission && !is_null($item->multi_imgs) ? $item->multi_imgs : [],
-            ], //有权限才可以查看
+            'body' => $this->permission ? $item->body : '',
+            'media_url' => $this->permission ? (string)$item->media_url : '',
+            'multi_imgs' => $this->permission ? $item->multi_imgs : [],
             'user' => $item->userBrief(),
-            'tags' => $item->getTags()
+            'tags' => $item->getTags(),
+            'comments' => $item->getComments(),
         ];
 
         return $data;

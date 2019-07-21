@@ -47,12 +47,33 @@ class Article extends Model
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     *
+     * 获取关联评论，及评论的昵称头像
+     */
     public function getComments()
     {
-
+        return $this->comments()
+            ->with(['user' => function ($query) {
+                $query->select(['id', 'nickname', 'avatar']);
+            }])
+            ->orderBy('id', 'desc')
+            ->limit(300)
+            ->get();
     }
     public function shop()
     {
         return $this->hasManyThrough(User::class, Shop::class);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     * 转化json数组
+     */
+    public function getMultiImgsAttribute($value)
+    {
+        return json_decode($value, true);
     }
 }

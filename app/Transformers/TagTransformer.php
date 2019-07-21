@@ -43,7 +43,7 @@ class TagTransformer extends TransformerAbstract
      */
     public function includeAudios(Tag $item)
     {
-        return $this->collection($this->getArticles($item, 'audio'), new ArticleTransformer());
+        return $this->collection($this->getArticles($item, 'audio'), new ArticleTransformer(true));
     }
 
     /**
@@ -53,7 +53,7 @@ class TagTransformer extends TransformerAbstract
      */
     public function includeVideos(Tag $item)
     {
-        return $this->collection($this->getArticles($item, 'video'), new ArticleTransformer());
+        return $this->collection($this->getArticles($item, 'video'), new ArticleTransformer(true));
     }
 
     /**
@@ -63,7 +63,7 @@ class TagTransformer extends TransformerAbstract
      */
     public function includeTopics(Tag $item)
     {
-        return $this->collection($this->getArticles($item, 'topic'), new ArticleTransformer());
+        return $this->collection($this->getArticles($item, 'topic'), new ArticleTransformer(true));
     }
 
     public function includeCompanyPosts(Tag $item)
@@ -74,11 +74,19 @@ class TagTransformer extends TransformerAbstract
             ->limit(5)
             ->get(), new CompanyPostTransformer(true));
     }
+
+    /**
+     * @param $item
+     * @param $type
+     * @return mixed
+     *
+     * 按类型查询
+     */
     public function getArticles($item, $type)
     {
         return $item->articles()
             ->where('type', $type)
-            ->where('status', 1)
+            ->where('status', 1) //审核通过
             ->orderBy('zan_count', 'desc')
             ->limit(5)
             ->get();

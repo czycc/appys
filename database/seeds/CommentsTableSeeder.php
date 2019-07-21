@@ -7,13 +7,14 @@ class CommentsTableSeeder extends Seeder
 {
     public function run()
     {
-        $comments = factory(Comment::class)->times(100)->make()->each(function ($comment, $index) {
-            if ($index == 0) {
-                // $comment->field = 'value';
-            }
+        factory(Comment::class, 100)->create();
+        Comment::all()->each(function (Comment $comment) {
+            factory(Comment::class, 1)->create([
+                'comment_id' => $comment->id,
+                'article_id' => $comment->article_id,
+                'user_id' => $comment->user_id
+            ]);
         });
-
-        Comment::insert($comments->toArray());
     }
 
 }

@@ -18,6 +18,14 @@ class ArticlesController extends Controller
 	public function index(Request $request, Article $article)
 	{
         $query = $article->query();
+	    if (!is_null($request->input('status'))) {
+	        //按状态查询，只针对当前用户
+            $query->where('user_id', $this->user()->id)
+                ->where('status', $request->input('status'));
+	    } else {
+            //查询审核痛过
+            $query->where('status', 1);
+        }
 
         if ($request->type) {
             //查询指定类型
@@ -26,7 +34,7 @@ class ArticlesController extends Controller
 
         $posts = orderByRequest($request, $query);
 
-        return $this->response->paginator($posts, new ArticleTransformer());
+        return $this->response->paginator($posts, new ArticleTransformer(true));
 
 	}
 
