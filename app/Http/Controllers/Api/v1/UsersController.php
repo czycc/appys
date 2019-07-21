@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Requests\BoundScanRequest;
 use App\Http\Requests\UserRequest;
+use App\Models\BoundScan;
 use App\Models\Media;
 use App\Models\User;
 use App\Transformers\UserTransformer;
@@ -140,5 +142,72 @@ class UsersController extends Controller
     {
         $team = User::where('bound_id', $this->user()->id)->get();
         return $this->response->collection($team, new UserTransformer());
+    }
+
+    /**
+     * @param BoundScanRequest $request
+     * @return \Dingo\Api\Http\Response|void
+     *
+     * 扫推荐码绑定上级
+     */
+    public function boundFormScan(BoundScanRequest $request)
+    {
+        $code = $request->input('code');
+
+        //判断是否绑定上级
+        if ($this->user()->bound_id !== 0) {
+            return $this->response->errorBadRequest('您已经绑定过上级');
+        }
+
+        //判断是否已经有申请
+        $bound = BoundScan::where('user_id', $this->user()->id)
+            ->where('status', 0)//0代表未处理
+            ->first();
+        if ($bound) {
+            return $this->response->errorBadRequest('您已经提交过绑定申请，等待确认');
+        }
+
+        $user = User::where('code', $code)->first();
+
+        //自己的二维码
+        if ($user->id == $this->user()->id) {
+            return $this->response->error('亲，这是您自己的二维码', 422);
+        }
+
+        $bound = new BoundScan();
+        $bound->user_id = $this->user()->id;
+        $bound->bound_id = $user->id;
+        $bound->save();
+
+
+        return $this->response->created();
+    }
+
+    /**
+     * @param BoundScan $bound
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response|void
+     *
+     *     确认绑定上级申请
+     */
+    public function ScanConfirm(BoundScan $bound, Request $request)
+    {
+        //是否是本人
+        if ($bound->bound_id !== $this->user()->id) {
+            return $this->response->errorUnauthorized('非上级');
+        }
+
+        //确认绑定
+        if ($confirm = $request->confirm) {
+            $user = User::find($bound->user_id);
+            $user->bound_id = $this->user()->id;
+            $user->save();
+        }
+
+        //标记已处理绑定
+        $bound->status = 1;
+        $bound->save();
+
+        return $this->response->noContent();
     }
 }

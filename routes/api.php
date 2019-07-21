@@ -116,5 +116,8 @@ $api->version('v1', [
         $api->post('zan/{type}/up/{id}', 'ZanController@store');
         $api->delete('zan/{type}/down/{id}', 'ZanController@delete');
 
+        //用户扫码绑定上级id
+        $api->post('user/bound/scan', 'UsersController@boundFormScan');
+        $api->post('user/bound/confirm/{bound}', 'UsersController@ScanConfirm');
     });
 });
