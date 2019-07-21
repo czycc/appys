@@ -32,10 +32,10 @@ class CompanyPostTransformer extends TransformerAbstract
         return [
             'id' => $post->id,
             'title' => $post->title,
-            'body' => make_excerpt($post->body),
-            'thumbnail' => $post->thumbnail,
+            'body' => $post->body,
+            'thumbnail' => (string)$post->thumbnail,
             'media_type' => $post->media_type,
-            'media_url' => $post->media_url,
+            'media_url' => (string)$post->media_url,
             'view_count' => (int)$post->view_count,
             'zan_count' => (int)$post->zan_count,
             'category_id' => (int)$post->category_id,
