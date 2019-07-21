@@ -34,8 +34,9 @@ class TagTransformer extends TransformerAbstract
     public function includeShops(Tag $item)
     {
         $query = $item->shops()
-            ->where('recommend', 1)
             ->where('expire_at', '>', Carbon::now())
+            ->orderByDesc('order')
+            ->orderByDesc('zan_count')
             ->limit(5)
             ->get();
         return $this->collection($query, new ShopTransformer(true));

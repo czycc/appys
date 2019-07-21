@@ -31,16 +31,17 @@ class ShopTransformer extends TransformerAbstract
             'shop_phone' => $item->shop_phone,
             'real_name' => $item->real_name,
             'banner' => $item->banner,
+            'introduction' => $item->introduction,
+            'zan_count' => (int)$item->zan_count,
             'shop_imgs' => $item->shop_imgs,
             'longitude' => $item->longitude,
             'latitude' => $item->latitude,
             'province' => $item->province,
             'city' => $item->city,
-            'district' => $item->district,
-            'address' => $item->address,
-            'wechat_qrcode' => $item->wechat_qrcode,
+            'district' => (string)$item->district,
+            'address' => (string)$item->address,
+            'wechat_qrcode' => (string)$item->wechat_qrcode,
             'crated_at' => $item->created_at->toDateTimeString(),
-            'updated_at' => $item->updated_at->toDateTimeString(),
         ];
 
         if (\Auth::guard('api')->id() === $item->user_id) {

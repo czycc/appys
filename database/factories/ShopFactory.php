@@ -28,6 +28,8 @@ $factory->define(App\Models\Shop::class, function (Faker $faker) {
         'status' => $faker->numberBetween(0, 2),
         'province' => '安徽省',
         'city' => '合肥市',
+        'introduction' => $faker->sentence,
+        'zan_count' => $faker->numberBetween(0, 1000),
         'district' => '蜀山区',
         'address' => '西湖国际广场',
         'recommend' => $faker->boolean,

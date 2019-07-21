@@ -7,10 +7,70 @@ use App\Models\User;
 
 class UserTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['shop'];
+    protected $list;
+    protected $search;
+
+    public function __construct($list = false, $search=false)
+    {
+        $this->list = $list;
+        $this->search = $search;
+    }
 
     public function transform(User $item)
     {
+        if ($this->list) {
+            //列表显示
+            return [
+                'id' => $item->id,
+                'nickname' => $item->nickname,
+                'avatar' => $item->avatar,
+                'vip' => $item->vip,
+            ];
+        }
+
+        if ($this->search) {
+            //根据id查询用户及店铺信息
+            return [
+                'id' => $item->id,
+                'nickname' => $item->nickname,
+                'phone' => substr_replace($item->phone, '****', 3, 4),
+                'code' => $item->code,
+                'avatar' => $item->avatar,
+                'vip' => $item->vip,
+                'follow_count' => 20, //关注数
+                'followed_count' => 18, //被关注数
+                'articles_count' => 10, //文章数量
+                'expire_at' => (string)$item->expire_at,
+                'created_at' => $item->created_at->toDateTimeString(),
+                'shop' => (object)$item->shop()
+                    ->select([
+                        'id', 'banner', 'introduction', 'shop_imgs', 'longitude', 'latitude', 'status', 'expire_at', 'province', 'city', 'district', 'address', 'wechat_qrcode', 'zan_count', 'created_at'
+                    ])
+                    ->first(),
+            ];
+        }
+
+        if (\Auth::guard('api')->id() === $item->id) {
+            //当本人时候
+            return [
+                'id' => $item->id,
+                'nickname' => $item->nickname,
+                'phone' => substr_replace($item->phone, '****', 3, 4),
+                'code' => $item->code,
+                'avatar' => $item->avatar,
+                'bound_wechat' => ($item->wx_openid || $item->wx_unionid) ? true : false,
+                'vip' => $item->vip,
+                'notification_count' => (int)$item->notifications_count,
+                'bound_user' => $item->bound_id === 0 ? '未绑定' :
+                    $item->bound_status ? '已绑定' : '待通过',
+                'gold' => $item->gold,
+                'silver' => $item->silver,
+                'copper' => $item->copper,
+                'expire_at' => (string)$item->expire_at,
+                'created_at' => $item->created_at->toDateTimeString(),
+                'shop' => (object)$item->getShop()->first(),
+            ];
+        }
         $data = [
             'id' => $item->id,
             'nickname' => $item->nickname,
@@ -18,24 +78,12 @@ class UserTransformer extends TransformerAbstract
             'code' => $item->code,
             'avatar' => $item->avatar,
             'bound_wechat' => ($item->wx_openid || $item->wx_unionid) ? true : false,
-            'vip' => $item->vip === 2 ? '代理' : $item === 1 ? '银牌' : '铜牌',
-            'created_at' => $item->created_at->toDateTimeString()
+            'vip' => $item->vip,
+            'created_at' => $item->created_at->toDateTimeString(),
         ];
 
-        if (\Auth::guard('api')->id() === $item->id) {
-            $data['notification_count'] = (int)$item->notifications_count;
-            $data['bound_user'] = $item->bound_id === 0 ? '未绑定' :
-                $item->bound_status ? '已绑定' : '待通过';
-            $data['gold'] = $item->gold;
-            $data['silver'] = $item->silver;
-            $data['copper'] = $item->copper;
-        }
 
         return $data;
     }
 
-    public function includeShop(User $user)
-    {
-        return $this->item($user->shop, new ShopTransformer());
-    }
 }

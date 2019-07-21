@@ -30,7 +30,6 @@ class CreateUsersTable extends Migration
             $table->boolean('bound_status')->default(0);
             $table->tinyInteger('vip')->unsigned()->default(0);
             $table->dateTime('expire_at')->nullable();
-            $table->unsignedInteger('zan_count')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

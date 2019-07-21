@@ -49,6 +49,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Shop::class);
     }
 
+    public function getShop()
+    {
+        return $this->shop()->select([
+            'id', 'shop_phone', 'real_name', 'banner', 'introduction', 'idcard', 'license', 'shop_imgs', 'longitude', 'latitude', 'status', 'expire_at', 'province', 'city', 'district', 'address', 'wechat_qrcode', 'zan_count', 'created_at'
+        ]);
+    }
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
@@ -57,5 +64,11 @@ class User extends Authenticatable implements JWTSubject
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function getVipAttribute($value)
+    {
+        return $value === 2 ? '代理会员' : $value === 1 ? '银牌会员' : '铜牌会员';
+
     }
 }

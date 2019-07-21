@@ -11,6 +11,7 @@ class CreateShopsTable extends Migration
             $table->increments('id');
             $table->string('shop_phone');
             $table->string('real_name');
+            $table->text('introduction');
             $table->string('banner');
             $table->string('idcard');
             $table->string('license');
@@ -25,6 +26,8 @@ class CreateShopsTable extends Migration
             $table->string('district');
             $table->string('address');
             $table->string('wechat_qrcode')->nullable();
+            $table->unsignedInteger('zan_count')->default(0);
+            $table->unsignedInteger('order')->default(0);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

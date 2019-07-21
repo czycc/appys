@@ -84,7 +84,7 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        return $this->response->item($user, new UserTransformer());
+        return $this->response->item($user, new UserTransformer(false, true));
     }
 
     /**
@@ -140,8 +140,11 @@ class UsersController extends Controller
      */
     public function team()
     {
-        $team = User::where('bound_id', $this->user()->id)->get();
-        return $this->response->collection($team, new UserTransformer());
+        $team = User::where('bound_id', $this->user()->id)
+            ->where('bound_status', 1)
+            ->orderByDesc('id')
+            ->get();
+        return $this->response->collection($team, new UserTransformer(true));
     }
 
     /**
@@ -179,6 +182,10 @@ class UsersController extends Controller
         $bound->bound_id = $user->id;
         $bound->save();
 
+        //插入绑定上级的id
+        $user = User::find($bound->user_id);
+        $user->bound_id = $this->user()->id;
+        $user->save();
 
         return $this->response->created();
     }
@@ -197,10 +204,10 @@ class UsersController extends Controller
             return $this->response->errorUnauthorized('非上级');
         }
 
-        //确认绑定
+        //确认绑定 判断bound_id+bound_status
         if ($confirm = $request->confirm) {
             $user = User::find($bound->user_id);
-            $user->bound_id = $this->user()->id;
+            $user->bound_status = 1;
             $user->save();
         }
 
