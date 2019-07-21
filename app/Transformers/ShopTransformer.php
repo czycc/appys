@@ -7,8 +7,24 @@ use App\Models\Shop;
 
 class ShopTransformer extends TransformerAbstract
 {
+    protected $list;
+
+    public function __construct($list = false)
+    {
+        $this->list = $list;
+    }
+
     public function transform(Shop $item)
     {
+        if ($this->list) {
+            //店铺列表
+            return [
+                'id' => $item->id,
+                'user_id' => $item->user_id,
+                'updated_at' => $item->updated_at->toDateTimeString(),
+                'user' => $item->user()->select(['id', 'nickname', 'avatar'])->first(),
+            ];
+        }
 
         $data = [
             'id' => $item->id,
@@ -35,10 +51,10 @@ class ShopTransformer extends TransformerAbstract
             $data['user_id'] = (int)$item->user_id;
             return $data;
         }
-        if ($item->status !== 1) {
-            //未审核
-            return [];
-        }
+//        if ($item->status !== 1) {
+//            //未审核
+//            return [];
+//        }
         return $data;
     }
 }

@@ -16,9 +16,9 @@ class Tag extends Model
         return $this->morphedByMany(Article::class, 'taggable');
     }
 
-    public function users()
+    public function shops()
     {
-        return $this->morphedByMany(User::class, 'taggable');
+        return $this->morphedByMany(Shop::class, 'taggable');
     }
 
     public function courses()

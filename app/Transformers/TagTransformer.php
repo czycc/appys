@@ -3,11 +3,12 @@
 namespace App\Transformers;
 
 use App\Models\Tag;
+use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
 
 class TagTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['company_posts','courses', 'shops', 'audios', 'videos', 'topics'];
+    protected $availableIncludes = ['company_posts', 'courses', 'shops', 'audios', 'videos', 'topics'];
 
     public function transform(Tag $item)
     {
@@ -32,7 +33,12 @@ class TagTransformer extends TransformerAbstract
 
     public function includeShops(Tag $item)
     {
-        return $this->collection($item->users, new UserTransformer());
+        $query = $item->shops()
+            ->where('recommend', 1)
+            ->where('expire_at', '>', Carbon::now())
+            ->limit(5)
+            ->get();
+        return $this->collection($query, new ShopTransformer(true));
     }
 
     /**
@@ -86,7 +92,7 @@ class TagTransformer extends TransformerAbstract
     {
         return $item->articles()
             ->where('type', $type)
-            ->where('status', 1) //审核通过
+            ->where('status', 1)//审核通过
             ->orderBy('zan_count', 'desc')
             ->limit(5)
             ->get();
