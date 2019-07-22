@@ -37,9 +37,10 @@ class UserTransformer extends TransformerAbstract
                 'code' => $item->code,
                 'avatar' => $item->avatar,
                 'vip' => $item->vip,
-                'follow_count' => 20, //关注数
-                'followed_count' => 18, //被关注数
-                'articles_count' => 10, //文章数量
+                'follow_count' => $item->followings()->count(), //关注数
+                'followed_count' => $item->followers()->count(), //被关注数
+                'articles_count' => $item->articles()->count(), //文章数量
+                'is_followed' => $item->isFollowedBy(\Auth::guard('api')->id()),
                 'expire_at' => (string)$item->expire_at,
                 'created_at' => $item->created_at->toDateTimeString(),
                 'shop' => (object)$item->shop()

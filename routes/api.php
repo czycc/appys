@@ -113,7 +113,9 @@ $api->version('v1', [
         //店铺相关
         $api->resource('shops', 'ShopsController', ['only' => ['store', 'update']]);
         //用户关注
-        $api->resource('attentions', 'AttentionController', ['only' => ['store', 'index', 'destroy']]);
+        $api->post('follow', 'FollowController@store');
+        $api->get('follow/{user}/type/{type}', 'FollowController@show');
+
         //用户点赞
         $api->post('zan/{type}/up/{id}', 'ZanController@store');
         $api->delete('zan/{type}/down/{id}', 'ZanController@delete');
