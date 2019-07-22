@@ -7,14 +7,12 @@ class ShopsTableSeeder extends Seeder
 {
     public function run()
     {
-        $users = \App\Models\User::all()->toArray();
-        $shops = factory(Shop::class)->times(60)->make()
-            ->each(function ($shop, $index) use ($users) {
-                $shop->user_id = $users[$index]['id'];
-                $shop->expire_at = $users[$index]['expire_at'];
-            });
-
-        Shop::insert($shops->toArray());
+        \App\Models\User::all()->each(function (\App\Models\User $user) {
+            factory(Shop::class, 1)->create([
+                'user_id' => $user->id,
+                'expire_at' => $user->expire_at
+            ]);
+        });
 
         //为店铺添加标签
         $tags = \App\Models\Tag::all()->toArray();
