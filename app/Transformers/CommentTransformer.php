@@ -22,10 +22,10 @@ class CommentTransformer extends TransformerAbstract
     }
     public function includeArticle(Comment $item)
     {
-        return $this->item($item->article, new ArticleTransformer());
+        return $this->item($item->article, new ArticleTransformer(true));
     }
     public function includeUser(Comment $item)
     {
-        return $this->item($item->user, new UserTransformer());
+        return $this->item($item->user, new UserTransformer(true));
     }
 }

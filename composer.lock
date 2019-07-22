@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a2337dfbe016a5e87202b7758801093",
+    "content-hash": "e33dff69e1b05e7a3b260cea15b48b90",
     "packages": [
         {
             "name": "dingo/api",
@@ -2311,6 +2311,60 @@
             ],
             "description": "The easiest way to send short message.",
             "time": "2019-04-26T08:24:28+00:00"
+        },
+        {
+            "name": "overtrue/laravel-follow",
+            "version": "1.1.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/laravel-follow.git",
+                "reference": "97b40d83478a4515f7cf40ce88ec5908cb0b1d69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/laravel-follow/zipball/97b40d83478a4515f7cf40ce88ec5908cb0b1d69",
+                "reference": "97b40d83478a4515f7cf40ce88ec5908cb0b1d69",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "laravel/laravel": "~5.5",
+                "mockery/mockery": "1.2.2",
+                "phpunit/phpunit": "~7.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Overtrue\\LaravelFollow\\FollowServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\LaravelFollow\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "i@overtrue.me"
+                }
+            ],
+            "description": "Laravel 5 User Based System",
+            "time": "2019-05-26T11:14:24+00:00"
         },
         {
             "name": "paragonie/random_compat",

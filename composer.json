@@ -14,6 +14,7 @@
         "laravel/tinker": "~1.0",
         "liyu/dingo-serializer-switch": "^0.3.1",
         "overtrue/easy-sms": "^1.1",
+        "overtrue/laravel-follow": "^1.1",
         "phpdocumentor/reflection-docblock": " 3.3.2",
         "predis/predis": "^1.1",
         "socialiteproviders/weixin": "^4.0",

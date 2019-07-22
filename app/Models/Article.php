@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-use Jcc\LaravelVote\CanBeVoted;
+//use Jcc\LaravelVote\CanBeVoted;
+
+use Overtrue\LaravelFollow\Traits\CanBeVoted;
 
 class Article extends Model
 {
