@@ -64,7 +64,7 @@ class ConfigureController extends Controller
         }])->list()
             ->where('recommend', 1)
             ->orderBy('id', 'desc')
-            ->limit(10)
+            ->limit(15)
             ->get();
         foreach ($hots as $hot) {
             $hot->body = make_excerpt($hot->body);
@@ -74,7 +74,7 @@ class ConfigureController extends Controller
         $news = CompanyPost::select(['id', 'title', 'body', 'thumbnail','category_id', 'created_at'])
             ->where('category_id', 2)//固定id为2
             ->orderByDesc('id')
-            ->limit(10)
+            ->limit(15)
             ->get();
         foreach ($news as $new) {
             $new->body = make_excerpt($new->body);
@@ -89,7 +89,7 @@ class ConfigureController extends Controller
             ->where('recommend', 1)
             ->where('expire_at', '>',Carbon::now())
             ->orderBy('updated_at', 'desc')
-            ->limit(10)
+            ->limit(15)
             ->get();
 
 
