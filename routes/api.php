@@ -126,5 +126,8 @@ $api->version('v1', [
         //用户留言功能
         $api->post('guest_book', 'GuestBookController@store');
         $api->get('guest_book/{user}', 'GuestBookController@show');
+
+        //后台铜币比例
+        $api->get('configure/copper', 'PayController@copper');
     });});
 

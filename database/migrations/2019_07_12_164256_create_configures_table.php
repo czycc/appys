@@ -23,6 +23,8 @@ class CreateConfiguresTable extends Migration
             $table->decimal('vip3_price', 9, 2)->unsigned()->commit('代理价格,线下缴费');
             $table->integer('invite_copper')->unsigned()->commit('邀请用户得铜币数');
             $table->integer('zan_copper')->unsigned()->commit('点赞得铜币数');
+            $table->integer('copper_pay_percent')->unsigned()->commit('铜币兑换比例');
+            $table->integer('copper_pay_num')->unsigned()->commit('1元兑铜币数量');
             $table->integer('buy_vip2_self')->unsigned()->commit('购买银牌会员自己得银币数');
             $table->integer('buy_vip2_top_vip2')->unsigned()->commit('购买银牌会员上级是银牌会员得银币数');
             $table->integer('buy_vip2_top_vip3')->unsigned()->commit('购买银牌会员上级是代理得金币数');

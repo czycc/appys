@@ -22,6 +22,8 @@ class SeedConfiguresData extends Migration
             'vip3_price' => 1000,
             'invite_copper' => 10,
             'zan_copper' => 1,
+            'copper_pay_percent' => 50,
+            'copper_pay_num' => 100,
             'buy_vip2_self' => 10,
             'buy_vip2_top_vip2' => 10,
             'buy_vip2_top_vip3' => 10,

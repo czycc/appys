@@ -56,7 +56,6 @@ class ArticleTransformer extends TransformerAbstract
             'multi_imgs' => $this->permission ? $item->multi_imgs : [],
             'user' => $item->userBrief(),
             'tags' => $item->getTags(),
-            'comments' => $item->getComments(),
         ];
 
         return $data;
