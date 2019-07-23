@@ -13,8 +13,8 @@ class ZanRequest extends Request
     public function rules()
     {
         return [
-            'type' => 'required|in:article,company_post,news,course,material',
-            'id' => 'required|integer'
+            'type' => 'required|in:article,company_post,course',
+            'handler' => 'required|in:upvote,downvote'
         ];
     }
 }

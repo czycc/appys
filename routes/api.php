@@ -117,8 +117,7 @@ $api->version('v1', [
         $api->get('follow/{user}/type/{type}', 'FollowController@show');
 
         //用户点赞
-        $api->post('zan/{type}/up/{id}', 'ZanController@store');
-        $api->delete('zan/{type}/down/{id}', 'ZanController@delete');
+        $api->post('zan', 'ZanController@store');
 
         //用户扫码绑定上级id
         $api->post('user/bound/scan', 'UsersController@boundFormScan');

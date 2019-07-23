@@ -40,7 +40,7 @@ class UserTransformer extends TransformerAbstract
                 'follow_count' => $item->followings()->count(), //关注数
                 'followed_count' => $item->followers()->count(), //被关注数
                 'articles_count' => $item->articles()->count(), //文章数量
-                'is_followed' => $item->isFollowedBy(\Auth::guard('api')->id()),
+                'is_followed' => (boolean)$item->isFollowedBy(\Auth::guard('api')->id()),
                 'expire_at' => (string)$item->expire_at,
                 'created_at' => $item->created_at->toDateTimeString(),
                 'shop' => (object)$item->shop()

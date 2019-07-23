@@ -44,6 +44,7 @@ class CourseTransformer extends TransformerAbstract
             'now_price' => $post->now_price,
             'buy_count' => (int)$post->buy_count,
             'zan_count' => (int)$post->zan_count,
+            'is_zan' => $post->isUpVotedBy(\Auth::guard('api')->id()),
             'category_id' => $post->category_id,
             'category' => $post->category->name,
             'buynote' => $post->buynote->body,

@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Overtrue\LaravelFollow\Traits\CanBeVoted;
+
 class CompanyPost extends Model
 {
+    use CanBeVoted;
+
     protected $fillable = ['title', 'body', 'thumbnail', 'media_type', 'media_url', 'category_id', 'view_count', 'zan_count', 'weight'];
 
     public function category()

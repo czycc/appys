@@ -38,6 +38,7 @@ class CompanyPostTransformer extends TransformerAbstract
             'media_url' => (string)$post->media_url,
             'view_count' => (int)$post->view_count,
             'zan_count' => (int)$post->zan_count,
+            'is_zan' => $post->isUpVotedBy(\Auth::guard('api')->id()),
             'category_id' => (int)$post->category_id,
             'category' => $post->category->name,
             'tags' => $post->getTags(),
