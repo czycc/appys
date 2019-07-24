@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->boolean('bound_status')->default(0);
             $table->tinyInteger('vip')->unsigned()->default(0);
             $table->dateTime('expire_at')->nullable();
+            $table->decimal('balance', 9,2)->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

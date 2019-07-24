@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\OrderRequest;
+use App\Jobs\CloseOrder;
 use App\Models\Article;
 use App\Models\Configure;
 use App\Models\Course;
@@ -64,6 +65,8 @@ class OrderController extends Controller
         $order->type_id = (int)$request->type_id;
         $order->save();
 
+        //提交关闭订单队列
+        $this->dispatch(new CloseOrder($order, config('app.order_ttl')));
 
         return $this->response->array([
             'data' => [
