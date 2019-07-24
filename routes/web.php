@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('alipay', function () {
     $order = [
         'out_trade_no' => time(),
-        'total_amount' => '1',
+        'total_amount' => '10000',
         'subject' => 'test subject - 测试',
     ];
 

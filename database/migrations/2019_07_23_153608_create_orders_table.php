@@ -19,8 +19,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('no', 100)->unique();
             $table->decimal('total_amount', 9,2);
+            $table->decimal('deduction', 9, 2)->default('0.00');
             $table->dateTime('paid_at')->nullable();
-            $table->string('paid_method')->nullable();
+            $table->string('pay_method')->nullable();
             $table->string('pay_no')->nullable();
             $table->boolean('closed')->default(false);
             $table->string('type')->comment('购买类型');

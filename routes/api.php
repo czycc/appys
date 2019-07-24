@@ -49,6 +49,9 @@ $api->version('v1', [
         //删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destory');
         $api->get('home', 'ConfigureController@home');
+
+        //阿里支付通知
+        $api->post('pay/alipay/notify', 'PayController@alipayNotify');
     });
 
     $api->group([
@@ -129,5 +132,9 @@ $api->version('v1', [
 
         //后台铜币比例
         $api->get('configure/copper', 'PayController@copper');
+
+        /* 支付相关 */
+        //下订单
+        $api->post('order', 'OrderController@store');
     });});
 

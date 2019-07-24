@@ -6,7 +6,7 @@ return [
         'app_id' => env('ALI_APP_ID', ''),
 
         // 支付宝异步通知地址
-        'notify_url' => '',
+        'notify_url' => env('ALI_NOTIFY_URL'),
 
         // 支付成功后同步通知地址
         'return_url' => '',
