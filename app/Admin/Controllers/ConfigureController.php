@@ -27,14 +27,19 @@ class ConfigureController extends AdminController
 
         $grid = new Grid(new Configure);
 
-        //禁用按钮
+        //禁用创建
         $grid->disableCreateButton();
+        //禁用分页
         $grid->disablePagination();
+        //禁用检索
         $grid->disableFilter();
+        //禁用导出
         $grid->disableExport();
+        //禁用多行
         $grid->disableRowSelector();
-        $grid->disableActions();
         $grid->disableColumnSelector();
+        //禁用操作
+        $grid->disableActions();
 
         $grid->column('distribute1_vip', __('购买会员一级分销比,百分比'));
         $grid->column('distribute2_vip', __('购买会员二级分销比,百分比'));
@@ -70,21 +75,21 @@ class ConfigureController extends AdminController
     {
         $show = new Show(Configure::findOrFail($id));
 
-        $show->field('distributor1', __('购买会员一级分销比,百分比'));
-        $show->field('distributor2', __('二级分销比,百分比'));
-        $show->field('distributor3', __('三级分销比,百分比'));
-        $show->field('vip2_price_n', __('银牌会员无上级购买价格'));
-        $show->field('vip2_price_y', __('Vip2 price y'));
-        $show->field('vip3_price', __('Vip3 price'));
-        $show->field('invite_copper', __('Invite copper'));
-        $show->field('zan_copper', __('Zan copper'));
-        $show->field('copper_pay_percent', __('Copper pay percent'));
-        $show->field('copper_pay_num', __('Copper pay num'));
-        $show->field('buy_vip2_self', __('Buy vip2 self'));
-        $show->field('buy_vip2_top_vip2', __('Buy vip2 top vip2'));
-        $show->field('buy_vip2_top_vip3', __('Buy vip2 top vip3'));
-        $show->field('buy_vip3_top_vip2', __('Buy vip3 top vip2'));
-        $show->field('buy_vip3_top_vip3', __('Buy vip3 top vip3'));
+//        $show->field('distributor1', __('购买会员一级分销比,百分比'));
+//        $show->field('distributor2', __('二级分销比,百分比'));
+//        $show->field('distributor3', __('三级分销比,百分比'));
+//        $show->field('vip2_price_n', __('银牌会员无上级购买价格'));
+//        $show->field('vip2_price_y', __('Vip2 price y'));
+//        $show->field('vip3_price', __('Vip3 price'));
+//        $show->field('invite_copper', __('Invite copper'));
+//        $show->field('zan_copper', __('Zan copper'));
+//        $show->field('copper_pay_percent', __('Copper pay percent'));
+//        $show->field('copper_pay_num', __('Copper pay num'));
+//        $show->field('buy_vip2_self', __('Buy vip2 self'));
+//        $show->field('buy_vip2_top_vip2', __('Buy vip2 top vip2'));
+//        $show->field('buy_vip2_top_vip3', __('Buy vip2 top vip3'));
+//        $show->field('buy_vip3_top_vip2', __('Buy vip3 top vip2'));
+//        $show->field('buy_vip3_top_vip3', __('Buy vip3 top vip3'));
 
         return $show;
     }
@@ -133,28 +138,30 @@ class ConfigureController extends AdminController
             $footer->disableCreatingCheck();
 
         });
+        $distribute_rules = 'required|integer|min:0|max:100';
+        $price = 'required|numeric|min:0.01';
+        $num = 'required|integer|min:0';
+        $form->number('distribute1_vip', __('购买会员一级分销比,百分比'))->rules($distribute_rules);
+        $form->number('distribute2_vip', __('购买会员二级分销比,百分比'))->rules($distribute_rules);
+        $form->number('distribute3_vip', __('购买会员三级分销比,百分比'))->rules($distribute_rules);
+        $form->number('distribute1_course', __('购买课程一级分销比,百分比'))->rules($distribute_rules);
+        $form->number('distribute2_course', __('购买课程二级分销比,百分比'))->rules($distribute_rules);
+        $form->number('distribute3_course', __('购买课程三级分销比,百分比'))->rules($distribute_rules);
+        $form->number('pub_plat', __('购买文章平台分成'))->rules($distribute_rules);
+        $form->number('pub_self', __('购买文章自己分成'))->rules($distribute_rules);
 
-        $form->number('distribute1_vip', __('购买会员一级分销比,百分比'));
-        $form->number('distribute2_vip', __('购买会员二级分销比,百分比'));
-        $form->number('distribute3_vip', __('购买会员三级分销比,百分比'));
-        $form->number('distribute1_course', __('购买课程一级分销比,百分比'));
-        $form->number('distribute2_course', __('购买课程二级分销比,百分比'));
-        $form->number('distribute3_course', __('购买课程三级分销比,百分比'));
-        $form->number('pub_plat', __('购买文章平台分成'));
-        $form->number('pub_self', __('购买文章自己分成'));
-
-        $form->decimal('vip2_price_n', __('银牌会员无上级购买价格'));
-        $form->decimal('vip2_price_y', __('银牌会员有上级购买价格'));
-        $form->decimal('vip3_price', __('代理价格,线下缴费'));
-        $form->number('invite_copper', __('邀请用户得铜币数'));
-        $form->number('zan_copper', __('点赞得铜币数'));
-        $form->number('copper_pay_percent', __('铜币抵扣比例，百分比'));
-        $form->number('copper_pay_num', __('铜币兑换1元所需数量'));
-        $form->number('buy_vip2_self', __('购买银牌会员自己得银币'));
-        $form->number('buy_vip2_top_vip2', __('购买银牌会员上级是银牌会员得银币数'));
-        $form->number('buy_vip2_top_vip3', __('购买银牌会员上级是代理得金币数'));
-        $form->number('buy_vip3_top_vip2', __('购买代理上级是银牌得银币数'));
-        $form->number('buy_vip3_top_vip3', __('购买代理上级是代理得金币数'));
+        $form->decimal('vip2_price_n', __('银牌会员无上级购买价格'))->rules($price);
+        $form->decimal('vip2_price_y', __('银牌会员有上级购买价格'))->rules($price);
+        $form->decimal('vip3_price', __('代理价格,线下缴费'))->rules($price);
+        $form->number('invite_copper', __('邀请用户得铜币数'))->rules($num);
+        $form->number('zan_copper', __('点赞得铜币数'))->rules($num);
+        $form->number('copper_pay_percent', __('铜币抵扣比例，百分比'))->rules($distribute_rules);
+        $form->number('copper_pay_num', __('铜币兑换1元所需数量'))->rules($num);
+        $form->number('buy_vip2_self', __('购买银牌会员自己得银币'))->rules($num);
+        $form->number('buy_vip2_top_vip2', __('购买银牌会员上级是银牌会员得银币数'))->rules($num);
+        $form->number('buy_vip2_top_vip3', __('购买银牌会员上级是代理得金币数'))->rules($num);
+        $form->number('buy_vip3_top_vip2', __('购买代理上级是银牌得银币数'))->rules($num);
+        $form->number('buy_vip3_top_vip3', __('购买代理上级是代理得金币数'))->rules($num);
 
         return $form;
     }

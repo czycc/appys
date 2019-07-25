@@ -15,7 +15,7 @@ class ArticlePriceController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\ArticlePrice';
+    protected $title = '文章价格设置';
 
     /**
      * Make a grid builder.
@@ -66,8 +66,25 @@ class ArticlePriceController extends AdminController
     protected function form()
     {
         $form = new Form(new ArticlePrice);
+        $form->footer(function ($footer) {
 
-        $form->decimal('price', __('价格'));
+            // 去掉`重置`按钮
+//            $footer->disableReset();
+
+            // 去掉`提交`按钮
+//            $footer->disableSubmit();
+
+            // 去掉`查看`checkbox
+            $footer->disableViewCheck();
+
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+
+            // 去掉`继续创建`checkbox
+            $footer->disableCreatingCheck();
+
+        });
+        $form->decimal('price', __('价格'))->rules('required|numeric|min:0.00');
 
         return $form;
     }

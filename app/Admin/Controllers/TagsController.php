@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Banner;
+use App\Models\Tag;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class HomeBannerController extends AdminController
+class TagsController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '首页轮播图';
+    protected $title = '标签管理';
 
     /**
      * Make a grid builder.
@@ -24,18 +24,18 @@ class HomeBannerController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Banner);
+        $grid = new Grid(new Tag);
+        //禁用按钮
+        $grid->disableFilter();
+        $grid->disableExport();
+        $grid->disableRowSelector();
+        $grid->disableColumnSelector();
 
         $grid->column('id', __('Id'));
-        $grid->column('img_url', __('轮播图'))->image();
+        $grid->column('name', __('标签名'));
         $grid->column('desc', __('描述'));
-        $grid->column('type', __('跳转类型'))->using([
-            'courses'  => '课程',
-            'company_posts' => '公司文章'
-        ]);
-        $grid->column('type_id', __('对应id'));
         $grid->column('order', __('权重'));
-        $grid->column('updated_at', __('更新时间'));
+//        $grid->column('post_count', __('Post count'));
 
         return $grid;
     }
@@ -48,16 +48,13 @@ class HomeBannerController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(Banner::findOrFail($id));
+        $show = new Show(Tag::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('img_url', __('Img url'));
+        $show->field('name', __('Name'));
         $show->field('desc', __('Desc'));
-        $show->field('type', __('Type'));
-        $show->field('type_id', __('Type id'));
         $show->field('order', __('Order'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+//        $show->field('post_count', __('Post count'));
 
         return $show;
     }
@@ -69,7 +66,7 @@ class HomeBannerController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Banner);
+        $form = new Form(new Tag);
         $form->footer(function ($footer) {
 
             // 去掉`重置`按钮
@@ -88,17 +85,9 @@ class HomeBannerController extends AdminController
             $footer->disableCreatingCheck();
 
         });
-        $form->cropper('img_url', __('轮播图(推荐1080 * 560)'))
-            ->uniqueName();
-        $form->textarea('desc', __('描述'));
-        $form->select('type', __('跳转类型'))
-            ->options([
-                'courses' => '课程',
-                'company_posts' => '公司文章'
-            ])
-            ->default('courses');
-        $form->number('type_id', __('类型id'));
-        $form->number('order', __('权重'))->rules('required|between:0, 10000');
+        $form->text('name', __('标签名'))->rules('required|string');
+        $form->text('desc', __('描述'));
+        $form->number('order', __('权重'))->default(0)->rules('required|between:0,10000');
 
         return $form;
     }
