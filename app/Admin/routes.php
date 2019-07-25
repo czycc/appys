@@ -12,4 +12,6 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('admin.home');
 
+    $router->resource('configures', ConfigureController::class, ['only' => ['index', 'show', 'edit', 'update']]);
+
 });

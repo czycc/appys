@@ -32,7 +32,7 @@ class CourseTransformer extends TransformerAbstract
                 'category_id' => $post->category_id,
                 'teacher_id' => $post->teacher_id,
                 'teacher' => $post->teacher()->select(['id', 'name', 'desc'])->first(),
-                'crated_at' => $post->created_at->toDateTimeString(),
+                'created_at' => $post->created_at->toDateTimeString(),
             ];
         }
         return [

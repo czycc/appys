@@ -24,3 +24,7 @@ Route::get('alipay', function () {
 
     return \Pay::alipay()->web($order);
 });
+
+Route::get('course/{course_id}/user/{user_id}', function () {
+    return '分享成功';
+});
