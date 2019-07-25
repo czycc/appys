@@ -23,4 +23,7 @@ Route::group([
 
     //标签管理
     $router->resource('tags', TagsController::class, ['only' => ['index', 'show', 'create', 'store', 'edit', 'update']]);
+
+    //教师管理
+    $router->resource('admin_teachers', TeachersController::class)->names('admin_teachers');
 });

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Storage;
+
 class Teacher extends Model
 {
     protected $fillable = ['name', 'password', 'desc', 'video_url', 'imgs'];
@@ -17,7 +19,7 @@ class Teacher extends Model
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     /**
@@ -29,5 +31,19 @@ class Teacher extends Model
     public function getImgsAttribute($value)
     {
         return json_decode($value, true);
+    }
+
+    public function setImgsAttribute($imgs)
+    {
+
+        if (is_array($imgs)) {
+            foreach ($imgs as $k => $img) {
+                //验证是否是链接
+                if (!filter_var($img, FILTER_VALIDATE_URL)) {
+                    $imgs[$k] = Storage::url($img);
+                }
+            }
+            $this->attributes['imgs'] = json_encode($imgs);
+        }
     }
 }
