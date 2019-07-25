@@ -98,16 +98,21 @@ class UsersController extends Controller
         //
     }
 
-
+    /**
+     * @param UserRequest $request
+     * @return \Dingo\Api\Http\Response
+     *
+     * 更新头像昵称
+     */
     public function update(UserRequest $request)
     {
         $user = $this->user();
 
-        $attr = $request->only(['nickname', 'avatar_id']);
-        if ($request->avatar_id) {
-            $img = Media::find($request->avatar_id);
-            $attr['avatar'] = $img->media_url;
-        }
+        $attr = $request->only(['nickname', 'avatar']);
+//        if ($request->avatar_id) {
+//            $img = Media::find($request->avatar_id);
+//            $attr['avatar'] = $img->media_url;
+//        }
         $user->update($attr);
 
         return $this->response->item($user, new UserTransformer());

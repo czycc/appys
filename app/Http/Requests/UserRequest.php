@@ -27,7 +27,7 @@ class UserRequest extends Request
                 $userId = \Auth::guard('api')->id();
                 return [
                     'nickname' => 'between:2,20|string',
-                    'avatar_id' => 'exists:media,id,type,avatar,user_id,' . $userId
+                    'avatar' => 'string'
                 ];
                 break;
         }
@@ -47,6 +47,7 @@ class UserRequest extends Request
     {
         return [
             'password.min' => '密码至少6位',
+            'nickname' => '昵称在2-20个字符以内'
         ];
     }
 }
