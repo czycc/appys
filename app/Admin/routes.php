@@ -17,4 +17,7 @@ Route::group([
 
     //文章可用价格
     $router->resource('article_prices', ArticlePriceController::class);
+
+    $router->resource('home_banners', HomeBannerController::class);
+
 });

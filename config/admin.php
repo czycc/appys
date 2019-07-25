@@ -368,5 +368,9 @@ return [
     */
     'extensions' => [
 
+        //图片裁剪
+        'cropper' => [
+            'enable' => true,
+        ]
     ],
 ];
