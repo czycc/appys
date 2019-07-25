@@ -27,7 +27,7 @@ class ConfigureController extends AdminController
 
         $grid = new Grid(new Configure);
 
-        //禁用创建按钮
+        //禁用按钮
         $grid->disableCreateButton();
         $grid->disablePagination();
         $grid->disableFilter();
@@ -70,7 +70,7 @@ class ConfigureController extends AdminController
     {
         $show = new Show(Configure::findOrFail($id));
 
-        $show->field('distributor1', __('一级分销比,百分比'));
+        $show->field('distributor1', __('购买会员一级分销比,百分比'));
         $show->field('distributor2', __('二级分销比,百分比'));
         $show->field('distributor3', __('三级分销比,百分比'));
         $show->field('vip2_price_n', __('银牌会员无上级购买价格'));
@@ -134,12 +134,12 @@ class ConfigureController extends AdminController
 
         });
 
-        $form->number('distribute1_vip', __('一级分销比,百分比'));
-        $form->number('distribute2_vip', __('二级分销比,百分比'));
-        $form->number('distribute3_vip', __('三级分销比,百分比'));
-        $form->number('distribute1_course', __('一级分销比,百分比'));
-        $form->number('distribute2_course', __('二级分销比,百分比'));
-        $form->number('distribute3_course', __('三级分销比,百分比'));
+        $form->number('distribute1_vip', __('购买会员一级分销比,百分比'));
+        $form->number('distribute2_vip', __('购买会员二级分销比,百分比'));
+        $form->number('distribute3_vip', __('购买会员三级分销比,百分比'));
+        $form->number('distribute1_course', __('购买课程一级分销比,百分比'));
+        $form->number('distribute2_course', __('购买课程二级分销比,百分比'));
+        $form->number('distribute3_course', __('购买课程三级分销比,百分比'));
         $form->number('pub_plat', __('购买文章平台分成'));
         $form->number('pub_self', __('购买文章自己分成'));
 

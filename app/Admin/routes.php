@@ -15,7 +15,6 @@ Route::group([
     //平台配置
     $router->resource('configures', ConfigureController::class, ['only' => ['index', 'show', 'edit', 'update']]);
 
-    //首页banner图
-    $router->resource('banners', BannerController::class);
-
+    //文章可用价格
+    $router->resource('article_prices', ArticlePriceController::class);
 });

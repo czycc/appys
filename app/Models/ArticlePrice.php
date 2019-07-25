@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArticlePrice extends Model
 {
-    //
+    protected $guarded = ['id'];
 }
