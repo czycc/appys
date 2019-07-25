@@ -14,9 +14,14 @@ class SeedConfiguresData extends Migration
     public function up()
     {
         $data = [
-            'distributor1' => 10,
-            'distributor2' => 1,
-            'distributor3' => 1,
+            'distribute1_vip' => 10,
+            'distribute2_vip' => 1,
+            'distribute3_vip' => 1,
+            'distribute1_course' => 10,
+            'distribute2_course' => 1,
+            'distribute3_course' => 1,
+            'pub_self' => 90,
+            'pub_plat' => 10,
             'vip2_price_n' => 2,
             'vip2_price_y' => 1,
             'vip3_price' => 1000,

@@ -36,9 +36,14 @@ class ConfigureController extends AdminController
         $grid->disableActions();
         $grid->disableColumnSelector();
 
-        $grid->column('distributor1', __('一级分销比,百分比'));
-        $grid->column('distributor2', __('二级分销比,百分比'));
-        $grid->column('distributor3', __('三级分销比,百分比'));
+        $grid->column('distribute1_vip', __('购买会员一级分销比,百分比'));
+        $grid->column('distribute2_vip', __('购买会员二级分销比,百分比'));
+        $grid->column('distribute3_vip', __('购买会员三级分销比,百分比'));
+        $grid->column('distribute1_course', __('购买课程一级分销比,百分比'));
+        $grid->column('distribute2_course', __('购买课程二级分销比,百分比'));
+        $grid->column('distribute3_course', __('购买课程三级分销比,百分比'));
+        $grid->column('pub_plat', __('购买文章平台分成'));
+        $grid->column('pub_self', __('购买文章自己分成'));
         $grid->column('vip2_price_n', __('银牌会员无上级购买价格'));
         $grid->column('vip2_price_y', __('银牌会员有上级购买价格'));
         $grid->column('vip3_price', __('代理价格,线下缴费'));
@@ -106,11 +111,38 @@ class ConfigureController extends AdminController
 
             // 添加一个按钮, 参数可以是字符串, 或者实现了Renderable或Htmlable接口的对象实例
             $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;所有用户金银币归0</a>');
+
         });
 
-        $form->number('distributor1', __('一级分销比,百分比'));
-        $form->number('distributor2', __('二级分销比,百分比'));
-        $form->number('distributor3', __('三级分销比,百分比'));
+
+        $form->footer(function ($footer) {
+
+            // 去掉`重置`按钮
+//            $footer->disableReset();
+
+            // 去掉`提交`按钮
+//            $footer->disableSubmit();
+
+            // 去掉`查看`checkbox
+            $footer->disableViewCheck();
+
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+
+            // 去掉`继续创建`checkbox
+            $footer->disableCreatingCheck();
+
+        });
+
+        $form->number('distribute1_vip', __('一级分销比,百分比'));
+        $form->number('distribute2_vip', __('二级分销比,百分比'));
+        $form->number('distribute3_vip', __('三级分销比,百分比'));
+        $form->number('distribute1_course', __('一级分销比,百分比'));
+        $form->number('distribute2_course', __('二级分销比,百分比'));
+        $form->number('distribute3_course', __('三级分销比,百分比'));
+        $form->number('pub_plat', __('购买文章平台分成'));
+        $form->number('pub_self', __('购买文章自己分成'));
+
         $form->decimal('vip2_price_n', __('银牌会员无上级购买价格'));
         $form->decimal('vip2_price_y', __('银牌会员有上级购买价格'));
         $form->decimal('vip3_price', __('代理价格,线下缴费'));

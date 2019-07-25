@@ -15,9 +15,14 @@ class CreateConfiguresTable extends Migration
     {
         Schema::create('configures', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('distributor1')->unsigned()->commit('一级分销比例,百分比');
-            $table->integer('distributor2')->unsigned()->commit('二级级分销比例,百分比');
-            $table->integer('distributor3')->unsigned()->commit('三级分销比例,百分比');
+            $table->integer('distribute1_vip')->unsigned()->commit('vip一级分销比例,百分比');
+            $table->integer('distribute2_vip')->unsigned()->commit('vip二级级分销比例,百分比');
+            $table->integer('distribute3_vip')->unsigned()->commit('vip三级分销比例,百分比');
+            $table->integer('distribute1_course')->unsigned()->commit('course一级分销比例,百分比');
+            $table->integer('distribute2_course')->unsigned()->commit('course二级级分销比例,百分比');
+            $table->integer('distribute3_course')->unsigned()->commit('course三级分销比例,百分比');
+            $table->integer('pub_self')->unsigned()->commit('文章购买个人分销比例,百分比');
+            $table->integer('pub_plat')->unsigned()->commit('文章购买平台分销比例,百分比');
             $table->decimal('vip2_price_n', 9, 2)->unsigned()->commit('银牌会员无上级购买价格');
             $table->decimal('vip2_price_y', 9, 2)->unsigned()->commit('银牌会员有上级购买价格');
             $table->decimal('vip3_price', 9, 2)->unsigned()->commit('代理价格,线下缴费');
