@@ -20,10 +20,13 @@ class VerificationCodesController extends Controller
             $code = str_pad(random_int(0, 9999), 4, 0, STR_PAD_LEFT);
             try {
                 $result = $easySms->send($phone, [
-                    'content' => "【上汽名爵】您的验证码是{$code}，有效期三分钟"
+                    'template' => 'SMS_165414240',
+                    'data' => [
+                        'number' => $code
+                    ]
                 ]);
             } catch (NoGatewayAvailableException $exception) {
-                $msg = $exception->getException('yunpian')->getMessage();
+                $msg = $exception->getException('aliyun')->getMessage();
                 return $this->response->errorBadRequest($msg ?: '短信网络发送异常');
             }
         }

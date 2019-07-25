@@ -12,6 +12,10 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('admin.home');
 
+    //平台配置
     $router->resource('configures', ConfigureController::class, ['only' => ['index', 'show', 'edit', 'update']]);
+
+    //首页banner图
+    $router->resource('banners', BannerController::class);
 
 });
