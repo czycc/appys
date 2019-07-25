@@ -50,7 +50,7 @@ class CourseTransformer extends TransformerAbstract
             'buynote' => $post->buynote->body,
             'teacher' => $post->teacher,
             'tags' => $post->getTags(),
-            'crated_at' => $post->created_at->toDateTimeString(),
+            'created_at' => $post->created_at->toDateTimeString(),
         ];
     }
 
