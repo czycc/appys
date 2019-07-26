@@ -28,6 +28,14 @@ class ArticlesController extends Controller
             $query->where('status', 1);
         }
 
+        //按标签查询
+        if ($tag_id = $request->input('tag_id')) {
+            //根据标签id查询
+            $query->whereHas('tags', function ($query) use($tag_id){
+                $query->where('id', $tag_id);
+            });
+        }
+
         if ($user_id = $request->user_id) {
             //查询指定用户店铺下通过审核的文章
             $query->where('user_id', $user_id)->where('status', 1);

@@ -26,4 +26,7 @@ Route::group([
 
     //教师管理
     $router->resource('admin_teachers', TeachersController::class)->names('admin_teachers');
+
+    //公司文章
+    $router->resource('company_posts', PostController::class);
 });
