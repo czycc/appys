@@ -12,10 +12,10 @@ class ArticlesTableSeeder extends Seeder
         $articles = factory(Article::class)->times(100)->make()
             ->each(function ($article, $index) use ($userids, $faker) {
                 $article->user_id = $faker->randomElement($userids);
-                $article->type = $faker->randomElement(['video', 'topic', 'audio']);
-            if ($article->type == 'video') {
+                $article->media_type = $faker->randomElement(['video', 'topic', 'audio']);
+            if ($article->media_type == 'video') {
                 $article->media_url = 'https://unitytouch.oss-cn-shanghai.aliyuncs.com/yhm/production/1.mp4';
-            } elseif ($article->type == 'audio') {
+            } elseif ($article->media_type == 'audio') {
                 $article->media_url = 'https://unitytouch.oss-cn-shanghai.aliyuncs.com/Zzc/Projects/ZhaDaBank/0102121131.mp3';
             } else {
                 $article->media_url = '';

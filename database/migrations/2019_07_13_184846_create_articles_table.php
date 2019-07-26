@@ -12,7 +12,7 @@ class CreateArticlesTable extends Migration
             $table->string('title')->index();
             $table->text('top_img');
             $table->text('body');
-            $table->enum('type', ['video', 'topic', 'audio']);
+            $table->enum('media_type', ['video', 'topic', 'audio']);
             $table->text('media_url')->nullable();
             $table->json('multi_imgs')->nullable();
             $table->decimal('price', 9, 2)->default(0);

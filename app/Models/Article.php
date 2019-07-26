@@ -11,7 +11,7 @@ class Article extends Model
     use CanBeVoted;
     protected $vote = User::class;
 
-    protected $fillable = ['title', 'top_img', 'body', 'type', 'media_url', 'multi_imgs', 'price'];
+    protected $fillable = ['title', 'top_img', 'body', 'media_type', 'media_url', 'multi_imgs', 'price'];
 
     protected $casts = [
         'multi_imgs' => 'array'

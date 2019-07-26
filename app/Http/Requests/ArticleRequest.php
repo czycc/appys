@@ -19,7 +19,7 @@ class ArticleRequest extends Request
                     'price_id' => 'required|exists:article_prices,id',
                     'multi_imgs' => 'required|json',
 //                    'top_img' => 'required|string',
-                    'type' => 'required|in:article,shop,video',
+                    'media_type' => 'required|in:topic,audio,video',
                     'media_url' => 'string',
                     'tags' => 'json'
                 ];
@@ -34,7 +34,7 @@ class ArticleRequest extends Request
                     'price' => 'integer',
                     'multi_imgs' => 'json',
                     'top_img' => 'string',
-                    'type' => 'in:article,shop,video',
+                    'media_type' => 'in:topic,audio,video',
                     'media_url' => 'string',
                     'tags' => 'json'
                 ];
