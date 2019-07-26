@@ -26,7 +26,7 @@ class ArticleTransformer extends TransformerAbstract
                 'id' => $item->id,
                 'title' => $item->title,
                 'top_img' => $item->top_img,
-                'type' => $item->type,
+                'media_type' => $item->type,
                 'price' => $item->price,
                 'zan_count' => (int)$item->zan_count,
                 'is_zan' => $item->isUpVotedBy(\Auth::guard('api')->id()),
