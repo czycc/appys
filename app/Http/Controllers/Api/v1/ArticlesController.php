@@ -40,9 +40,9 @@ class ArticlesController extends Controller
             //查询指定用户店铺下通过审核的文章
             $query->where('user_id', $user_id)->where('status', 1);
         }
-        if ($request->type) {
+        if ($request->media_type) {
             //查询指定类型
-            $query->where('type', $request->type);
+            $query->where('media_type', $request->media_type);
         }
 
         $posts = orderByRequest($request, $query);
