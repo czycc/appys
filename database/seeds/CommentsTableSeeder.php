@@ -7,12 +7,12 @@ class CommentsTableSeeder extends Seeder
 {
     public function run()
     {
-        factory(Comment::class, 100)->create();
-        Comment::all()->each(function (Comment $comment) {
-            factory(Comment::class, 1)->create([
+        $users = \App\Models\User::all()->pluck('id')->toArray();
+        factory(Comment::class, 500)->create();
+        Comment::all()->each(function (Comment $comment) use ($users) {
+            factory(\App\Models\Reply::class, random_int(1, 3))->create([
                 'comment_id' => $comment->id,
-                'article_id' => $comment->article_id,
-                'user_id' => $comment->user_id
+                'user_id' => array_random($users)
             ]);
         });
     }

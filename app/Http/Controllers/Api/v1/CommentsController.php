@@ -15,65 +15,69 @@ class CommentsController extends Controller
     {
     }
 
-	public function index(Request $request)
-	{
+    public function index(Request $request)
+    {
         if ($request->article_id) {
             //查询文章下所有回复
             $article = Article::find($request->article_id);
-            $comments = $article->comments()->orderBy('id', 'desc')->paginate(20);
+            $comments = $article->comments()->with('replies')
+                ->orderBy('id', 'desc')->paginate(20);
         } else {
+            //先查询用户下的所有文章id，再查询所有回复的id
             $articles = $this->user()->articles()->get()->pluck('id');
-            $comments = Comment::whereIn('article_id', $articles)->orderBy('id', 'desc')->paginate(20);
+            $comments = Comment::whereIn('article_id', $articles)
+                ->where('user_id', '!=', $this->user()->id)
+                ->orderBy('id', 'desc')->paginate(20);
         }
 
         return $this->response->paginator($comments, new CommentTransformer());
-	}
+    }
 
     public function show(Comment $comment)
     {
     }
 
 
-	public function store(CommentRequest $request, Comment $comment)
-	{
-	    $comment->content = $request->input('content');
-	    if ($request->comment_id) {
-	        //回复评论
+    public function store(CommentRequest $request, Comment $comment)
+    {
+        $comment->content = $request->input('content');
+        if ($request->comment_id) {
+            //回复评论
             $comment->comment_id = $request->comment_id;
         }
-	    $article_id = $request->article_id;
-	    if (empty($article_id)) {
-	        $article_id = Comment::find($request->comment_id)->article_id;
+        $article_id = $request->article_id;
+        if (empty($article_id)) {
+            $article_id = Comment::find($request->comment_id)->article_id;
         }
         $comment->article()->associate($article_id);
 
         $comment->user()->associate($this->user());
-	    $comment->save();
+        $comment->save();
 
-	    return $this->response
+        return $this->response
             ->item($comment, new CommentTransformer())
             ->setStatusCode(201);
-	}
+    }
 
-	public function edit(Comment $comment)
-	{
+    public function edit(Comment $comment)
+    {
         $this->authorize('update', $comment);
-		return view('comments.create_and_edit', compact('comment'));
-	}
+        return view('comments.create_and_edit', compact('comment'));
+    }
 
-	public function update(CommentRequest $request, Comment $comment)
-	{
-		$this->authorize('update', $comment);
-		$comment->update($request->all());
+    public function update(CommentRequest $request, Comment $comment)
+    {
+        $this->authorize('update', $comment);
+        $comment->update($request->all());
 
-		return redirect()->route('comments.show', $comment->id)->with('message', 'Updated successfully.');
-	}
+        return redirect()->route('comments.show', $comment->id)->with('message', 'Updated successfully.');
+    }
 
-	public function destroy(Comment $comment)
-	{
-		$this->authorize('destroy', $comment);
-		$comment->delete();
+    public function destroy(Comment $comment)
+    {
+        $this->authorize('destroy', $comment);
+        $comment->delete();
 
-		return redirect()->route('comments.index')->with('message', 'Deleted successfully.');
-	}
+        return redirect()->route('comments.index')->with('message', 'Deleted successfully.');
+    }
 }
