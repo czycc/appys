@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelFollow\Traits\CanBeVoted;
 
 class CompanyPost extends Model
@@ -28,5 +29,13 @@ class CompanyPost extends Model
     public function getTags()
     {
         return $this->tags()->select(['id', 'name'])->get();
+    }
+
+    public function setThumbnailAttribute($thumbnail)
+    {
+        //用于后台上传保存完整地址
+        if (!filter_var($thumbnail, FILTER_VALIDATE_URL)) {
+            $this->attributes['thumbnail'] = Storage::url($thumbnail);
+        }
     }
 }

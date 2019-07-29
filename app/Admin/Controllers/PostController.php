@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\CompanyCategory;
 use App\Models\CompanyPost;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -26,20 +27,43 @@ class PostController extends AdminController
     {
         $grid = new Grid(new CompanyPost);
 
+
+        //禁用创建
+//        $grid->disableCreateButton();
+        //禁用分页
+//        $grid->disablePagination();
+        //禁用检索
+//        $grid->disableFilter();
+        //禁用导出
+        $grid->disableExport();
+        //禁用多行
+//        $grid->disableRowSelector();
+//        $grid->disableColumnSelector();
+        //禁用操作
+//        $grid->disableActions();
+
         $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('标题'));
-        $grid->column('body', __('图文内容'));
-        $grid->column('thumbnail', __('封面图'));
-        $grid->column('media_type', __('媒体类型'));
-        $grid->column('media_url', __('媒体链接'));
+        $grid->column('body', __('图文内容'))->display(function ($body) {
+            return make_excerpt($body, 30);
+        });
+        $grid->column('thumbnail', __('封面图'))->image(100, 100);
+        $grid->column('media_type', __('媒体类型'))->using(['video' => '视频', 'audio' => '音频']);
+        $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
+            if (!$this->media_url) {
+                return '';
+            }
+            if ($this->media_type == 'video') {
+                return $column->video(['videoWidth' => 720, 'videoHeight' => 480]);
+            }
+            return $column->audio(['audioWidth' => 240]);
+        })->width(100);
 //        $grid->column('view_count', __(''));
         $grid->column('zan_count', __('点赞数量'))->sortable();
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('category_id', __('分类'))->display(function ($id) {
-
-        });
+        $grid->column('category.name', __('分类'));
         $grid->column('created_at', __('创建时间'));
-        $grid->column('updated_at', __('更新时间'));
+//        $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -79,14 +103,16 @@ class PostController extends AdminController
     {
         $form = new Form(new CompanyPost);
 
-        $form->text('title', __('Title'));
-        $form->textarea('body', __('Body'));
-        $form->textarea('thumbnail', __('Thumbnail'));
-        $form->text('media_type', __('Media type'))->default('audio');
-        $form->textarea('media_url', __('Media url'));
-        $form->number('view_count', __('View count'));
-        $form->number('zan_count', __('Zan count'));
-        $form->number('order', __('Order'));
+        $form->text('title', __('标题'));
+        $form->textarea('body', __('内容'));
+        $form->cropper('thumbnail', __('封面图'))
+            ->move('backend/images/posts')
+            ->uniqueName();
+        $form->text('media_type', __('媒体类型'))->default('audio');
+        $form->text('media_url', __('媒体链接'));
+//        $form->number('view_count', __(''));
+        $form->number('zan_count', __('点赞数量'));
+        $form->number('order', __('权重'))->required();
         $form->number('category_id', __('Category id'));
 
         return $form;

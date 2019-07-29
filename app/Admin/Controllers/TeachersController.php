@@ -43,10 +43,7 @@ class TeachersController extends AdminController
         $grid->column('name', __('姓名'));
         $grid->column('desc', __('描述'));
         $grid->column('video_url', __('视频简介'))->video(['videoWidth' => 720, 'videoHeight' => 480]);
-        $grid->column('imgs', __('多图简介'))->display(function ($imgs) {
-            return $imgs;
-//            return json_decode($imgs, true);
-        })->image('', 100, 100);
+        $grid->column('imgs', __('多图简介'))->carousel();
         $grid->column('created_at', __('Created at'));
 
         return $grid;
@@ -87,7 +84,6 @@ class TeachersController extends AdminController
         $form->textarea('desc', __('描述'));
         $form->text('video_url', __('视频链接'))->rules('required|active_url');
         $form->multipleImage('imgs', __('多图简介上传'))->removable();
-        //保存前回调
 
 
         return $form;
