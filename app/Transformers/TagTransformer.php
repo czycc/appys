@@ -92,7 +92,7 @@ class TagTransformer extends TransformerAbstract
     public function getArticles($item, $type)
     {
         return $item->articles()
-            ->where('type', $type)
+            ->where('media_type', $type)
             ->where('status', 1)//审核通过
             ->orderBy('zan_count', 'desc')
             ->limit(5)
