@@ -20,7 +20,7 @@ class NewsTransformer extends TransformerAbstract
 //            'category_id' => $item->category_id,
             'view_count' => (int)$item->view_count,
             'zan_count' => (int)$item->zan_count,
-            'crated_at' => $item->created_at->toDateTimeString(),
+            'created_at' => $item->created_at->toDateTimeString(),
             'updated_at' => $item->updated_at->toDateTimeString(),
         ];
     }

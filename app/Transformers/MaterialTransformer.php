@@ -23,7 +23,7 @@ class MaterialTransformer extends TransformerAbstract
             'category_id' => $post->category_id,
             'view_count' => (int)$post->view_count,
             //            'zan_count' => $post->zan_count,
-            'crated_at' => $post->created_at->toDateTimeString(),
+            'created_at' => $post->created_at->toDateTimeString(),
             'updated_at' => $post->updated_at->toDateTimeString(),
         ];
     }

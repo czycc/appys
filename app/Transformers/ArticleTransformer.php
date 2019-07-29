@@ -31,7 +31,7 @@ class ArticleTransformer extends TransformerAbstract
                 'zan_count' => (int)$item->zan_count,
                 'is_zan' => $item->isUpVotedBy(\Auth::guard('api')->id()),
                 'status' => (int)$item->status == 2 ? '待审核' : ($item->status == 1 ? '已通过' : '未通过'),
-                'crated_at' => $item->created_at->toDateTimeString(),
+                'created_at' => $item->created_at->toDateTimeString(),
                 'user' => $item->userBrief(),
             ];
         }
@@ -49,7 +49,7 @@ class ArticleTransformer extends TransformerAbstract
             'zan_count' => (int)$item->zan_count,
             'is_zan' => $item->isUpVotedBy(\Auth::guard('api')->id()),
             'status' => (int)$item->status == 2 ? '待审核' : ($item->status == 1 ? '已通过' : '未通过'),
-            'crated_at' => $item->created_at->toDateTimeString(),
+            'created_at' => $item->created_at->toDateTimeString(),
             'permission' => $this->permission,
             'body' => $this->permission ? $item->body : '',
             'media_url' => $this->permission ? (string)$item->media_url : '',

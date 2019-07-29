@@ -41,7 +41,7 @@ class ShopTransformer extends TransformerAbstract
             'district' => (string)$item->district,
             'address' => (string)$item->address,
             'wechat_qrcode' => (string)$item->wechat_qrcode,
-            'crated_at' => $item->created_at->toDateTimeString(),
+            'created_at' => $item->created_at->toDateTimeString(),
         ];
 
         if (\Auth::guard('api')->id() === $item->user_id) {

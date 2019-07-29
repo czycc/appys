@@ -26,7 +26,7 @@ class CompanyPostTransformer extends TransformerAbstract
                 'thumbnail' => $post->thumbnail,
                 'category_id' => (int)$post->category_id,
                 'category' => $post->category->name,
-                'crated_at' => $post->created_at->toDateTimeString(),
+                'created_at' => $post->created_at->toDateTimeString(),
             ];
         }
         return [
@@ -42,7 +42,7 @@ class CompanyPostTransformer extends TransformerAbstract
             'category_id' => (int)$post->category_id,
             'category' => $post->category->name,
             'tags' => $post->getTags(),
-            'crated_at' => $post->created_at->toDateTimeString(),
+            'created_at' => $post->created_at->toDateTimeString(),
             'updated_at' => $post->updated_at->toDateTimeString(),
         ];
     }
