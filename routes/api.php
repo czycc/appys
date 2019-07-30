@@ -113,6 +113,9 @@ $api->version('v1', [
         $api->resource('articles', 'ArticlesController', ['only' => ['index', 'show', 'store', 'update', 'destroy']]);
         //用户评论
         $api->resource('comments', 'CommentsController', ['only' => ['index', 'store']]);
+        //回复评论
+        $api->post('reply/comment', 'CommentsController@reply');
+
         //店铺相关
         $api->resource('shops', 'ShopsController', ['only' => ['store', 'update']]);
         //用户关注

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Requests\ReplyRequest;
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\Reply;
 use App\Transformers\CommentTransformer;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -79,5 +81,21 @@ class CommentsController extends Controller
         $comment->delete();
 
         return redirect()->route('comments.index')->with('message', 'Deleted successfully.');
+    }
+
+    /**
+     * @param ReplyRequest $request
+     * @return \Dingo\Api\Http\Response
+     *
+     * 回复评论
+     */
+    public function reply(ReplyRequest $request)
+    {
+        Reply::create([
+            'content' => $request->input('content'),
+            'user_id' => $this->user()->id,
+            'comment_id' => $request->input('comment_id')
+        ]);
+        return $this->response->created();
     }
 }

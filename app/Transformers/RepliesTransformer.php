@@ -11,8 +11,8 @@ class RepliesTransformer extends TransformerAbstract
     {
         return [
             'content' => $item->content,
-            'nickname' => $item->user->nickname,
-            'avatar' => $item->user->avatar
+//            'nickname' => $item->user->nickname,
+//            'avatar' => $item->user->avatar
         ];
     }
 }
