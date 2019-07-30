@@ -17,12 +17,12 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     static $password;
     $now = \Carbon\Carbon::now()->toDateTimeString();
     $avatars = [
-        'https://cdn.learnku.com/uploads/images/201710/14/1/s5ehp11z6s.png?imageView2/1/w/200/h/200',
-        'https://cdn.learnku.com/uploads/images/201710/14/1/Lhd1SHqu86.png?imageView2/1/w/200/h/200',
-        'https://cdn.learnku.com/uploads/images/201710/14/1/LOnMrqbHJn.png?imageView2/1/w/200/h/200',
-        'https://cdn.learnku.com/uploads/images/201710/14/1/xAuDMxteQy.png?imageView2/1/w/200/h/200',
-        'https://cdn.learnku.com/uploads/images/201710/14/1/ZqM7iaP4CR.png?imageView2/1/w/200/h/200',
-        'https://cdn.learnku.com/uploads/images/201710/14/1/NDnzMutoxX.png?imageView2/1/w/200/h/200',
+        'https://woheniys.oss-cn-hangzhou.aliyuncs.com/test/xAuDMxteQy.png',
+        'https://woheniys.oss-cn-hangzhou.aliyuncs.com/test/s5ehp11z6s.png',
+        'https://woheniys.oss-cn-hangzhou.aliyuncs.com/test/ZqM7iaP4CR.png',
+        'https://woheniys.oss-cn-hangzhou.aliyuncs.com/test/NDnzMutoxX.png',
+        'https://woheniys.oss-cn-hangzhou.aliyuncs.com/test/Lhd1SHqu86.png',
+        'https://woheniys.oss-cn-hangzhou.aliyuncs.com/test/LOnMrqbHJn.png',
     ];
     return [
         'nickname' => $faker->name,
