@@ -19,8 +19,9 @@ class PayController extends Controller
     public function copper()
     {
         $configure = Configure::select(['copper_pay_percent', 'copper_pay_num'])
-            ->first();
+            ->first()->toArray();
 
+        $configure['user_copper'] = $this->user()->copper;
         return $this->response->array(['data' => $configure]);
     }
 
