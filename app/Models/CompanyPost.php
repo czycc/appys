@@ -37,5 +37,7 @@ class CompanyPost extends Model
         if (!filter_var($thumbnail, FILTER_VALIDATE_URL)) {
             $this->attributes['thumbnail'] = Storage::url($thumbnail);
         }
+        $this->attributes['thumbnail'] = $thumbnail;
+
     }
 }

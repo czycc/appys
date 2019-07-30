@@ -124,7 +124,7 @@ $api->version('v1', [
 
         //用户扫码绑定上级id
         $api->post('user/bound/scan', 'UsersController@boundFormScan');
-        $api->post('user/bound/confirm/{bound}', 'UsersController@ScanConfirm');
+        $api->post('user/bound/confirm/{notify}', 'UsersController@ScanConfirm');
 
         //用户留言功能
         $api->post('guest_book', 'GuestBookController@store');
@@ -136,5 +136,8 @@ $api->version('v1', [
         /* 支付相关 */
         //下订单
         $api->post('order', 'OrderController@store');
+
+        //通知列表
+        $api->get('notifications', 'NotificationController@index');
     });});
 

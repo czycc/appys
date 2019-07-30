@@ -7,8 +7,10 @@ use App\Http\Requests\UserRequest;
 use App\Models\BoundScan;
 use App\Models\Media;
 use App\Models\User;
+use App\Notifications\UserBound;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 
 class UsersController extends Controller
 {
@@ -188,37 +190,44 @@ class UsersController extends Controller
         $bound->save();
 
         //插入绑定上级的id
-        $user = User::find($bound->user_id);
-        $user->bound_id = $this->user()->id;
-        $user->save();
+        $this->user()->bound_id = $user->id;
+        $this->user()->save();
+
+        //消息通知
+        $user->msgNotify(new UserBound($this->user(), $bound->id));
+
 
         return $this->response->created();
     }
 
-    /**
-     * @param BoundScan $bound
-     * @param Request $request
-     * @return \Dingo\Api\Http\Response|void
-     *
-     *     确认绑定上级申请
-     */
-    public function ScanConfirm(BoundScan $bound, Request $request)
+
+    public function ScanConfirm(DatabaseNotification $notify, Request $request)
     {
+        $bound = BoundScan::find($notify->data['type_id']);
         //是否是本人
         if ($bound->bound_id !== $this->user()->id) {
-            return $this->response->errorUnauthorized('非上级');
+            return $this->response->errorBadRequest('非上级');
         }
+        if ($bound->status) {
+            return $this->response->errorBadRequest('申请已经处理过了');
+        }
+        $user = User::find($bound->user_id);
 
         //确认绑定 判断bound_id+bound_status
         if ($confirm = $request->confirm) {
-            $user = User::find($bound->user_id);
             $user->bound_status = 1;
-            $user->save();
+        } else {
+            //取消上级绑定
+            $user->bound_id = 0;
+            $user->bound_status = 0;
         }
+        $user->save();
 
         //标记已处理绑定
         $bound->status = 1;
         $bound->save();
+
+        $notify->delete();
 
         return $this->response->noContent();
     }

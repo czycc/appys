@@ -74,4 +74,27 @@ class User extends Authenticatable implements JWTSubject
         return $value === 2 ? '代理会员' : $value === 1 ? '银牌会员' : '铜牌会员';
 
     }
+
+    /**
+     * @param $instance
+     *
+     * 绑定上级通知
+     */
+    public function msgNotify($instance)
+    {
+        //同一个人不返回
+        if ($this->id == \Auth::id()) {
+            return ;
+        }
+        $this->increment('notification_count');
+
+        $this->notify($instance);
+    }
+
+    public function markAsRead()
+    {
+        $this->notification_count = 0;
+        $this->save();
+        $this->unreadNotifications->markAsRead();
+    }
 }
