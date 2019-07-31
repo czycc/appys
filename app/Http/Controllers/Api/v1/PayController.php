@@ -7,6 +7,7 @@ use App\Models\Configure;
 use App\Models\Flow;
 use App\Models\Order;
 use App\Models\User;
+use App\Notifications\NormalNotify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yansongda\LaravelPay\Facades\Pay;
@@ -57,6 +58,12 @@ class PayController extends Controller
         return Pay::alipay()->success();
     }
 
+    /**
+     * @param Order $order
+     * @param User $user
+     *
+     * 分销相关逻辑
+     */
     public function cps(Order $order, User $user)
     {
         $configure = Configure::first();
@@ -73,6 +80,14 @@ class PayController extends Controller
                         ->multiply($configure['pub_self'] / 100),
                     'extra' => $article->type,
                 ]);
+                //发送通知
+                $article->user()->msgNotify(new NormalNotify(
+                    '作品被购买',
+                    "{$article->title}被{$user->nickname}购买",
+                    'normal',
+                    $article->id
+                    ));
+
                 break;
             //购买vip
             case 'vip':

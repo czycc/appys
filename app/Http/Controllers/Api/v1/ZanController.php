@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\CompanyPost;
 use App\Models\Configure;
 use App\Models\Course;
+use App\Notifications\NormalNotify;
 use Illuminate\Http\Request;
 use App\Http\Requests\ZanRequest;
 
@@ -39,6 +40,14 @@ class ZanController extends Controller
                     //第一次点赞,并且对象是用户文章,发放铜币
                     $configure = Configure::first();
                     $item->user()->increment('copper', $configure->zan_copper);
+
+                    //发送点赞通知
+                    $item->user->msgNotify(new NormalNotify(
+                        '作品被点赞',
+                        "{$this->user()->nickname} 点赞了您的作品 {$item->title}",
+                        'normal',
+                        $item->id
+                    ));
                 }
                 //文章点赞数+1
                 $item->increment('zan_count', 1);
