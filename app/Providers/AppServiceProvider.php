@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->make('api.exception')->register(function (AuthorizationException $e) {
-            abort(401, "用户没有权限");
+            abort(400, "用户没有权限操作");
         });
 	}
 
