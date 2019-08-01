@@ -48,7 +48,7 @@ class ShopTransformer extends TransformerAbstract
             //店铺本人
             $data['idcard'] = $item->idcard;
             $data['license'] = $item->license;
-            $data['status'] = $item->status === 2 ? '认证中' : ($item->status === 1 ? '认证通过' : '认证失败');
+            $data['status'] = $item->status;
             $data['user_id'] = (int)$item->user_id;
             return $data;
         }

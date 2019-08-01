@@ -47,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
             ],$exception->getStatusCode());
         });
 
+        //policy 鉴权失败
         $this->app->make('api.exception')->register(function (AuthorizationException $e) {
             abort(400, "用户没有权限操作");
         });
