@@ -70,14 +70,17 @@ class PayController extends Controller
         //根据订单用户分成
         switch ($type = $order->type) {
             //购买用户文章
-            case 'article':
+            case 'audio':
+            case 'video':
+            case 'topic':
                 $article = Article::find($order->type_id);
                 Flow::create([
                     'title' => '作品被购买收益',
                     'user_id' => $article->user_id,
                     'order_id' => $order->id,
                     'total_amount' => big_num($order->total_amount)
-                        ->multiply($configure['pub_self'] / 100),
+                        ->multiply($configure['pub_self'] / 100)
+                        ->getValue(),
                     'extra' => $article->type,
                 ]);
                 //发送通知
@@ -115,7 +118,8 @@ class PayController extends Controller
                         'user_id' => $top->id,
                         'order_id' => $order->id,
                         'total_amount' => big_num($order->total_amount)
-                            ->multiply($configure->distribute1_vip / 100),
+                            ->multiply($configure->distribute1_vip / 100)
+                            ->getValue(),
                         'extra' => '会员一级分销',
                     ]);
 
@@ -126,7 +130,8 @@ class PayController extends Controller
                             'user_id' => $top2->id,
                             'order_id' => $order->id,
                             'total_amount' => big_num($order->total_amount)
-                                ->multiply($configure->distribute2_vip / 100),
+                                ->multiply($configure->distribute2_vip / 100)
+                                ->getValue(),
                             'extra' => '会员二级分销'
                         ]);
                         if ($top2->bound_id) {
@@ -136,7 +141,8 @@ class PayController extends Controller
                                 'user_id' => $top3->id,
                                 'order_id' => $order->id,
                                 'total_amount' => big_num($order->total_amount)
-                                    ->multiply($configure->distribute3_vip / 100),
+                                    ->multiply($configure->distribute3_vip / 100)
+                                    ->getValue(),
                                 'extra' => '会员三级级分销'
                             ]);
                         }
@@ -156,7 +162,8 @@ class PayController extends Controller
                         'user_id' => $top->id,
                         'order_id' => $order->id,
                         'total_amount' => big_num($order->total_amount)
-                            ->multiply($configure->distribute1_course / 100),
+                            ->multiply($configure->distribute1_course / 100)
+                            ->getValue(),
                         'extra' => '课程一级分销',
                     ]);
                     if ($top->bound_id) {
@@ -167,7 +174,8 @@ class PayController extends Controller
                             'user_id' => $top2->id,
                             'order_id' => $order->id,
                             'total_amount' => big_num($order->total_amount)
-                                ->multiply($configure->distribute2_course / 100),
+                                ->multiply($configure->distribute2_course / 100)
+                                ->getValue(),
                             'extra' => '课程二级分销',
                         ]);
 
@@ -179,7 +187,8 @@ class PayController extends Controller
                                 'user_id' => $top3->id,
                                 'order_id' => $order->id,
                                 'total_amount' => big_num($order->total_amount)
-                                    ->multiply($configure->distribute3_course / 100),
+                                    ->multiply($configure->distribute3_course / 100)
+                                    ->getValue(),
                                 'extra' => '课程三级分销',
                             ]);
                         }

@@ -26,13 +26,18 @@ class Order extends Model
 
         //监听模型事件，在写入前触发
         static::creating(function ($model) {
-            //如果没有订单流水号
+            //如果没有订单流水号创建
             if (!$model->no) {
                 $model->no = static::findAvailableNo();
                 if (!$model->no) {
                     return false;
                 }
             }
+        });
+
+        static::created(function ($model) {
+
+            //支付成功后
         });
     }
 

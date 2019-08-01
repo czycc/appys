@@ -5,29 +5,50 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Requests\OrderRequest;
 use App\Jobs\CloseOrder;
 use App\Models\Article;
+use App\Models\Chapter;
 use App\Models\Configure;
 use App\Models\Course;
 use App\Models\Order;
+use App\Transformers\OrderTransformer;
 use Illuminate\Http\Request;
 use Pay;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request, Order $order)
     {
+        $query = $order->query();
 
-    }
+        $query->where('closed', 0)
+            ->whereNotNull('paid_at');
 
+        //按用户id查询
+        if ($user_id = $request->user_id) {
+            $query->where('user_id', $user_id);
+        } else {
+            //返回当前用户订单
+            $query->where('user_id', $this->user()->id);
+        }
 
-    public function create()
-    {
-        //
+        //按类型查询
+        if ($request->type == 'course') {
+            $query->whereIn('type', ['course']);
+        } elseif ($request->type) {
+            $query->where('type', $request->type);
+        }
+
+        $query->orderByDesc('id');
+
+        $orders = $query->paginate(20);
+
+        return $this->response->paginator($orders, new OrderTransformer());
     }
 
     public function store(OrderRequest $request)
     {
         $order = new Order();
         $order->user_id = $this->user()->id;
+        $order->type = $request->type;
 
         switch ($type = $request->type) {
             //购买用户文章
@@ -35,6 +56,7 @@ class OrderController extends Controller
                 $article = Article::find($request->type_id);
                 $title = $article->titile;
                 $price = $article->price;
+                $order->type = $article->media_type; //用于区分文章类型
                 break;
             //购买vip
             case 'vip':
@@ -51,7 +73,21 @@ class OrderController extends Controller
             case 'course':
                 $course = Course::find($request->type_id);
                 $title = $course->title;
-                $price = $course->now_price;
+
+                //抵扣
+                $deduction = $this->copperToMoney($course->now_price, $request->copper);
+                $order->deduction = $deduction;
+                $price = big_num($course->now_price)->subtract($deduction)->getValue();
+                break;
+            case 'chapter':
+                $chapter = Chapter::find($request->type_id);
+                $title = $chapter->title;
+
+                //抵扣
+                $deduction = $this->copperToMoney($chapter->now_price, $request->copper);
+                $order->deduction = $deduction;
+                $price = big_num($chapter->now_price)->subtract($deduction)->getValue();
+
                 break;
             default:
                 return $this->response->errorBadRequest('请求失败，请检查参数是否有误');
@@ -61,7 +97,6 @@ class OrderController extends Controller
         }
         $order->title = '购买 ' . $title;
         $order->total_amount = $price;
-        $order->type = $type;
         $order->type_id = (int)$request->type_id;
         $order->save();
 
@@ -78,48 +113,23 @@ class OrderController extends Controller
             ]]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function copperToMoney($price, $copper)
     {
-        //
-    }
+        $configure = Configure::first();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        //最大抵扣金额
+        $max_deduction = big_num($price)
+            ->multiply($configure['copper_pay_percent'] / 100)
+            ->getValue();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        //实际抵扣金额
+        $deduction = big_num(1)->multiply($copper / $configure['copper_pay_num'])->getValue();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        //不能超过最大抵扣
+        if ($max_deduction < $deduction) {
+            $deduction = $max_deduction;
+        }
+
+        return $deduction;
     }
 }

@@ -138,7 +138,9 @@ $api->version('v1', [
 
         /* 支付相关 */
         //下订单
-        $api->post('order', 'OrderController@store');
+        $api->post('orders', 'OrderController@store');
+        //查询订单
+        $api->get('orders', 'OrderController@index');
 
         //通知列表
         $api->get('notifications', 'NotificationController@index');
