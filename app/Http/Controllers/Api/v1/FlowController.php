@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Requests\FlowOutRequest;
 use App\Models\Flow;
 use App\Models\FlowOut;
 use App\Transformers\FlowTransformer;
@@ -36,8 +37,8 @@ class FlowController extends Controller
         return $this->response->array(['data' => $outs]);
     }
 
-    public function flowOutStore()
+    public function flowOutStore(FlowOutRequest $request, FlowOut $flowOut)
     {
-        
+        $flowOut->fill($request->all());
     }
 }

@@ -148,5 +148,7 @@ $api->version('v1', [
         //流水
         $api->get('flows', 'FlowController@index');
         $api->get('out/flows', 'FlowController@flowOutList');
+        $api->post('out/flows', 'FlowController@flowOut');
+
     });});
 

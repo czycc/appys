@@ -32,9 +32,11 @@ class FlowOutRequest extends Request
     {
         return [
             'total_amount.required' => '提现金额不能为空',
+            'total_amount.max' => '提现金额不能超过当前收益',
             'name.required' => '首次提现需完善用户信息-姓名',
             'idcard.required' => '首次提现需完善用户信息-身份证号',
             'health.required' => '首次提现需完善用户信息-健康状态',
+
         ];
     }
 }
