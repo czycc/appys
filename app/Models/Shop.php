@@ -23,6 +23,18 @@ class Shop extends Model
     }
 
     /**
+     * @param $query
+     * @return mixed
+     *
+     * 查询关联tags
+     */
+    public function scopeWithTags($query)
+    {
+        return $query->with(['tags' => function ($query) {
+            $query->select(['id', 'name']);
+        }]);
+    }
+    /**
      * @param $value
      * @return mixed
      *

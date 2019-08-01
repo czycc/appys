@@ -25,7 +25,7 @@ class ShopsController extends Controller
         $shop->save();
 
         if ($request->tags) {
-            $this->user()->tags()->attach(json_decode($request->tags));
+            $shop->tags()->attach(json_decode($request->tags));
         }
         return $this->response->item($shop, new ShopTransformer())
             ->setStatusCode(201);
@@ -39,7 +39,7 @@ class ShopsController extends Controller
         $shop->update($request->all());
         if ($request->tags) {
 
-            $this->user()->tags()->sync(json_decode($request->tags));
+            $shop->tags()->sync(json_decode($request->tags));
         }
         return $this->response->item($shop, new ShopTransformer());
     }

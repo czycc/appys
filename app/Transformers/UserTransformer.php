@@ -44,6 +44,7 @@ class UserTransformer extends TransformerAbstract
                 'expire_at' => (string)$item->expire_at,
                 'created_at' => $item->created_at->toDateTimeString(),
                 'shop' => (object)$item->shop()
+                    ->withTags()
                     ->select([
                         'id', 'banner', 'introduction', 'shop_imgs', 'longitude', 'latitude', 'status', 'expire_at', 'province', 'city', 'district', 'address', 'wechat_qrcode', 'zan_count', 'created_at'
                     ])
