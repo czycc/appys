@@ -11,7 +11,7 @@ class ShopsController extends Controller
 {
     public function store(ShopRequest $request, Shop $shop)
     {
-        $this->authorize('create');
+        $this->authorize('create', $shop);
 
         $userId = $this->user()->id;
 
