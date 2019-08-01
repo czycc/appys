@@ -13,8 +13,15 @@ class FlowController extends Controller
         $flows = Flow::select(['id', 'title', 'total_amount'])
             ->where('user_id', $this->user()->id)
             ->orderByDesc('id')
-            ->paginator();
+            ->paginate(20);
 
-        return $this->response->paginator($flows, new FlowTransformer());
+        return $this->response
+            ->paginator($flows, new FlowTransformer())
+            ->addMeta('balance', $this->user()->balance);
+    }
+
+    public function flowOutList()
+    {
+
     }
 }

@@ -59,6 +59,8 @@ class ArticlesController extends Controller
 
     public function store(ArticleRequest $request, Article $article)
     {
+        $this->authorize('create', $article);
+
         $article->fill($request->all());
         $article->user_id = $this->user()->id;
         $article->status = 2; //避免transformer返回null

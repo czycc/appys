@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\ServiceProvider;
 use Exception;
 
@@ -44,6 +45,10 @@ class AppServiceProvider extends ServiceProvider
                 'message' => '请求次数过多，请稍后再试',
                 'status_code' => $exception->getStatusCode(),
             ],$exception->getStatusCode());
+        });
+
+        $this->app->make('api.exception')->register(function (AuthorizationException $e) {
+            abort(401, "用户没有权限");
         });
 	}
 

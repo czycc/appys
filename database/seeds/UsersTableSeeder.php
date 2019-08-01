@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
         $user->phone = '13331936826';
         $user->avatar = 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/test/ZqM7iaP4CR.png';
         $user->bound_id = 0;
+        $user->expire_at = '2029-07-26 16:48:08';
         $user->bound_status = 0;
         $user->save();
     }

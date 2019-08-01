@@ -144,5 +144,8 @@ $api->version('v1', [
 
         //通知列表
         $api->get('notifications', 'NotificationController@index');
+
+        //流水
+        $api->get('flows', 'FlowController@index');
     });});
 

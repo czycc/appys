@@ -17,11 +17,9 @@ class ChapterTransformer extends TransformerAbstract
     public function transform(Chapter $item)
     {
         //判断有没有权限
-        if ($item->price === 0) {
+        if ($item->price === 0 || \Auth::guard('api')->user()->vip !== '铜牌会员') {
             //免费
             $this->permission =true;
-        } elseif (\Auth::guard('api')->user()->vip !== 0) {
-            //会员或代理可以直接观看
         }
 
         $data = [
@@ -33,6 +31,7 @@ class ChapterTransformer extends TransformerAbstract
             'media_url' => $this->permission ? $item->media_url : '',
             'created_at' => $item->created_at->toDateTimeString()
         ];
+
         return $data;
     }
 }
