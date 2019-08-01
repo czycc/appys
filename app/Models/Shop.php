@@ -44,8 +44,4 @@ class Shop extends Model
         return (string)$value;
     }
 
-    public function getStatusAttribute($status)
-    {
-        return $status === 2 ? '认证中' : ($status === 1 ? '认证通过' : '认证失败');
-    }
 }
