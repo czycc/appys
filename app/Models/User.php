@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 //use Jcc\LaravelVote\Vote;
@@ -32,6 +33,11 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'expire_at'
+    ];
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -71,6 +77,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function getVipAttribute($value)
     {
+        //会员状态
+        if ($this->expire_at < Carbon::now()) {
+            return '铜牌会员';
+        }
         return $value === 2 ? '代理会员' : $value === 1 ? '银牌会员' : '铜牌会员';
 
     }

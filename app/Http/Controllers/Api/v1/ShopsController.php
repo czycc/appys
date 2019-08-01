@@ -16,7 +16,7 @@ class ShopsController extends Controller
         if (Shop::where('user_id', $userId)->first()) {
             return $this->response->errorBadRequest('店铺申请已经提交');
         }
-        if ($this->user()->vip !== 2 && $this->user()->vip !== 1) {
+        if ($this->user()->vip == '铜牌会员') {
             //未注册vip
             return $this->response->errorBadRequest('非会员用户');
         }

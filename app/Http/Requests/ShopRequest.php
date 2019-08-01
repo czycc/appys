@@ -26,6 +26,7 @@ class ShopRequest extends Request
                         'city' => 'required|string',
                         'district' => 'required|string',
                         'address' => 'required|string',
+                        'introduction' => 'required|string',
                         'wechat_qrcode' => 'string',
                         'tags' => 'json'
                     ];
