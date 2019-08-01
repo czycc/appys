@@ -60,7 +60,11 @@ class User extends Authenticatable implements JWTSubject
 
     public function getShop()
     {
-        return $this->shop()->select([
+        return $this->shop()
+            ->with(['tags' => function ($query) {
+                $query->select(['id', 'name']);
+            }])
+            ->select([
             'id', 'shop_phone', 'real_name', 'banner', 'introduction', 'idcard', 'license', 'shop_imgs', 'longitude', 'latitude', 'status', 'expire_at', 'province', 'city', 'district', 'address', 'wechat_qrcode', 'zan_count', 'created_at'
         ]);
     }
@@ -106,5 +110,10 @@ class User extends Authenticatable implements JWTSubject
         $this->notification_count = 0;
         $this->save();
         $this->unreadNotifications->markAsRead();
+    }
+
+    public function extra()
+    {
+        return $this->hasOne(UserExtra::class);
     }
 }

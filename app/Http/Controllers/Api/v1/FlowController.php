@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Flow;
+use App\Models\FlowOut;
 use App\Transformers\FlowTransformer;
 use Illuminate\Http\Request;
 
@@ -20,8 +21,23 @@ class FlowController extends Controller
             ->addMeta('balance', $this->user()->balance);
     }
 
+    /**
+     * @return mixed
+     *
+     * 提现列表
+     */
     public function flowOutList()
     {
+        $outs = FlowOut::select(['id', 'total_amount', 'created_at', 'status'])
+            ->where('user_id', $this->user()->id)
+            ->orderByDesc('id')
+            ->get();
 
+        return $this->response->array(['data' => $outs]);
+    }
+
+    public function flowOutStore()
+    {
+        
     }
 }

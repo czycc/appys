@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Flow extends Model
 {
-    protected $guarded = ['id'];
+    protected $guarded =['id', 'created_at', 'updated_at'];
 
     public static function boot()
     {

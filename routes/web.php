@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-   return 'true';
+   return view('welcome');
 });
 
 Route::get('alipay', function () {

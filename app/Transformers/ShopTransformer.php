@@ -50,6 +50,7 @@ class ShopTransformer extends TransformerAbstract
             $data['license'] = $item->license;
             $data['status'] = $item->status;
             $data['user_id'] = (int)$item->user_id;
+            $data['tags'] = $item->user->tags()->select(['id', 'name'])->get();
             return $data;
         }
 //        if ($item->status !== 1) {
