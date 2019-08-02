@@ -104,7 +104,7 @@ class PostController extends AdminController
         $form = new Form(new CompanyPost);
 
         $form->text('title', __('标题'));
-        $form->textarea('body', __('内容'));
+        $form->wangEditor('body', __('内容'));
         $form->cropper('thumbnail', __('封面图'))
             ->move('backend/images/posts')
             ->uniqueName();

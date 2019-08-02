@@ -12,9 +12,13 @@ class GuestBook extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'guest_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function guest()
+    {
+        return $this->belongsTo(User::class, 'guest_id');
+    }
     public static function boot()
     {
         parent::boot();

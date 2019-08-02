@@ -28,5 +28,32 @@ Route::group([
     $router->resource('admin_teachers', TeachersController::class)->names('admin_teachers');
 
     //公司文章
-    $router->resource('company_posts', PostController::class);
+    $router->resource('posts', PostController::class);
+
+    //公司文章类别
+    $router->resource('admin_categories', CategoryController::class);
+
+    //用户管理
+    $router->resource('admin_users', UserController::class);
+
+    //店铺管理
+    $router->resource('admin_shops', ShopController::class);
+
+    //用户作品管理
+    $router->resource('admin_articles', ArticleController::class);
+
+    //留言管理
+    $router->resource('admin_guest_books', GuestBookController::class);
+
+    //评论管理
+    $router->resource('admin_comments', CommentController::class);
+
+    //订单管理
+    $router->resource('admin_orders', OrderController::class);
+
+    //课程管理
+    $router->resource('admin_courses', CourseController::class);
+
+    //提现管理
+    $router->resource('admin_flow_outs', FlowController::class);
 });

@@ -8,7 +8,7 @@ $factory->define(App\Models\CompanyPost::class, function (Faker $faker) {
     $created_at = $faker->dateTimeThisMonth($updated_at);
     return [
         'title' => $sentence,
-        'body' => $faker->randomHtml(),
+        'body' => '<p><br></p><p><b>​</b>事实上<i>这是一段图文内容测试，这是一段图文内容测试，这是一段图文内容测试，</i></p><p><br></p>',
         'zan_count' => $faker->numberBetween(0,1000),
         'view_count' => $faker->numberBetween(0,1000),
         'created_at' => $created_at,

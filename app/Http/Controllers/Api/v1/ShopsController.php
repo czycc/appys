@@ -38,7 +38,6 @@ class ShopsController extends Controller
 
         $shop->update($request->all());
         if ($request->tags) {
-
             $shop->tags()->sync(json_decode($request->tags));
         }
         return $this->response->item($shop, new ShopTransformer());
