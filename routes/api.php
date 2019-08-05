@@ -117,7 +117,7 @@ $api->version('v1', [
         $api->post('reply/comment', 'CommentsController@reply');
 
         //店铺相关
-        $api->resource('shops', 'ShopsController', ['only' => ['store', 'update']]);
+        $api->resource('shops', 'ShopsController', ['only' => ['index','store', 'update']]);
         //用户关注
         $api->post('follow', 'FollowController@store');
         $api->get('follow/{user}/type/{type}', 'FollowController@show');

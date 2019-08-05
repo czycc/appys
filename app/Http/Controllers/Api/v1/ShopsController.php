@@ -4,11 +4,33 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Shop;
 use App\Transformers\ShopTransformer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\ShopRequest;
 
 class ShopsController extends Controller
 {
+    public function index(Request $request)
+    {
+        $query = Shop::query()->with('tags');
+
+        if ($tag_id = $request->input('tag_id')) {
+            //根据标签id查询
+            $query->whereHas('tags', function ($query) use($tag_id){
+                $query->where('id', $tag_id);
+            });
+        }
+
+        $shops = $query->where('expire_at', '>', Carbon::now())
+            ->where('status', 1)
+            ->orderByDesc('order')
+            ->orderByDesc('zan_count')
+            ->paginate(20);
+
+        return $this->response->paginator($shops, new ShopTransformer(true));
+    }
+
+
     public function store(ShopRequest $request, Shop $shop)
     {
         $this->authorize('create', $shop);
