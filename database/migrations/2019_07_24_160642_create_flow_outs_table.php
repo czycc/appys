@@ -15,7 +15,7 @@ class CreateFlowOutsTable extends Migration
     {
         Schema::create('flow_outs', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('total_amount', 9, 5)->comment('资金');
+            $table->decimal('total_amount', 9, 2)->comment('资金');
             $table->boolean('status')->default(0)->comment('审核状态');
             $table->boolean('out_status')->default(0)->comment('提现状态');
             $table->string('out_method')->comment('提现方式');

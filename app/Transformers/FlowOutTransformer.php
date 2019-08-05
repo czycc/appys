@@ -15,6 +15,7 @@ class FlowOutTransformer extends TransformerAbstract
             'id' => $item->id,
             'total_amount' => $item->total_amount,
             'status' => $item->status,
+            'out_status' => $item->out_status,
             'created_at' => (string)$item->created_at,
 
         ];

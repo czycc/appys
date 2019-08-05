@@ -15,7 +15,7 @@ class CreateFlowsTable extends Migration
     {
         Schema::create('flows', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('total_amount', 9, 5)->comment('资金');
+            $table->decimal('total_amount', 9, 2)->comment('资金');
             $table->string('title')->comment('标题');
             $table->string('extra')->nullable();
             $table->unsignedInteger('user_id');

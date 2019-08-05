@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FlowOut extends Model
 {
-    protected $fillable =['id', 'created_at', 'updated_at'];
+    protected $fillable =['total_amount', 'out_method', 'ali_account'];
 
     public $casts =[
         'status' => 'boolean',

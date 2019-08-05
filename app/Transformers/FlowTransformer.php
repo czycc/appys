@@ -14,7 +14,7 @@ class FlowTransformer extends TransformerAbstract
             'id' => $item->id,
             'title' => $item->title,
             'total_amount' => $item->total_amount,
-            'created_at' => $item->created_at->toDateTimeString(),
+            'created_at' => (string)$item->created_at,
         ];
     }
 

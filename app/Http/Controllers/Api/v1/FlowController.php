@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Requests\FlowOutRequest;
 use App\Models\Flow;
 use App\Models\FlowOut;
+use App\Models\UserExtra;
 use App\Transformers\FlowOutTransformer;
 use App\Transformers\FlowTransformer;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class FlowController extends Controller
 {
     public function index()
     {
-        $flows = Flow::select(['id', 'title', 'total_amount'])
+        $flows = Flow::select(['id', 'title', 'total_amount', 'created_at'])
             ->where('user_id', $this->user()->id)
             ->orderByDesc('id')
             ->paginate(20);
@@ -30,7 +31,7 @@ class FlowController extends Controller
      */
     public function flowOutList()
     {
-        $outs = FlowOut::select(['id', 'total_amount', 'created_at', 'status'])
+        $outs = FlowOut::select(['id', 'total_amount', 'created_at', 'status', 'out_status'])
             ->where('user_id', $this->user()->id)
             ->orderByDesc('id')
             ->paginate(20);
@@ -40,6 +41,22 @@ class FlowController extends Controller
 
     public function flowOutStore(FlowOutRequest $request, FlowOut $flowOut)
     {
+        if (!$this->user()->extra) {
+            $extra = new UserExtra();
+
+            $extra->name = $request->name;
+            $extra->idcard = $request->idcard;
+            $extra->health = $request->health;
+            $extra->extra = $request->extra;
+            $extra->user_id = $this->user()->id;
+            $extra->save();
+        }
+
         $flowOut->fill($request->all());
+        $flowOut->user_id = $this->user()->id;
+        $flowOut->status = 0;
+        $flowOut->out_status = 0;
+        $flowOut->save();
+        return $this->response->array(['data' => $flowOut])->setStatusCode(201);
     }
 }
