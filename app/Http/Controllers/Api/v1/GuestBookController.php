@@ -19,13 +19,11 @@ class GuestBookController extends Controller
      */
     public function show(User $user)
     {
-        $guestBooks = GuestBook::with(['user' => function ($query) {
-            $query->select(['id', 'nickname', 'avatar']);
-        }])->select(['id', 'user_id', 'guest_id', 'guest_book_id', 'body', 'created_at'])
+        $guestBooks = GuestBook::select(['id', 'user_id', 'guest_id', 'guest_book_id', 'body', 'created_at'])
             ->where('user_id', $user->id)
             ->where('guest_book_id', 0)
             ->orderByDesc('id')
-            ->paginate();
+            ->paginate(20);
 
         return $this->response->paginator($guestBooks, new GuestBookTransformer());
     }

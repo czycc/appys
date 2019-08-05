@@ -33,14 +33,14 @@ class FollowController extends Controller
     {
         if ($type == 'followings') {
             //关注人
-            $follows = $user->followings()->get();
+            $follows = $user->followings()->paginate(20);
         } elseif ($type == 'followers') {
             //粉丝
-            $follows = $user->followers()->get();
+            $follows = $user->followers()->paginate(20);
         } else {
             return $this->response->errorBadRequest('错误的类型');
         }
 
-        return $this->response->collection($follows, new UserTransformer(true));
+        return $this->response->paginator($follows, new UserTransformer(true));
     }
 }

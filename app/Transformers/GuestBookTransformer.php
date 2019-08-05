@@ -18,11 +18,11 @@ class GuestBookTransformer extends TransformerAbstract
             'guest_id' => $item->guest_id,
 //            'guest_book_id' => $item->guest_book_id,
             'created_at' => (string)$item->created_at,
-            'user' => $item->user
+            'guest' => $item->guest()->select(['id', 'nickname', 'avatar'])->first()
         ];
 
         if ($item->guest_book_id === 0) {
-            $data['replies'] = GuestBook::with(['user' => function ($query) {
+            $data['replies'] = GuestBook::with(['guest' => function ($query) {
                 $query->select(['id', 'nickname', 'avatar']);
             }])->select(['id', 'user_id', 'guest_id', 'guest_book_id', 'body', 'created_at'])
                 ->where('guest_book_id', $item->id)

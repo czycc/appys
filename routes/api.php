@@ -35,7 +35,7 @@ $api->version('v1', [
 
     $api->group([
         'middleware' => 'api.throttle',
-        'limit' => 10,
+        'limit' => 100,
         'expires' => 2
     ], function ($api) {
         //用户注册

@@ -150,8 +150,8 @@ class UsersController extends Controller
         $team = User::where('bound_id', $this->user()->id)
             ->where('bound_status', 1)
             ->orderByDesc('id')
-            ->get();
-        return $this->response->collection($team, new UserTransformer(true));
+            ->paginate(20);
+        return $this->response->paginator($team, new UserTransformer(true));
     }
 
     /**

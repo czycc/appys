@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Requests\FlowOutRequest;
 use App\Models\Flow;
 use App\Models\FlowOut;
+use App\Transformers\FlowOutTransformer;
 use App\Transformers\FlowTransformer;
 use Illuminate\Http\Request;
 
@@ -32,9 +33,9 @@ class FlowController extends Controller
         $outs = FlowOut::select(['id', 'total_amount', 'created_at', 'status'])
             ->where('user_id', $this->user()->id)
             ->orderByDesc('id')
-            ->get();
+            ->paginate(20);
 
-        return $this->response->array(['data' => $outs]);
+        return $this->response->paginator($outs, new FlowOutTransformer());
     }
 
     public function flowOutStore(FlowOutRequest $request, FlowOut $flowOut)
