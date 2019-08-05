@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Requests\GuestBookRequest;
 use App\Models\GuestBook;
 use App\Models\User;
+use App\Transformers\GuestBookTransformer;
 use Illuminate\Http\Request;
 
 class GuestBookController extends Controller
@@ -22,10 +23,11 @@ class GuestBookController extends Controller
             $query->select(['id', 'nickname', 'avatar']);
         }])->select(['id', 'user_id', 'guest_id', 'guest_book_id', 'body', 'created_at'])
             ->where('user_id', $user->id)
+            ->where('guest_book_id', 0)
             ->orderByDesc('id')
-            ->get();
+            ->paginate();
 
-        return $this->response->array(['data' => $guestBooks]);
+        return $this->response->paginator($guestBooks, new GuestBookTransformer());
     }
 
     /**
