@@ -49,7 +49,10 @@ class PayController extends Controller
         if ($order->paid_at) {
             return Pay::alipay()->success();
         }
-
+        //订单已经关闭
+        if ($order->closed) {
+            return 'fail';
+        }
         $order->update([
             'paid_at' => Carbon::now(),
             'pay_method' => 'alipay',
@@ -58,7 +61,6 @@ class PayController extends Controller
 
         $this->cps($order, $order->user);
 
-
         return Pay::alipay()->success();
     }
 
@@ -66,7 +68,7 @@ class PayController extends Controller
      * @param Order $order
      * @param User $user
      *
-     * 分销相关逻辑
+     * 分销&支付后相关逻辑处理
      */
     public function cps(Order $order, User $user)
     {
