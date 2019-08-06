@@ -15,6 +15,7 @@ class OrderRequest extends Request
         $rules = [
             'type' => 'required|in:chapter,article,course,vip',
             'pay_method' => 'required|in:alipay,wechat',
+            'copper' => 'numeric|min:0|max:' . \Auth::guard('api')->user()->copper
         ];
 
         if ($this->type == 'chapter') {
@@ -32,7 +33,8 @@ class OrderRequest extends Request
         return [
             'type.in' => '错误的购买类型',
             'pay_method.' => '仅支持微信支付宝购买',
-            'type_id.exists' => 'id不存在'
+            'type_id.exists' => 'id不存在',
+            'copper.max' => '不能超过当前铜币'
         ];
     }
 }

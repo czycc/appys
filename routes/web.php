@@ -17,9 +17,9 @@ Route::get('/', function () {
 
 Route::get('alipay', function () {
     $order = [
-        'out_trade_no' => time(),
-        'total_amount' => '10000',
-        'subject' => 'test subject - 测试',
+        'out_trade_no' => '20190806154635757937',
+        'total_amount' => '2.00',
+        'subject' => '购买 银牌会员',
     ];
 
     return \Pay::alipay()->web($order);

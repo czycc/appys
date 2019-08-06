@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Article;
+use App\Models\Chapter;
 use App\Models\Configure;
+use App\Models\Course;
 use App\Models\Flow;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\NormalNotify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Yansongda\LaravelPay\Facades\Pay;
 
 class PayController extends Controller
@@ -53,7 +56,8 @@ class PayController extends Controller
             'pay_no' => $data->trade_no
         ]);
 
-        $this->cps($order, $order->user_id);
+        $this->cps($order, $order->user);
+
 
         return Pay::alipay()->success();
     }
@@ -89,7 +93,7 @@ class PayController extends Controller
                     "{$article->title}被{$user->nickname}购买",
                     'normal',
                     $article->id
-                    ));
+                ));
 
                 break;
             //购买vip
@@ -97,19 +101,25 @@ class PayController extends Controller
 
                 //一级分成虚拟币，自己购买会员得银币,三级分销
                 $user->silver += $configure->buy_vip2_self;
+                //更新会员
+                $user->vip = 1;
+                if ($user->expire_at < Carbon::now()) {
+                    $user->expire_at = Carbon::now()->addYear();
+                } else {
+                    $user->expire_at = $user->expire_at->addYear();
+                }
                 $user->save();
 
                 if ($user->bound_id) {
 
                     //上级是代理得金币，是银牌得银币
                     $top = User::find($user->bound_id);
-                    if ($top->vip === 1) {
+                    if ($top->vip === '银牌会员') {
                         $top->silver += $configure->buy_vip2_top_vip2;
-                    } elseif ($top->vip === 2) {
+                    } elseif ($top->vip === '代理会员') {
                         //代理
                         $top->gold += $configure->buy_vip2_top_vip3;
                     }
-
                     $top->save();
 
                     //会员购买三级分销
@@ -149,10 +159,19 @@ class PayController extends Controller
                     }
                 }
 
-
                 break;
             case 'course':
             case 'chapter':
+
+                //提高课程购买数
+                if ($type == 'course') {
+                    Course::increment('buy_count', 1, ['id' => $order->type_id]);
+                } else {
+                    Course::increment('buy_count', 1, [
+                        'id' => Chapter::find($order->type_id)->course_id
+                    ]);
+                }
+
                 //购买课程或章节， 三级分销
                 if ($user->bound_id) {
                     $top = User::find($user->bound_id);

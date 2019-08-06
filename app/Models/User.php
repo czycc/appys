@@ -38,6 +38,7 @@ class User extends Authenticatable implements JWTSubject
         'updated_at',
         'expire_at'
     ];
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -65,8 +66,8 @@ class User extends Authenticatable implements JWTSubject
                 $query->select(['id', 'name']);
             }])
             ->select([
-            'id', 'shop_phone', 'real_name', 'banner', 'introduction', 'idcard', 'license', 'shop_imgs', 'longitude', 'latitude', 'status', 'expire_at', 'province', 'city', 'district', 'address', 'wechat_qrcode', 'zan_count', 'created_at'
-        ]);
+                'id', 'shop_phone', 'real_name', 'banner', 'introduction', 'idcard', 'license', 'shop_imgs', 'longitude', 'latitude', 'status', 'expire_at', 'province', 'city', 'district', 'address', 'wechat_qrcode', 'zan_count', 'created_at'
+            ]);
     }
 
     public function tags()
@@ -98,7 +99,7 @@ class User extends Authenticatable implements JWTSubject
     {
         //同一个人不返回
         if ($this->id == \Auth::id()) {
-            return ;
+            return;
         }
         $this->increment('notification_count');
 
@@ -115,5 +116,19 @@ class User extends Authenticatable implements JWTSubject
     public function extra()
     {
         return $this->hasOne(UserExtra::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function (User $model) {
+
+            //同步更新店铺过期时间
+            if ($model->isDirty('expire_at')) {
+                Shop::where('user_id', $model->id)
+                    ->update(['expire_at' => $model->expire_at]);
+            }
+        });
     }
 }

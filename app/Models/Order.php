@@ -12,7 +12,7 @@ class Order extends Model
         'closed' => 'boolean'
     ];
     protected $dates = [
-        'paid_at',
+        'paid_at', 'created_at', 'updated_at'
     ];
 
     const TYPE_ARTICLE = 'article';
