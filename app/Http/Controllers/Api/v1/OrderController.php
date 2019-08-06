@@ -103,19 +103,19 @@ class OrderController extends Controller
         //提交关闭订单队列
         $this->dispatch(new CloseOrder($order, config('app.order_ttl')));
 
-//        return $this->response->array([
-//            'data' => [
-//                'order' => Pay::alipay()->app([
-//                    'out_trade_no' => $order->no,
-//                    'total_amount' => $order->total_amount,
-//                    'subject' => $order->title,
-//                ])->getContent()
-//            ]]);
-        return Pay::alipay()->web([
-                   'out_trade_no' => $order->no,
-                   'total_amount' => $order->total_amount,
-                   'subject' => $order->title,
-              ]);
+        return $this->response->array([
+            'data' => [
+                'order' => Pay::alipay()->app([
+                    'out_trade_no' => $order->no,
+                    'total_amount' => $order->total_amount,
+                    'subject' => $order->title,
+                ])->getContent()
+            ]]);
+//        return Pay::alipay()->web([
+//                   'out_trade_no' => $order->no,
+//                   'total_amount' => $order->total_amount,
+//                   'subject' => $order->title,
+//              ]);
     }
 
     public function copperToMoney($price, $copper)
