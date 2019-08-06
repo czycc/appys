@@ -12,4 +12,16 @@ class FlowOut extends Model
         'status' => 'boolean',
         'out_status' => 'boolean',
     ];
+
+    public static function boot() {
+
+        parent::boot();
+
+        static::creating(function ($model) {
+
+            //扣除用户提现金额
+            \Auth::guard('api')->user()->balance -= $model->total_amount;
+            \Auth::guard('api')->user()->save();
+        });
+    }
 }

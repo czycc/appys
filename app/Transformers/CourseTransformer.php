@@ -48,7 +48,7 @@ class CourseTransformer extends TransformerAbstract
             'category_id' => $post->category_id,
             'category' => $post->category->name,
             'buynote' => $post->buynote->body,
-            'teacher' => $post->teacher,
+            'teacher' => $post->teacher()->select(['id', 'name', 'desc', 'video_url', 'imgs'])->first(),
             'tags' => $post->getTags(),
             'created_at' => $post->created_at->toDateTimeString(),
         ];
