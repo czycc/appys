@@ -47,25 +47,26 @@ class CourseController extends AdminController
 //            $actions->disableDelete();
 
             // 去掉编辑
-            $actions->disableEdit();
+//            $actions->disableEdit();
 
             // 去掉查看
             $actions->disableView();
         });
 
         $grid->column('id', __('Id'));
-        $grid->column('title', __('Title'));
-        $grid->column('banner', __('Banner'));
-        $grid->column('ori_price', __('Ori price'));
-        $grid->column('now_price', __('Now price'));
-        $grid->column('body', __('Body'));
-        $grid->column('view_count', __('View count'));
-        $grid->column('zan_count', __('Zan count'));
-        $grid->column('buy_count', __('Buy count'));
-        $grid->column('show', __('Show'));
-        $grid->column('recommend', __('Recommend'));
-        $grid->column('order', __('Order'));
-        $grid->column('buynote_id', __('Buynote id'));
+        $grid->column('title', __('标题'));
+        $grid->column('banner', __('大图'));
+        $grid->column('ori_price', __('原价'));
+        $grid->column('now_price', __('现价'));
+        $grid->column('body', __('图文'))->display(function ($body) {
+            return make_excerpt($body, 15);
+        });
+//        $grid->column('view_count', __(''));
+        $grid->column('zan_count', __('赞数'));
+        $grid->column('buy_count', __('购买次数'));
+        $grid->column('show', __('是否显示'));
+        $grid->column('recommend', __('是否推荐'));
+        $grid->column('order', __('权重'));
         $grid->column('teacher_id', __('Teacher id'));
         $grid->column('category_id', __('Category id'));
         $grid->column('created_at', __('Created at'));
