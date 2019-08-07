@@ -54,12 +54,18 @@ class OrderController extends Controller
             //购买用户文章
             case 'article':
                 $article = Article::find($request->type_id);
-                $title = $article->titile;
+                $title = $article->title;
                 $price = $article->price;
                 $order->type = $article->media_type; //用于区分文章类型
                 break;
             //购买vip
             case 'vip':
+
+                //当前用户是代理，不允许购买会员
+                if ($this->user()->vip == '代理会员') {
+                    return $this->response->errorBadRequest('您已经是代理会员，无法购买银牌会员');
+                }
+
                 //根据是否有上级来决定vip价格
                 $configure = Configure::select(['vip2_price_n', 'vip2_price_y'])
                     ->first();
@@ -90,7 +96,7 @@ class OrderController extends Controller
 
                 break;
             default:
-                return $this->response->errorBadRequest('请求失败，请检查参数是否有误');
+                return $this->response->errorBadRequest('请求失败，请检查购买类型是否有误');
         }
         if ($price == 0) {
             return $this->response->errorBadRequest('该商品免费，无需购买');
@@ -103,19 +109,19 @@ class OrderController extends Controller
         //提交关闭订单队列
         $this->dispatch(new CloseOrder($order, config('app.order_ttl')));
 
-        return $this->response->array([
-            'data' => [
-                'order' => Pay::alipay()->app([
-                    'out_trade_no' => $order->no,
-                    'total_amount' => $order->total_amount,
-                    'subject' => $order->title,
-                ])->getContent()
-            ]]);
-//        return Pay::alipay()->web([
-//                   'out_trade_no' => $order->no,
-//                   'total_amount' => $order->total_amount,
-//                   'subject' => $order->title,
-//              ]);
+//        return $this->response->array([
+//            'data' => [
+//                'order' => Pay::alipay()->app([
+//                    'out_trade_no' => $order->no,
+//                    'total_amount' => $order->total_amount,
+//                    'subject' => $order->title,
+//                ])->getContent()
+//            ]]);
+        return Pay::alipay()->web([
+                   'out_trade_no' => $order->no,
+                   'total_amount' => $order->total_amount,
+                   'subject' => $order->title,
+              ]);
     }
 
     public function copperToMoney($price, $copper)

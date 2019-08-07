@@ -22,7 +22,6 @@ class AppServiceProvider extends ServiceProvider
 		\App\Models\Chapter::observe(\App\Observers\ChapterObserver::class);
 		\App\Models\Course::observe(\App\Observers\CourseObserver::class);
 		\App\Models\Teacher::observe(\App\Observers\TeacherObserver::class);
-		\App\Models\Material::observe(\App\Observers\MaterialObserver::class);
 		\App\Models\CompanyPost::observe(\App\Observers\CompanyPostObserver::class);
         app('Dingo\Api\Exception\Handler')->register(function (\Dingo\Api\Exception\ResourceException $exception) {
             return \Illuminate\Support\Facades\Response::make([

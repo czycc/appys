@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\Chapter;
+use App\Models\Order;
 use League\Fractal\TransformerAbstract;
 
 class ChapterTransformer extends TransformerAbstract
@@ -19,9 +20,20 @@ class ChapterTransformer extends TransformerAbstract
         //判断有没有权限
         if ($item->price === 0 || \Auth::guard('api')->user()->vip !== '铜牌会员') {
             //免费
-            $this->permission =true;
+            $this->permission = true;
         }
-
+        //查询是否购买过当前章节
+        if (!$this->permission) {
+            if (
+            Order::where('user_id', \Auth::guard('api')->user()->id)
+                ->where('type_id', $item->id)
+                ->where('type', 'chapter')
+                ->whereNotNull('paid_at')
+                ->first()
+            ) {
+                $this->permission = true;
+            }
+        }
         $data = [
             'id' => $item->id,
             'title' => $item->title,

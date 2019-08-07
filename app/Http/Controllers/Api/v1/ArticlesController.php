@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Article;
 use App\Models\ArticlePrice;
 use App\Models\Media;
+use App\Models\Order;
 use App\Transformers\ArticleTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
@@ -31,7 +32,7 @@ class ArticlesController extends Controller
         //按标签查询
         if ($tag_id = $request->input('tag_id')) {
             //根据标签id查询
-            $query->whereHas('tags', function ($query) use($tag_id){
+            $query->whereHas('tags', function ($query) use ($tag_id) {
                 $query->where('id', $tag_id);
             });
         }
@@ -53,7 +54,19 @@ class ArticlesController extends Controller
 
     public function show(Article $article)
     {
-        return $this->response->item($article, new ArticleTransformer());
+        $permission = false;
+        //查询用户是否购买了课程
+        if (
+        Order::where('user_id', $this->user()->id)
+            ->where('type_id', $article->id)
+            ->whereIn('type', ['audio', 'video', 'topic'])
+            ->whereNotNull('paid_at')
+            ->first()
+        ) {
+            $permission = true;
+        }
+
+        return $this->response->item($article, new ArticleTransformer(false, $permission));
     }
 
 

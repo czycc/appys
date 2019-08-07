@@ -35,6 +35,7 @@ class CourseTransformer extends TransformerAbstract
                 'created_at' => $post->created_at->toDateTimeString(),
             ];
         }
+
         return [
             'id' => $post->id,
             'title' => $post->title,
@@ -50,12 +51,13 @@ class CourseTransformer extends TransformerAbstract
             'buynote' => $post->buynote->body,
             'teacher' => $post->teacher()->select(['id', 'name', 'desc', 'video_url', 'imgs'])->first(),
             'tags' => $post->getTags(),
+            'is_bought' => $this->permission,//用户是否购买
             'created_at' => $post->created_at->toDateTimeString(),
         ];
     }
 
     public function includeChapters(Course $course)
     {
-        return $this->collection($course->chapters()->orderBy('order', 'desc')->get(), new ChapterTransformer());
+        return $this->collection($course->chapters()->orderBy('order', 'desc')->get(), new ChapterTransformer($this->permission));
     }
 }

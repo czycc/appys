@@ -53,11 +53,11 @@ class PayController extends Controller
         if ($order->closed) {
             return 'fail';
         }
-        $order->update([
-            'paid_at' => Carbon::now(),
-            'pay_method' => 'alipay',
-            'pay_no' => $data->trade_no
-        ]);
+//        $order->update([
+//            'paid_at' => Carbon::now(),
+//            'pay_method' => 'alipay',
+//            'pay_no' => $data->trade_no
+//        ]);
 
         $this->cps($order, $order->user);
 
@@ -90,7 +90,7 @@ class PayController extends Controller
                     'extra' => $article->type,
                 ]);
                 //发送通知
-                $article->user()->msgNotify(new NormalNotify(
+                $article->user->msgNotify(new NormalNotify(
                     '作品被购买',
                     "{$article->title}被{$user->nickname}购买",
                     'normal',
@@ -167,11 +167,9 @@ class PayController extends Controller
 
                 //提高课程购买数
                 if ($type == 'course') {
-                    Course::increment('buy_count', 1, ['id' => $order->type_id]);
+                    Course::where('id', $order->type_id)->increment('buy_count', 1);
                 } else {
-                    Course::increment('buy_count', 1, [
-                        'id' => Chapter::find($order->type_id)->course_id
-                    ]);
+                    Course::where('id', Chapter::find($order->type_id)->course_id)->increment('buy_count', 1);
                 }
 
                 //购买课程或章节， 三级分销

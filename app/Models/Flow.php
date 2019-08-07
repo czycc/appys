@@ -17,9 +17,9 @@ class Flow extends Model
         static::created(function ($model) {
 
             //同步更新用户收益余额
-            DB::table('users')->increment('balance', $model->total_amount, [
-                'id' => $model->user_id
-            ]);
+            DB::table('users')
+                ->where('id', $model->user_id)
+                ->increment('balance', $model->total_amount);
 
         });
     }
