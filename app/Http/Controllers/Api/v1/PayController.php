@@ -53,11 +53,11 @@ class PayController extends Controller
         if ($order->closed) {
             return 'fail';
         }
-//        $order->update([
-//            'paid_at' => Carbon::now(),
-//            'pay_method' => 'alipay',
-//            'pay_no' => $data->trade_no
-//        ]);
+        $order->update([
+            'paid_at' => Carbon::now(),
+            'pay_method' => 'alipay',
+            'pay_no' => $data->trade_no
+        ]);
 
         $this->cps($order, $order->user);
 
