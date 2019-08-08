@@ -12,9 +12,6 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('admin.home');
 
-    //平台配置
-    $router->resource('configures', ConfigureController::class, ['only' => ['index', 'show', 'edit', 'update']]);
-
     //文章可用价格
     $router->resource('article_prices', ArticlePriceController::class);
 
