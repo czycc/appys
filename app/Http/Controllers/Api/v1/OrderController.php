@@ -108,6 +108,25 @@ class OrderController extends Controller
         //提交关闭订单队列
         $this->dispatch(new CloseOrder($order, config('app.order_ttl')));
 
+        //不同支付方式
+        if ($request->pay_method === 'wechat') {
+            return $this->response->array([
+                'data' => [
+                    'order' => Pay::wechat()->app([
+                        'out_trade_no' => $order->no,
+                        'total_fee' => $order->total_amount * 100,
+                        'body' => $order->title,
+                    ])->getContent()
+                ]]);
+
+            //用于测试
+//            return Pay::wechat()->scan([
+//                'out_trade_no' => $order->no,
+//                'total_fee' => $order->total_amount * 100,
+//                'body' => $order->title,
+//            ]);
+
+        }
         return $this->response->array([
             'data' => [
                 'order' => Pay::alipay()->app([

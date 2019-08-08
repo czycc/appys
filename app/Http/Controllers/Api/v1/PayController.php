@@ -43,16 +43,24 @@ class PayController extends Controller
         if (!in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
             return Pay::alipay()->success();
         }
+
         $order = Order::where('no', $data->out_trade_no)->first();
+
+        //查询不到订单
+        if (!$order) {
+            return 'fail';
+        }
 
         //已经支付
         if ($order->paid_at) {
             return Pay::alipay()->success();
         }
+
         //订单已经关闭
         if ($order->closed) {
             return 'fail';
         }
+
         $order->update([
             'paid_at' => Carbon::now(),
             'pay_method' => 'alipay',
@@ -64,9 +72,47 @@ class PayController extends Controller
         return Pay::alipay()->success();
     }
 
+    /**
+     * @return string
+     *
+     * 微信支付回调通知
+     */
     public function wechatNotify()
     {
         $data = Pay::wechat()->verify();
+
+        $order = Order::where('no', $data->out_trade_no)->first();
+
+        //查询不到订单
+        if (!$order) {
+            return 'fail';
+        }
+
+        //查询不到订单
+        if (!$order) {
+            return 'fail';
+        }
+
+        //已经支付
+        if ($order->paid_at) {
+            return Pay::wechat()->success();
+        }
+
+        //订单已经关闭
+        if ($order->closed) {
+            return 'fail';
+        }
+
+        $order->update([
+            'paid_at' => Carbon::now(),
+            'pay_method' => 'wechat',
+            'pay_no' => $data->transaction_id
+        ]);
+
+        $this->cps($order, $order->user);
+
+        return Pay::wechat()->success();
+
     }
 
     /**

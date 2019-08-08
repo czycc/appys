@@ -52,6 +52,9 @@ $api->version('v1', [
 
         //阿里支付通知
         $api->post('pay/alipay/notify', 'PayController@alipayNotify');
+        //微信支付通知
+        $api->post('pay/wechat/notify', 'PayController@wechatNotify');
+
     });
 
     $api->group([
