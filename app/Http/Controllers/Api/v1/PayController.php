@@ -64,6 +64,11 @@ class PayController extends Controller
         return Pay::alipay()->success();
     }
 
+    public function wechatNotify()
+    {
+        $data = Pay::wechat()->verify();
+    }
+
     /**
      * @param Order $order
      * @param User $user

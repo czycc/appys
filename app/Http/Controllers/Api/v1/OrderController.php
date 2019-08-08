@@ -92,8 +92,7 @@ class OrderController extends Controller
                 //抵扣
                 $deduction = $this->copperToMoney($chapter->now_price, $request->copper);
                 $order->deduction = $deduction;
-                $price = big_num($chapter->now_price)->subtract($deduction)->getValue();
-
+                $price = big_num($chapter->price)->subtract($deduction)->getValue();
                 break;
             default:
                 return $this->response->errorBadRequest('请求失败，请检查购买类型是否有误');
