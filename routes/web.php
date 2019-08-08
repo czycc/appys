@@ -25,6 +25,8 @@ Route::get('alipay', function () {
     return \Pay::alipay()->web($order);
 });
 
+Route::post('editor/upload', 'EditorUploadImgController@upload');
+
 Route::get('course/{course_id}/user/{user_id}', function () {
     return '分享成功';
 });

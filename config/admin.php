@@ -371,6 +371,19 @@ return [
         //图片裁剪
         'cropper' => [
             'enable' => true,
+        ],
+        //富文本编辑器
+        'wang-editor' => [
+            'enable' => true,
+
+            // 编辑器的配置
+            'config' => [
+                'debug' => true,
+                'uploadImgServer' => '/editor/upload',
+                'uploadImgMaxLength' => 1,
+                'uploadImgMaxSize' => 3 * 1024 * 1024,
+                'uploadFileName' => 'img'
+            ]
         ]
     ],
 ];
