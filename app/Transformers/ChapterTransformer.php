@@ -17,13 +17,15 @@ class ChapterTransformer extends TransformerAbstract
 
     public function transform(Chapter $item)
     {
+        $bought = $this->permission;
+
         //判断有没有权限
         if ($item->price === 0 || \Auth::guard('api')->user()->vip !== '铜牌会员') {
             //免费
-            $this->permission = true;
+            $bought = true;
         }
         //查询是否购买过当前章节
-        if (!$this->permission) {
+        if (!$bought) {
             if (
             Order::where('user_id', \Auth::guard('api')->user()->id)
                 ->where('type_id', $item->id)
@@ -31,7 +33,7 @@ class ChapterTransformer extends TransformerAbstract
                 ->whereNotNull('paid_at')
                 ->first()
             ) {
-                $this->permission = true;
+                $bought = true;
             }
         }
         $data = [
@@ -39,8 +41,8 @@ class ChapterTransformer extends TransformerAbstract
             'title' => $item->title,
             'price' => $item->price,
             'media_type' => $item->media_type,
-            'permission' => $this->permission, //是否有权限
-            'media_url' => $this->permission ? $item->media_url : '',
+            'permission' => $bought, //是否有权限
+            'media_url' => $bought ? $item->media_url : '',
             'created_at' => $item->created_at->toDateTimeString()
         ];
 

@@ -90,7 +90,7 @@ class OrderController extends Controller
                 $title = $chapter->title;
 
                 //抵扣
-                $deduction = $this->copperToMoney($chapter->now_price, $request->copper);
+                $deduction = $this->copperToMoney($chapter->price, $request->copper);
                 $order->deduction = $deduction;
                 $price = big_num($chapter->price)->subtract($deduction)->getValue();
                 break;
@@ -139,9 +139,9 @@ class OrderController extends Controller
         if ($max_deduction < $deduction) {
             $deduction = $max_deduction;
         }
-
         //扣除当前用户铜币
-        $this->user()->decrement('copper', $copper);
+        $this->user()
+            ->decrement('copper', $deduction * $configure['copper_pay_num']);
 
         return $deduction;
     }
