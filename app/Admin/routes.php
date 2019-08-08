@@ -57,5 +57,5 @@ Route::group([
     //提现管理
     $router->resource('admin_flow_outs', FlowController::class);
 
-    $router->get('setting', 'SettingsController@index');
+    $router->get('settings', 'SettingsController@index');
 });
