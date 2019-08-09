@@ -68,12 +68,6 @@ $api->version('v1', [
         $api->resource('tags', 'TagController', ['only' => ['index', 'show']]);
         //返回公司简介列表
         $api->resource('company_posts', 'CompanyPostsController', ['only' => ['index', 'show']]);
-        //最新资讯
-        $api->resource('news', 'NewsController', ['only' => ['index', 'show']]);
-        //平台素材库分类
-        $api->get('material_categories', 'MaterialCategoryController@index')->name('material_categories.index');
-        //平台素材库
-        $api->resource('materials', 'MaterialsController', ['only' => ['index', 'show']]);
 
         /* 首页配置 */
         //banner轮播图

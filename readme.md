@@ -6,6 +6,7 @@
 - `laravel`: 5.5.*
 - `mysql`: >=5.7
 - `composer`
+- PHP OpenSSL PDO Mbstring Tokenizer XML
 
 ### 文件
 
