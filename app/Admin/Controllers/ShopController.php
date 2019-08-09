@@ -36,7 +36,7 @@ class ShopController extends AdminController
         //禁用导出
         $grid->disableExport();
         //禁用多行
-//        $grid->disableRowSelector();
+        $grid->disableRowSelector();
 //        $grid->disableColumnSelector();
         //禁用操作
 //        $grid->disableActions();
@@ -56,20 +56,33 @@ class ShopController extends AdminController
         $grid->column('id', __('Id'))->sortable();
         $grid->column('shop_phone', __('手机'));
         $grid->column('real_name', __('姓名'));
-        $grid->column('introduction', __('介绍'));
-        $grid->column('banner', __('大图'))->image('');
-//        $grid->column('idcard', __('身份证'))->image();
-//        $grid->column('license', __('营业执照'))->image();
-//        $grid->column('shop_imgs', __('多图'))->carousel();
-        $grid->column('status', __('审核'));
-        $grid->column('recommend', __('推荐'));
-        $grid->column('province', __('Province'));
-        $grid->column('city', __('City'));
-        $grid->column('district', __('District'));
-        $grid->column('address', __('地址'));
-//        $grid->column('wechat_qrcode', __('微信码'))->image('',80, 80);
-        $grid->column('zan_count', __('赞'));
-        $grid->column('order', __('权重'));
+        $grid->column('introduction', __('介绍'))->display(function ($intro) {
+            return make_excerpt($intro, 10);
+        });
+        $grid->column('banner', __('大图'))
+            ->image('', 80, 80)
+            ->hide();
+        $grid->column('idcard', __('身份证'))->image()->hide();
+        $grid->column('license', __('营业执照'))->image()->hide();
+        $grid->column('shop_imgs', __('多图'))->carousel()->hide();
+        $grid->column('status', __('审核'))->using([
+            '0' => '未通过',
+            '1' => '通过',
+            '2' => '未审核'
+        ]);
+        $grid->column('recommend', __('推荐'))->using([
+            '0' => '否',
+            '1' => '是',
+        ]);
+        $grid->column('province', __('省'));
+        $grid->column('city', __('市'));
+        $grid->column('district', __('区'));
+        $grid->column('address', __('详细'))->hide();
+        $grid->column('wechat_qrcode', __('微信码'))
+            ->image('',80, 80)
+            ->hide();
+        $grid->column('zan_count', __('赞'))->sortable();
+        $grid->column('order', __('权重'))->sortable();
         $grid->column('user.nickname', __('所属人'));
         $grid->column('created_at', __('创建'));
 
@@ -131,17 +144,19 @@ class ShopController extends AdminController
 //        $form->text('shop_imgs', __('Shop imgs'));
 //        $form->decimal('longitude', __('Longitude'));
 //        $form->decimal('latitude', __('Latitude'));
-        $form->switch('status', __('Status'))->default(2);
-        $form->datetime('expire_at', __('Expire at'))->default(date('Y-m-d H:i:s'));
-        $form->switch('recommend', __('Recommend'));
-        $form->text('province', __('Province'));
-        $form->text('city', __('City'));
-        $form->text('district', __('District'));
-        $form->text('address', __('Address'));
-        $form->text('wechat_qrcode', __('Wechat qrcode'));
-        $form->number('zan_count', __('Zan count'));
-        $form->number('order', __('Order'));
-        $form->number('user_id', __('User id'));
+        $form->switch('status', __('是否审核'))->default(2);
+//        $form->datetime('expire_at', __('Expire at'))->default(date('Y-m-d H:i:s'));
+        $form->switch('recommend', __('是否推荐'));
+        $form->text('province', __('省'));
+        $form->text('city', __('市'));
+        $form->text('district', __('区'));
+        $form->text('address', __('详细'));
+        $form->cropper('wechat_qrcode', __('店铺二维码'))
+            ->move('backend/images/posts/' . date('Ym/d', time()))
+            ->uniqueName();
+        $form->number('zan_count', __('点赞数'));
+        $form->number('order', __('权重'));
+//        $form->number('user_id', __('User id'));
 
         return $form;
     }

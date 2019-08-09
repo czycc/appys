@@ -12,7 +12,7 @@ class Buynote extends Form
      *
      * @var string
      */
-    public $title = '购买须知';
+    public $title = '课程购买须知';
 
     /**
      * Handle the form request.

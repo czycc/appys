@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Widgets\Table;
 
 class UserController extends AdminController
 {
@@ -36,7 +37,7 @@ class UserController extends AdminController
         //禁用导出
         $grid->disableExport();
         //禁用多行
-//        $grid->disableRowSelector();
+        $grid->disableRowSelector();
 //        $grid->disableColumnSelector();
         //禁用操作
 //        $grid->disableActions();
@@ -56,16 +57,27 @@ class UserController extends AdminController
         //快速查询
         $grid->quickSearch('phone');
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('phone', __('手机号'));
-        $grid->column('nickname', __('昵称'));
+        $grid->column('nickname', __('昵称'))->expand(function ($model) {
+            $extra = $model->extra()->select([
+                'name', 'idcard', 'idcard', 'health', 'extra', 'created_at'
+            ])->get();
+            if ($extra->isNotEmpty()) {
+                return new Table([
+                    '姓名', '身份证号', '健康', '备注', '创建时间'
+                ], $extra->toArray());
+            }
+
+        });
         $grid->column('avatar', __('头像'))->image(80, 80);
         $grid->column('gold', __('金币'));
         $grid->column('silver', __('银币'));
         $grid->column('copper', __('铜币'));
-        $grid->column('bound_id', __('上级'))->display(function ($bound_id) {
-            if ($bound_id) {
-                return User::find($bound_id)->nickname;
+        $grid->column('bound_id', __('上级'))->display(function ($boundId) {
+            if ($boundId) {
+                $user = User::find($boundId);
+                return "<a href='admin_users?&id={$user->id}'>" . $user->nickname . "</a>";
             }
         });
         $grid->column('vip', __('Vip'));
@@ -116,13 +128,30 @@ class UserController extends AdminController
     protected function form()
     {
         $form = new Form(new User);
+        $form->saving(function (Form $form) {
+            switch ($form->vip) {
+                case '铜牌会员':
+                    $form->vip = 0;
+                    break;
+                case '银牌会员':
+                    $form->vip = 1;
+                    break;
+                case '代理会员':
+                    $form->vip = 2;
+                    break;
+            }
 
+        });
         $form->mobile('phone', __('手机'))->disable();
-        $form->text('nickname', __('昵称'))->disable();
+        $form->text('nickname', __('昵称'));
         $form->number('gold', __('金币'));
         $form->number('silver', __('银币'));
         $form->number('copper', __('铜币'));
-        $form->switch('vip', __('会员'));
+        $form->select('vip', __('会员'))->options([
+            '铜牌会员' => '铜牌会员',
+            '银牌会员' => '银牌会员',
+            '代理会员' => '代理会员',
+        ])->required();
         $form->datetime('expire_at', __('到期时间'))->default(date('Y-m-d H:i:s'));
 
         return $form;

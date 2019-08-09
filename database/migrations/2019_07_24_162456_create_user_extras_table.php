@@ -20,7 +20,10 @@ class CreateUserExtrasTable extends Migration
             $table->string('health')->comment('健康状态');
             $table->string('extra')->nullable()->comment('备注');
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

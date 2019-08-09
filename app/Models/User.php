@@ -86,7 +86,7 @@ class User extends Authenticatable implements JWTSubject
         if ($this->expire_at < Carbon::now()) {
             return '铜牌会员';
         }
-        return $value === 2 ? '代理会员' : $value === 1 ? '银牌会员' : '铜牌会员';
+        return $value === 2 ? '代理会员' : ($value === 1 ? '银牌会员' : '铜牌会员');
 
     }
 

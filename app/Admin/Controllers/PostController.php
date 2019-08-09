@@ -102,11 +102,11 @@ class PostController extends AdminController
     protected function form()
     {
         $form = new Form(new CompanyPost);
-
+        $date = date('Ym/d', time());
         $form->text('title', __('标题'));
         $form->wangEditor('body', __('内容'));
         $form->cropper('thumbnail', __('封面图'))
-            ->move('backend/images/posts')
+            ->move('backend/images/posts/' . $date)
             ->uniqueName();
         $form->text('media_type', __('媒体类型'))->default('audio');
         $form->text('media_url', __('媒体链接'));

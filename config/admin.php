@@ -384,6 +384,9 @@ return [
                 'uploadImgMaxSize' => 3 * 1024 * 1024,
                 'uploadFileName' => 'img'
             ]
+        ],
+        'chartjs' => [
+            'enable' => true,
         ]
     ],
 ];

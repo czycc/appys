@@ -15,7 +15,7 @@ class FlowController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\FlowOut';
+    protected $title = '提现记录';
 
     /**
      * Make a grid builder.

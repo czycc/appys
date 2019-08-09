@@ -12,6 +12,7 @@
         "fideloper/proxy": "~3.3",
         "intervention/image": "^2.5",
         "jacobcyl/ali-oss-storage": "^2.1",
+        "laravel-admin-ext/chartjs": "^1.0",
         "laravel-admin-ext/cropper": "1.0.2.1",
         "laravel-admin-ext/media-player": "^1.0",
         "laravel-admin-ext/wang-editor": "^1.1",

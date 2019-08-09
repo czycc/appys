@@ -21,7 +21,10 @@ class CreateFlowOutsTable extends Migration
             $table->string('out_method')->comment('提现方式');
             $table->string('ali_account')->nullable();
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
