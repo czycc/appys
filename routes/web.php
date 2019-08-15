@@ -28,6 +28,6 @@ Route::get('alipay', function () {
 //editor 上传图片
 Route::post('editor/upload', 'EditorUploadImgController@upload');
 
-Route::get('course/{course_id}/user/{user_id}', function () {
+Route::get('type/{type}/id/{id}/user/{user_id}', function () {
     return '分享成功';
 });
