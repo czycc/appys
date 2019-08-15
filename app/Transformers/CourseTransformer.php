@@ -40,6 +40,7 @@ class CourseTransformer extends TransformerAbstract
             'id' => $post->id,
             'title' => $post->title,
             'body' => $post->body,
+            'excerpt' => make_excerpt($post->body),
             'banner' => $post->banner,
             'ori_price' => $post->ori_price,
             'now_price' => $post->now_price,
