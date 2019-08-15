@@ -60,7 +60,7 @@ class Coin extends Form
     {
         return [
             'reset' => 0,
-            'date' => \Redis::get('last_reset_date')
+            'date' => Redis::get('last_reset_date')
         ];
     }
 }
