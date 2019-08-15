@@ -77,7 +77,7 @@ class AuthorizationsController extends Controller
     public function SocialStore($type, SocialAuthorizationRequest $request)
     {
         if (!in_array($type, ['weixin'])) {
-            return $this->response->errorBadRequest();
+            return $this->response->errorBadRequest('不可用的登陆方式');
         }
 
         //第三方登陆
@@ -95,7 +95,7 @@ class AuthorizationsController extends Controller
             }
             $oauthUser = $driver->userFromToken($token);
         } catch (\Exception $e) {
-            return $this->response->errorBadRequest('参数错误,无法获取用户信息');
+            return $this->response->errorBadRequest('授权登陆失败，请重试');
         }
 
 

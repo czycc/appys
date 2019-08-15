@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\NormalNotify;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -124,11 +125,21 @@ class User extends Authenticatable implements JWTSubject
 
         static::saved(function (User $model) {
 
-            //同步更新店铺过期时间
             if ($model->isDirty('expire_at')) {
+                //同步更新店铺过期时间
                 Shop::where('user_id', $model->id)
                     ->update(['expire_at' => $model->expire_at]);
+                if ($model->vip === '代理会员') {
+                    //通知成为代理
+                    $model->msgNotify(new NormalNotify(
+                        '代理会员通知',
+                        '代理会员到期时间：'. $model->expire_at,
+                        'vip'
+                    ));
+                }
             }
+
+
         });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\FlowOut;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -27,14 +28,24 @@ class FlowController extends AdminController
         $grid = new Grid(new FlowOut);
 
         $grid->column('id', __('Id'));
-        $grid->column('total_amount', __('Total amount'));
-        $grid->column('status', __('Status'));
-        $grid->column('out_status', __('Out status'));
-        $grid->column('out_method', __('Out method'));
-        $grid->column('ali_account', __('Ali account'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('total_amount', __('总金额'));
+        $grid->column('status', __('审核状态'))->using([
+            '0' => '未审核',
+            '1' => '已审核'
+        ]);
+        $grid->column('out_status', __('提现状态'))->using([
+            '0' => '未提现',
+            '1' => '已提现'
+        ]);
+        $grid->column('out_method', __('提现方式'))->using([
+            'wechat' => '微信',
+            'alipay' => '支付宝'
+        ]);
+        $grid->column('ali_account', __('阿里账号'));
+        $grid->column('user_id', __('用户姓名'))->display(function ($user_id) {
+            return User::find($user_id)->nickname;
+        });
+        $grid->column('created_at', __('创建时间'));
 
         return $grid;
     }
@@ -71,8 +82,8 @@ class FlowController extends AdminController
     {
         $form = new Form(new FlowOut);
 
-        $form->decimal('total_amount', __('Total amount'));
-        $form->switch('status', __('Status'));
+//        $form->decimal('total_amount', __(''));
+        $form->switch('status', __('审核状态'));
         $form->switch('out_status', __('Out status'));
         $form->text('out_method', __('Out method'));
         $form->text('ali_account', __('Ali account'));

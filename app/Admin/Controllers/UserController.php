@@ -55,7 +55,7 @@ class UserController extends AdminController
         });
 
         //快速查询
-        $grid->quickSearch('phone');
+        $grid->quickSearch('phone')->placeholder('按手机号搜索');
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('phone', __('手机号'));

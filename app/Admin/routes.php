@@ -51,8 +51,16 @@ Route::group([
     //课程管理
     $router->resource('admin_courses', CourseController::class);
 
+    //课程章节管理
+    $router->resource('admin_chapters', ChapterController::class);
+
+    //课程分类
+    $router->resource('course_categories', CourseCategoryController::class);
+
     //提现管理
     $router->resource('admin_flow_outs', FlowController::class);
 
+    //平台设置
     $router->get('settings', 'SettingsController@index');
+
 });

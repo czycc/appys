@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\ArticlePrice;
+use App\Models\CourseCategory;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class ArticlePriceController extends AdminController
+class CourseCategoryController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '文章价格设置';
+    protected $title = '课程分类';
 
     /**
      * Make a grid builder.
@@ -24,18 +24,38 @@ class ArticlePriceController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new ArticlePrice);
+        $grid = new Grid(new CourseCategory);
 
-        //禁用按钮
-        $grid->disablePagination();
+        $grid->model()->orderByDesc('id');
+        //禁用创建
+        $grid->disableCreateButton();
+        //禁用分页
+//        $grid->disablePagination();
+        //禁用检索
         $grid->disableFilter();
+        //禁用导出
         $grid->disableExport();
+        //禁用多行
         $grid->disableRowSelector();
-        $grid->disableColumnSelector();
+//        $grid->disableColumnSelector();
+        //禁用操作
+//        $grid->disableActions();
 
+        $grid->actions(function ($actions) {
+
+            // 去掉删除
+            $actions->disableDelete();
+
+            // 去掉编辑
+//            $actions->disableEdit();
+
+            // 去掉查看
+            $actions->disableView();
+        });
         $grid->column('id', __('Id'));
-        $grid->column('price', __('价格'));
-
+        $grid->column('name', __('分类名称'));
+        $grid->column('desc', __('描述'));
+//        $grid->column('post_count', __('Post count'));
 
         return $grid;
     }
@@ -48,12 +68,12 @@ class ArticlePriceController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(ArticlePrice::findOrFail($id));
+        $show = new Show(CourseCategory::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('price', __('Price'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('name', __('Name'));
+        $show->field('desc', __('Desc'));
+        $show->field('post_count', __('Post count'));
 
         return $show;
     }
@@ -65,7 +85,8 @@ class ArticlePriceController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new ArticlePrice);
+        $form = new Form(new CourseCategory);
+
         $form->footer(function ($footer) {
 
             // 去掉`重置`按钮
@@ -95,11 +116,11 @@ class ArticlePriceController extends AdminController
 
             // 去掉`查看`按钮
             $tools->disableView();
-
-            // 添加一个按钮, 参数可以是字符串, 或者实现了Renderable或Htmlable接口的对象实例
-//            $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
         });
-        $form->decimal('price', __('价格'))->rules('required|numeric|min:0.00');
+
+        $form->text('name', __('分类名'));
+        $form->text('desc', __('描述'));
+//        $form->number('post_count', __('Post count'));
 
         return $form;
     }

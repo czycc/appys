@@ -31,3 +31,6 @@ Route::post('editor/upload', 'EditorUploadImgController@upload');
 Route::get('type/{type}/id/{id}/user/{user_id}', function () {
     return '分享成功';
 });
+
+Route::get('admin/api/courses', 'AdminApiController@courses');
+Route::get('admin/api/teachers', 'AdminApiController@teachers');

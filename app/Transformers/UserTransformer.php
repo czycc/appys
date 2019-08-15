@@ -62,7 +62,7 @@ class UserTransformer extends TransformerAbstract
                 'avatar' => $item->avatar,
                 'bound_wechat' => ($item->wx_openid || $item->wx_unionid) ? true : false,
                 'vip' => $item->vip,
-                'notification_count' => (int)$item->notifications_count,
+                'notification_count' => (int)$item->notification_count,
                 'bound_user' => $item->bound_id === 0 ? '未绑定' :
                     $item->bound_status ? '已绑定' : '待通过',
                 'gold' => $item->gold,
