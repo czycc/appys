@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Encore\Admin\Widgets\Form;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class Coin extends Form
 {
@@ -26,7 +27,7 @@ class Coin extends Form
     public function handle(Request $request)
     {
         if ($request->reset === 'on') {
-            \Redis::set('last_reset_date', Carbon::now()->toDateTimeString());
+            Redis::set('last_reset_date', Carbon::now()->toDateTimeString());
             DB::table('users')->update([
                 'silver' => 0,
                 'gold' => 0
