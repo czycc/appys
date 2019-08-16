@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Forms\Coin;
 use App\Admin\Forms\Configure;
+use App\Admin\Forms\Index;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Layout\Content;
 use App\Admin\Forms\Buynote;
@@ -17,6 +18,7 @@ class SettingsController extends Controller
             'configure' => Configure::class,
             'buynote' => Buynote::class,
             'reset' => Coin::class,
+            'index' => Index::class,
         ];
 
         return $content

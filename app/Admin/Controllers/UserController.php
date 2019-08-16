@@ -147,7 +147,7 @@ class UserController extends AdminController
         $form->number('gold', __('金币'));
         $form->number('silver', __('银币'));
         $form->number('copper', __('铜币'));
-        $form->select('vip', __('会员'))->options([
+        $form->select('vip', __('会员(必须同时设置到期时间)'))->options([
             '铜牌会员' => '铜牌会员',
             '银牌会员' => '银牌会员',
             '代理会员' => '代理会员',

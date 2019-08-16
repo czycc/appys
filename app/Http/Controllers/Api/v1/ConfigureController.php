@@ -71,7 +71,7 @@ class ConfigureController extends Controller
         }
 
         //最新资讯
-        $news = CompanyPost::select(['id', 'title', 'body', 'thumbnail','category_id', 'created_at'])
+        $news = CompanyPost::select(['id', 'title', 'body', 'thumbnail', 'category_id', 'created_at'])
             ->where('category_id', 2)//固定id为2
             ->orderByDesc('id')
             ->limit(15)
@@ -87,7 +87,7 @@ class ConfigureController extends Controller
         }])
             ->select(['id', 'user_id', 'updated_at'])
             ->where('recommend', 1)
-            ->where('expire_at', '>',Carbon::now())
+            ->where('expire_at', '>', Carbon::now())
             ->orderBy('updated_at', 'desc')
             ->limit(15)
             ->get();
@@ -106,8 +106,7 @@ class ConfigureController extends Controller
 
         return $this->response->array(
             [
-                'data' =>
-                    [
+                'data' => [
                         'menu' => $menu,
                         'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id'])->get(),
                         'shops' => $shops,
