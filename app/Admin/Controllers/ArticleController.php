@@ -25,7 +25,44 @@ class ArticleController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Article);
+        $grid = new Grid(new Course);
 
+        $grid->model()->orderByDesc('id');
+        //禁用创建
+        $grid->disableCreateButton();
+        //禁用分页
+//        $grid->disablePagination();
+        //禁用检索
+//        $grid->disableFilter();
+        //禁用导出
+        $grid->disableExport();
+        //禁用多行
+//        $grid->disableRowSelector();
+//        $grid->disableColumnSelector();
+        //禁用操作
+//        $grid->disableActions();
+
+        $grid->actions(function ($actions) {
+
+            // 去掉删除
+//            $actions->disableDelete();
+
+            // 去掉编辑
+            $actions->disableEdit();
+
+            // 去掉查看
+            $actions->disableView();
+        });
+
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+//            $filter->disableIdFilter();
+
+            // 在这里添加字段过滤器
+
+
+        });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('标题'));
         $grid->column('top_img', __('大图'))->image('');
@@ -42,7 +79,7 @@ class ArticleController extends AdminController
             }
             return $column->audio(['audioWidth' => 240]);
         })->width(100);
-        $grid->column('multi_imgs', __('多图'))->hide();
+        $grid->column('multi_imgs', __('多图'))->carousel(150,150)->hide();
         $grid->column('price', __('价格'))->editable();
         $grid->column('zan_count', __('赞数'));
         $grid->column('user.nickname', __('用户'));
