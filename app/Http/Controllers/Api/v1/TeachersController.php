@@ -25,36 +25,4 @@ class TeachersController extends Controller
         return $this->response->item($teacher, new TeacherTransformer());
     }
 
-	public function create(Teacher $teacher)
-	{
-		return view('teachers.create_and_edit', compact('teacher'));
-	}
-
-	public function store(TeacherRequest $request)
-	{
-		$teacher = Teacher::create($request->all());
-		return redirect()->route('teachers.show', $teacher->id)->with('message', 'Created successfully.');
-	}
-
-	public function edit(Teacher $teacher)
-	{
-        $this->authorize('update', $teacher);
-		return view('teachers.create_and_edit', compact('teacher'));
-	}
-
-	public function update(TeacherRequest $request, Teacher $teacher)
-	{
-		$this->authorize('update', $teacher);
-		$teacher->update($request->all());
-
-		return redirect()->route('teachers.show', $teacher->id)->with('message', 'Updated successfully.');
-	}
-
-	public function destroy(Teacher $teacher)
-	{
-		$this->authorize('destroy', $teacher);
-		$teacher->delete();
-
-		return redirect()->route('teachers.index')->with('message', 'Deleted successfully.');
-	}
 }

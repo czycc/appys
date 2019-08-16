@@ -9,6 +9,13 @@ use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 
 class VerificationCodesController extends Controller
 {
+    /**
+     * @param VerificationCodeRequest $request
+     * @param EasySms $easySms
+     * @throws \Overtrue\EasySms\Exceptions\InvalidArgumentException
+     *
+     * 发送验证码
+     */
     public function store(VerificationCodeRequest $request, EasySms $easySms)
     {
         $phone = $request->phone;

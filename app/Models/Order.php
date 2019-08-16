@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['no', 'title', 'total_amount', 'paid_at', 'pay_method', 'pay_no', 'type', 'type_id', 'closed'];
 
     protected $casts = [
         'closed' => 'boolean'
     ];
     protected $dates = [
-        'paid_at', 'created_at', 'updated_at'
+        'paid_at', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     const TYPE_ARTICLE = 'article';

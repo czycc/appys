@@ -23,6 +23,7 @@ class CreateCoursesTable extends Migration
             $table->integer('buynote_id')->unsigned()->default(1);
             $table->integer('teacher_id')->unsigned();
             $table->integer('category_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('buynote_id')

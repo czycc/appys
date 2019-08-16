@@ -200,8 +200,15 @@ class UsersController extends Controller
         return $this->response->created();
     }
 
-
-    public function ScanConfirm(DatabaseNotification $notify, Request $request)
+    /**
+     * @param DatabaseNotification $notify
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response|void
+     * @throws \Exception
+     *
+     * 扫码绑定上级
+     */
+    public function scanConfirm(DatabaseNotification $notify, Request $request)
     {
         $bound = BoundScan::find($notify->data['type_id']);
         //是否是本人

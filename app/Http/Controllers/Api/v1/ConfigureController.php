@@ -13,6 +13,7 @@ use App\Transformers\CourseTransformer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Banner;
+use Illuminate\Support\Facades\Redis;
 
 class ConfigureController extends Controller
 {
@@ -103,6 +104,7 @@ class ConfigureController extends Controller
         $menu[6] = '用户视频';
         $menu[7] = $company_categories[1]->name;
 
+        $notify = Redis::get('appys_index_notify');
 
         return $this->response->array(
             [
@@ -112,9 +114,7 @@ class ConfigureController extends Controller
                         'shops' => $shops,
                         'hots' => $hots,
                         'news' => $news,
-                        'notify' => [
-                            '这是一段通知，有问题请联系123456789'
-                        ],
+                        'notify' => json_decode($notify, true) ?? [],
                     ]]);
     }
 }

@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 
 class FlowController extends Controller
 {
+    /**
+     * @return \Dingo\Api\Http\Response
+     *
+     * 当前用户流水列表
+     */
     public function index()
     {
         $flows = Flow::select(['id', 'title', 'total_amount', 'created_at'])
@@ -27,7 +32,7 @@ class FlowController extends Controller
     /**
      * @return mixed
      *
-     * 提现列表
+     * 当前用户提现列表
      */
     public function flowOutList()
     {
@@ -39,6 +44,13 @@ class FlowController extends Controller
         return $this->response->paginator($outs, new FlowOutTransformer());
     }
 
+    /**
+     * @param FlowOutRequest $request
+     * @param FlowOut $flowOut
+     * @return mixed
+     *
+     * 提交提现
+     */
     public function flowOutStore(FlowOutRequest $request, FlowOut $flowOut)
     {
         if (!$this->user()->extra) {

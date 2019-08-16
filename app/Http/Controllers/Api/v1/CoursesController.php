@@ -15,6 +15,13 @@ class CoursesController extends Controller
 //        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
+    /**
+     * @param Request $request
+     * @param Course $course
+     * @return \Dingo\Api\Http\Response
+     *
+     * 课程列表
+     */
 	public function index(Request $request, Course $course)
 	{
         $query = $course->query()->with('teacher', 'buynote', 'tags');
@@ -45,6 +52,12 @@ class CoursesController extends Controller
         return $this->response->paginator($posts, new CourseTransformer(true));
     }
 
+    /**
+     * @param Course $course
+     * @return \Dingo\Api\Http\Response
+     *
+     * 查询课程
+     */
     public function show(Course $course)
     {
         $permission = false;

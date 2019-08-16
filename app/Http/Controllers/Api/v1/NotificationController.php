@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+    /**
+     * @return \Dingo\Api\Http\Response
+     *
+     * 查询通知信息
+     */
     public function index()
     {
         $list = $this->user()->notifications()->paginate(20);

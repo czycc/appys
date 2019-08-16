@@ -49,6 +49,7 @@ class CompanyPostsController extends Controller
     public function show($id)
     {
         $post = CompanyPost::find($id);
+
         return $this->response->item($post, new CompanyPostTransformer());
     }
 

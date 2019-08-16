@@ -15,6 +15,7 @@ class CreateTeachersTable extends Migration
             $table->text('video_url')->nullable();
             $table->json('imgs');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 	}

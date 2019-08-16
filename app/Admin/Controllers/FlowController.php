@@ -27,21 +27,56 @@ class FlowController extends AdminController
     {
         $grid = new Grid(new FlowOut);
 
+        $grid->model()->orderByDesc('id');
+        //禁用创建
+        $grid->disableCreateButton();
+        //禁用分页
+//        $grid->disablePagination();
+        //禁用检索
+//        $grid->disableFilter();
+        //禁用导出
+        $grid->disableExport();
+        //禁用多行
+//        $grid->disableRowSelector();
+//        $grid->disableColumnSelector();
+        //禁用操作
+        $grid->disableActions();
+
+        $grid->actions(function ($actions) {
+
+            // 去掉删除
+//            $actions->disableDelete();
+
+            // 去掉编辑
+//            $actions->disableEdit();
+
+            // 去掉查看
+//            $actions->disableView();
+        });
+
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+//            $filter->disableIdFilter();
+
+            // 在这里添加字段过滤器
+
+
+        });
         $grid->column('id', __('Id'));
         $grid->column('total_amount', __('总金额'));
-        $grid->column('status', __('审核状态'))->using([
-            '0' => '未审核',
-            '1' => '已审核'
-        ]);
-        $grid->column('out_status', __('提现状态'))->using([
-            '0' => '未提现',
-            '1' => '已提现'
-        ]);
+        $grid->column('status', __('审核状态'))->switch();
+        $grid->column('out_status', __('提现状态'))->display(function ($out_status) {
+            if ($out_status == 1) {
+                return '成功';
+            }
+            return '未提现';
+        });
         $grid->column('out_method', __('提现方式'))->using([
             'wechat' => '微信',
             'alipay' => '支付宝'
         ]);
-        $grid->column('ali_account', __('阿里账号'));
+        $grid->column('ali_account', __('支付宝账号'));
         $grid->column('user_id', __('用户姓名'))->display(function ($user_id) {
             return User::find($user_id)->nickname;
         });

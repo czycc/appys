@@ -88,11 +88,6 @@ class PayController extends Controller
             return 'fail';
         }
 
-        //查询不到订单
-        if (!$order) {
-            return 'fail';
-        }
-
         //已经支付
         if ($order->paid_at) {
             return Pay::wechat()->success();

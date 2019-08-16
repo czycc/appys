@@ -4,14 +4,17 @@ namespace App\Models;
 
 //use Jcc\LaravelVote\CanBeVoted;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Overtrue\LaravelFollow\Traits\CanBeVoted;
 
 class Course extends Model
 {
-    use CanBeVoted;
+    use CanBeVoted, SoftDeletes;
+
     protected $vote = User::class;
 
     protected $fillable = ['title', 'banner', 'ori_price', 'now_price', 'body', 'show', 'recommend', 'order', 'buynote_id', 'teacher_id'];
+    protected $dates = ['deleted_at'];
 
     public function scopeRecommend($query)
     {
@@ -31,11 +34,13 @@ class Course extends Model
             'id', 'title', 'body', 'banner', 'ori_price', 'now_price', 'buy_count', 'category_id', 'created_at', 'teacher_id',
         ]);
     }
+
     public function scopeBought($query)
     {
         //按购买数量
         return $query->orderBy('buy_count', 'desc');
     }
+
     public function category()
     {
         return $this->belongsTo(CourseCategory::class, 'category_id');
@@ -48,7 +53,7 @@ class Course extends Model
 
     public function teacher()
     {
-       return $this->belongsTo(Teacher::class, 'teacher_id');
+        return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
     public function chapters()

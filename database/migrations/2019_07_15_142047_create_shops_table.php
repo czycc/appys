@@ -14,12 +14,12 @@ class CreateShopsTable extends Migration
             $table->text('introduction');
             $table->string('banner');
             $table->string('idcard');
-            $table->string('license');
-            $table->json('shop_imgs');
+            $table->string('license')->comment('营业执照');
+            $table->json('shop_imgs')->comment('店铺多图');
             $table->decimal('longitude', 10, 7);
             $table->decimal('latitude', 10, 7);
             $table->tinyinteger('status')->default(2)->comment('审核状态');
-            $table->dateTime('expire_at')->nullable();
+            $table->dateTime('expire_at')->nullable()->comment('与会员到期一致，用于检索');
             $table->tinyInteger('recommend')->default(0);
             $table->string('province');
             $table->string('city');

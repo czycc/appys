@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Teacher extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['name', 'password', 'desc', 'video_url', 'imgs'];
 
     public function course()
@@ -21,6 +24,8 @@ class Teacher extends Model
     protected $hidden = [
         'remember_token',
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * @param $value

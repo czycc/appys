@@ -19,6 +19,13 @@ function make_excerpt($value, $length = 50)
     return str_limit($excerpt, $length);
 }
 
+/**
+ * @param $num
+ * @param int $scale
+ * @return \Moontoast\Math\BigNumber
+ *
+ * 计算decimal数字
+ */
 function big_num($num, $scale = 2) {
     return new \Moontoast\Math\BigNumber($num, $scale);
 }

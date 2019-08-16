@@ -6,15 +6,15 @@ use App\Notifications\NormalNotify;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-//use Jcc\LaravelVote\Vote;
 use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 use Overtrue\LaravelFollow\Traits\CanVote;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, CanVote, CanBeFollowed, CanFollow;
+    use Notifiable, CanVote, CanBeFollowed, CanFollow, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +37,8 @@ class User extends Authenticatable implements JWTSubject
     protected $dates = [
         'created_at',
         'updated_at',
-        'expire_at'
+        'expire_at',
+        'deleted_at'
     ];
 
     public function getJWTIdentifier()

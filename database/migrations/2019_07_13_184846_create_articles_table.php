@@ -19,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->integer('zan_count')->index()->default(0);
             $table->integer('user_id')->unsigned();
             $table->tinyInteger('status')->default(2);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')

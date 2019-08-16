@@ -4,18 +4,20 @@ namespace App\Models;
 
 //use Jcc\LaravelVote\CanBeVoted;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Overtrue\LaravelFollow\Traits\CanBeVoted;
 
 class Article extends Model
 {
-    use CanBeVoted;
+    use CanBeVoted, SoftDeletes;
     protected $vote = User::class;
 
     protected $fillable = ['title', 'top_img', 'body', 'media_type', 'media_url', 'multi_imgs', 'price'];
-
+    protected $dates = ['deleted_at'];
     protected $casts = [
         'multi_imgs' => 'array'
     ];
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
@@ -64,6 +66,7 @@ class Article extends Model
             ->limit(300)
             ->get();
     }
+
     public function shop()
     {
         return $this->hasManyThrough(User::class, Shop::class);

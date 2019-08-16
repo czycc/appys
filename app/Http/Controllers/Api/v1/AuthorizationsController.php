@@ -74,7 +74,7 @@ class AuthorizationsController extends Controller
      *
      * 第三方授权登陆
      */
-    public function SocialStore($type, SocialAuthorizationRequest $request)
+    public function socialStore($type, SocialAuthorizationRequest $request)
     {
         if (!in_array($type, ['weixin'])) {
             return $this->response->errorBadRequest('不可用的登陆方式');
