@@ -69,13 +69,4 @@ class Article extends Model
         return $this->hasManyThrough(User::class, Shop::class);
     }
 
-    /**
-     * @param $value
-     * @return mixed
-     * 转化json数组
-     */
-    public function getMultiImgsAttribute($value)
-    {
-        return json_decode($value, true);
-    }
 }

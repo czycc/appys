@@ -75,10 +75,11 @@ class ArticlesController extends Controller
         $this->authorize('create', $article);
 
         $article->fill($request->all());
+        $multi = json_decode($request->multi_imgs);
         $article->user_id = $this->user()->id;
         $article->status = 2; //避免transformer返回null
-        $article->top_img = json_decode($request->multi_imgs)[0];//第一张作为头图
-
+        $article->top_img = $multi[0];//第一张作为头图
+        $article->multi_imgs = $multi;
         //根据后台设置价格
         $price = ArticlePrice::find($request->price_id);
         $article->price = $price->price;
