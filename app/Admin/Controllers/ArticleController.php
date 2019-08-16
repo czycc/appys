@@ -25,7 +25,6 @@ class ArticleController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Article);
-        $grid = new Grid(new Course);
 
         $grid->model()->orderByDesc('id');
         //禁用创建
