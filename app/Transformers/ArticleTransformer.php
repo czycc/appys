@@ -36,8 +36,8 @@ class ArticleTransformer extends TransformerAbstract
             ];
         }
 
-        //当前用户为自己时拥有权限查看
-        if (\Auth::guard('api')->id() === $item->user_id) {
+        //当前用户为自己时拥有权限查看 或免费
+        if (\Auth::guard('api')->id() === $item->user_id || $item->price === '0.00') {
             $this->permission = true;
         }
         $data = [
