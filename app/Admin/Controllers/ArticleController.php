@@ -68,7 +68,9 @@ class ArticleController extends AdminController
         $grid->column('body', __('图文'))->display(function ($body) {
             return make_excerpt($body, 10);
         });
-        $grid->column('media_type', __('媒体类型'))->using(['video' => '视频', 'audio' => '音频'])->hide();
+        $grid->column('media_type', __('媒体类型'))->using([
+            'video' => '视频', 'audio' => '音频', 'topic' => '文章'
+        ])->hide();
         $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
             if (!$this->media_url) {
                 return '';
