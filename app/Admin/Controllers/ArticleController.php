@@ -26,13 +26,13 @@ class ArticleController extends AdminController
     {
         $grid = new Grid(new Article);
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('标题'));
         $grid->column('top_img', __('大图'))->image('');
         $grid->column('body', __('图文'))->display(function ($body) {
             return make_excerpt($body, 10);
         });
-        $grid->column('media_type', __('媒体类型'))->using(['video' => '视频', 'audio' => '音频']);
+        $grid->column('media_type', __('媒体类型'))->using(['video' => '视频', 'audio' => '音频'])->hide();
         $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
             if (!$this->media_url) {
                 return '';
@@ -42,12 +42,12 @@ class ArticleController extends AdminController
             }
             return $column->audio(['audioWidth' => 240]);
         })->width(100);
-        $grid->column('multi_imgs', __('多图'))->carousel(150, 150);
+        $grid->column('multi_imgs', __('多图'))->hide();
         $grid->column('price', __('价格'))->editable();
         $grid->column('zan_count', __('赞数'));
         $grid->column('user.nickname', __('用户'));
-        $grid->column('status', __('审核'));
-        $grid->column('created_at', __('创建'));
+        $grid->column('status', __('审核'))->switch();
+        $grid->column('created_at', __('创建'))->hide();
 
         return $grid;
     }
