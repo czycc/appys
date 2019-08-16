@@ -108,7 +108,10 @@ class PostController extends AdminController
         $form->cropper('thumbnail', __('封面图'))
             ->move('backend/images/posts/' . $date)
             ->uniqueName();
-        $form->text('media_type', __('媒体类型'))->default('audio');
+        $form->select('media_type', __('媒体类型'))->options([
+            'audio' => '音频',
+            'video' => '视频'
+        ]);
         $form->text('media_url', __('媒体链接'));
 //        $form->number('view_count', __(''));
         $form->number('zan_count', __('点赞数量'))->default(0);

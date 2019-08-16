@@ -121,7 +121,10 @@ class ChapterController extends AdminController
 
         $form->text('title', __('标题'));
         $form->decimal('price', __('价格'))->default(0.00);
-        $form->text('media_type', __('媒体类型'))->required();
+        $form->select('media_type', __('媒体类型'))->options([
+            'audio' => '音频',
+            'video' => '视频'
+        ]);
         $form->textarea('media_url', __('媒体链接'));
         $form->select('course_id', __('所属课程(输入课程名称搜索)'))->options(function ($id) {
             $course = Course::find($id);
