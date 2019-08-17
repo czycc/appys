@@ -20,7 +20,7 @@ class ChapterTransformer extends TransformerAbstract
         $bought = $this->permission;
 
         //判断有没有权限
-        if ($item->price === 0 || \Auth::guard('api')->user()->vip !== '铜牌会员') {
+        if ($item->price === '0.00' || \Auth::guard('api')->user()->vip !== '铜牌会员') {
             //免费
             $bought = true;
         }
