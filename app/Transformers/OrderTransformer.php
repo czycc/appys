@@ -24,7 +24,7 @@ class OrderTransformer extends TransformerAbstract
         ];
         if ($item->type == 'course') {
             $data['relation'] = Course::with(['teacher' => function ($query) {
-                $query->select(['id', 'name', 'desc']);
+                $query->withTrashed()->select(['id', 'name', 'desc']);
             }])->withTrashed()->select([
                 'id', 'title', 'body', 'banner', 'teacher_id'
             ])
@@ -32,7 +32,7 @@ class OrderTransformer extends TransformerAbstract
             $data['relation']->body = make_excerpt($data['relation']->body);
         } elseif (in_array($item->type, ['video', 'audio', 'topic'])) {
             $data['relation'] = Article::with(['user' => function ($query) {
-                $query->select(['id', 'nickname', 'avatar']);
+                $query->withTrashed()->select(['id', 'nickname', 'avatar']);
             }])
                 ->withTrashed()
                 ->select(['id', 'title', 'top_img', 'user_id'])
