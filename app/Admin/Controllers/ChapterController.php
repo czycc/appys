@@ -79,7 +79,10 @@ class ChapterController extends AdminController
         })->width(100);
         $grid->column('course_id', __('所属课程'))->display(function ($course_id) {
             $course = Course::find($course_id);
-            return "<a href='admin_courses?id={$course->id}'>{$course->title}</a>";
+            if ($course) {
+                return "<a href='admin_courses?id={$course->id}'>{$course->title}</a>";
+            }
+            return '';
         });
         $grid->column('order', __('权重'))->sortable();
         $grid->column('created_at', __('创建'));
