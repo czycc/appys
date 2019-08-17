@@ -46,9 +46,16 @@ class AppServiceProvider extends ServiceProvider
             ],$exception->getStatusCode());
         });
 
+        app('Dingo\Api\Exception\Handler')->register(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception) {
+            return \Illuminate\Support\Facades\Response::make([
+                'message' => '查询不到结果，可能已被删除',
+                'status_code' => $exception->getStatusCode(),
+            ],$exception->getStatusCode());
+        });
+
         //policy 鉴权失败
         $this->app->make('api.exception')->register(function (AuthorizationException $e) {
-            abort(400, "用户没有权限操作");
+            abort(401, "用户没有权限操作");
         });
 	}
 
