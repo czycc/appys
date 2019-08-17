@@ -107,7 +107,7 @@ class PostController extends AdminController
         $form->editor('body', __('内容'));
         $form->cropper('thumbnail', __('封面图'))
             ->move('backend/images/posts/' . $date)
-            ->uniqueName()->require();
+            ->uniqueName()->required();
         $form->select('media_type', __('媒体类型'))->options([
             'audio' => '音频',
             'video' => '视频'
