@@ -181,7 +181,7 @@ class CourseController extends AdminController
         $form->switch('recommend', __('推荐'))->default(0);
         $form->number('order', __('权重'))->default(0);
 //        $form->number('buynote_id', __('Buynote id'))->default(1);
-        $form->select('teacher_id', __('教师'))->options(function ($id) {
+        $form->select('teacher_id', __('教师（输入教师名搜索）'))->options(function ($id) {
             $teacher = Teacher::find($id);
             if ($teacher) {
                 return [$teacher->id=> $teacher->name];
