@@ -36,8 +36,9 @@ class CompanyPost extends Model
         //用于后台上传保存完整地址
         if (!filter_var($thumbnail, FILTER_VALIDATE_URL)) {
             $this->attributes['thumbnail'] = Storage::url($thumbnail);
+        } else {
+            $this->attributes['thumbnail'] = $thumbnail;
         }
-        $this->attributes['thumbnail'] = $thumbnail;
 
     }
 }

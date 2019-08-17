@@ -5,6 +5,7 @@ namespace App\Models;
 //use Jcc\LaravelVote\CanBeVoted;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelFollow\Traits\CanBeVoted;
 
 class Course extends Model
@@ -74,5 +75,16 @@ class Course extends Model
     public function getTags()
     {
         return $this->tags()->select(['id', 'name'])->get();
+    }
+
+    public function setBannerAttribute($banner)
+    {
+        //用于后台上传保存完整地址
+        if (!filter_var($banner, FILTER_VALIDATE_URL)) {
+            $this->attributes['banner'] = Storage::url($banner);
+        } else {
+            $this->attributes['banner'] = $banner;
+        }
+
     }
 }

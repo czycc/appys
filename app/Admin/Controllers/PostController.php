@@ -27,7 +27,7 @@ class PostController extends AdminController
     {
         $grid = new Grid(new CompanyPost);
 
-
+        $grid->model()->orderByDesc('id');
         //禁用创建
 //        $grid->disableCreateButton();
         //禁用分页
@@ -42,6 +42,17 @@ class PostController extends AdminController
         //禁用操作
 //        $grid->disableActions();
 
+        $grid->actions(function ($actions) {
+
+            // 去掉删除
+//            $actions->disableDelete();
+
+            // 去掉编辑
+//            $actions->disableEdit();
+
+            // 去掉查看
+            $actions->disableView();
+        });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('标题'));
         $grid->column('body', __('图文内容'))->display(function ($body) {
@@ -102,12 +113,47 @@ class PostController extends AdminController
     protected function form()
     {
         $form = new Form(new CompanyPost);
+
+        $form->footer(function ($footer) {
+
+            // 去掉`重置`按钮
+//            $footer->disableReset();
+
+            // 去掉`提交`按钮
+//            $footer->disableSubmit();
+
+            // 去掉`查看`checkbox
+            $footer->disableViewCheck();
+
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+
+            // 去掉`继续创建`checkbox
+            $footer->disableCreatingCheck();
+
+        });
+
+        $form->tools(function (Form\Tools $tools) {
+
+            // 去掉`列表`按钮
+//            $tools->disableList();
+
+            // 去掉`删除`按钮
+//            $tools->disableDelete();
+
+            // 去掉`查看`按钮
+            $tools->disableView();
+
+            // 添加一个按钮, 参数可以是字符串, 或者实现了Renderable或Htmlable接口的对象实例
+//            $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+        });
+
         $date = date('Ym/d', time());
         $form->text('title', __('标题'));
         $form->editor('body', __('内容'));
-        $form->cropper('thumbnail', __('封面图'))
+        $form->cropper('thumbnail', __('封面图(必传)'))
             ->move('backend/images/posts/' . $date)
-            ->uniqueName()->required();
+            ->uniqueName();
         $form->select('media_type', __('媒体类型'))->options([
             'audio' => '音频',
             'video' => '视频'
