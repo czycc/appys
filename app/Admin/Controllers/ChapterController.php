@@ -29,7 +29,7 @@ class ChapterController extends AdminController
         $grid = new Grid(new Chapter);
         $grid->model()->orderByDesc('id');
         //禁用创建
-        $grid->disableCreateButton();
+//        $grid->disableCreateButton();
         //禁用分页
 //        $grid->disablePagination();
         //禁用检索
