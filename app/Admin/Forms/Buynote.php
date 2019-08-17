@@ -36,7 +36,7 @@ class Buynote extends Form
      */
     public function form()
     {
-        $this->editor('body', '图文内容')->rules('required');
+        $this->editor('body', '图文(10M以内)')->rules('required');
     }
 
     /**

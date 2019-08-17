@@ -150,7 +150,7 @@ class PostController extends AdminController
 
         $date = date('Ym/d', time());
         $form->text('title', __('标题'));
-        $form->editor('body', __('内容'));
+        $form->editor('body', __('内容(图片10M以内)'));
         $form->cropper('thumbnail', __('封面图(必传)'))
             ->move('backend/images/posts/' . $date)
             ->uniqueName()->rules('required');

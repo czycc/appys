@@ -173,7 +173,7 @@ class CourseController extends AdminController
             ->uniqueName()->rules('required');
         $form->decimal('ori_price', __('原价'))->default(0.00);
         $form->decimal('now_price', __('现价'))->default(0.00);
-        $form->editor('body', __('图文'));
+        $form->editor('body', __('图文(图片10M以内)'));
 //        $form->number('view_count', __('View count'));
         $form->number('zan_count', __('点赞数量'))->default(0);
 //        $form->number('buy_count', __(''));
