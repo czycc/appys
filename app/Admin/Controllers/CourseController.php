@@ -170,7 +170,7 @@ class CourseController extends AdminController
         $form->text('title', __('标题'));
         $form->cropper('banner', __('封面图'))
             ->move('backend/images/courses/' . date('Ym/d', time()))
-            ->uniqueName();
+            ->uniqueName()->rules('required');
         $form->decimal('ori_price', __('原价'))->default(0.00);
         $form->decimal('now_price', __('现价'))->default(0.00);
         $form->editor('body', __('图文'));

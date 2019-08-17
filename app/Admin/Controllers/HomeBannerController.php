@@ -26,6 +26,33 @@ class HomeBannerController extends AdminController
     {
         $grid = new Grid(new Banner);
 
+        $grid->model()->orderByDesc('id');
+        //禁用创建
+//        $grid->disableCreateButton();
+        //禁用分页
+//        $grid->disablePagination();
+        //禁用检索
+//        $grid->disableFilter();
+        //禁用导出
+        $grid->disableExport();
+        //禁用多行
+//        $grid->disableRowSelector();
+//        $grid->disableColumnSelector();
+        //禁用操作
+//        $grid->disableActions();
+
+        $grid->actions(function ($actions) {
+
+            // 去掉删除
+//            $actions->disableDelete();
+
+            // 去掉编辑
+//            $actions->disableEdit();
+
+            // 去掉查看
+            $actions->disableView();
+        });
+
         $grid->column('id', __('Id'));
         $grid->column('img_url', __('轮播图'))->image();
         $grid->column('desc', __('描述'));
@@ -89,16 +116,16 @@ class HomeBannerController extends AdminController
 
         });
         $form->cropper('img_url', __('轮播图(推荐1080 * 560)'))
-            ->uniqueName();
+            ->uniqueName()->rules('required');
         $form->textarea('desc', __('描述'));
         $form->select('type', __('跳转类型'))
             ->options([
                 'courses' => '课程',
                 'company_posts' => '公司文章'
             ])
-            ->default('courses');
-        $form->number('type_id', __('类型id'));
-        $form->number('order', __('权重'))->rules('required|between:0, 10000');
+            ->default('courses')->required();
+        $form->number('type_id', __('类型id'))->required();
+        $form->number('order', __('权重'))->default(0)->rules('required|between:0, 10000');
 
         return $form;
     }
