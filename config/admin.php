@@ -381,7 +381,7 @@ return [
                 'debug' => true,
                 'uploadImgServer' => '/editor/upload',
                 'uploadImgMaxLength' => 1,
-                'uploadImgMaxSize' => 3 * 1024 * 1024,
+                'uploadImgMaxSize' => 10 * 1024 * 1024,
                 'uploadFileName' => 'img'
             ]
         ],
