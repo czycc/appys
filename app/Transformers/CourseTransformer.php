@@ -35,7 +35,10 @@ class CourseTransformer extends TransformerAbstract
                 'created_at' => $post->created_at->toDateTimeString(),
             ];
         }
-
+        $bought = $this->permission;
+        if ($post->now_price === '0.00') {
+            $this->permission = true;
+        }
         return [
             'id' => $post->id,
             'title' => $post->title,
@@ -52,7 +55,7 @@ class CourseTransformer extends TransformerAbstract
             'buynote' => $post->buynote->body,
             'teacher' => $post->teacher()->select(['id', 'name', 'desc', 'video_url', 'imgs'])->first(),
             'tags' => $post->getTags(),
-            'is_bought' => $this->permission,//用户是否购买
+            'is_bought' => $bought,//用户是否购买
             'created_at' => $post->created_at->toDateTimeString(),
         ];
     }
