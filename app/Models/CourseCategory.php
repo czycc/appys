@@ -9,4 +9,6 @@ class CourseCategory extends Model
     protected $fillable = [
         'name', 'desc'
     ];
+    public $timestamps = false;
+
 }
