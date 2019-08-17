@@ -25,6 +25,7 @@ class TeachersController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Teacher);
+        $grid->model()->orderByDesc('id');
         //禁用创建
 //        $grid->disableCreateButton();
         //禁用分页
@@ -39,6 +40,17 @@ class TeachersController extends AdminController
         //禁用操作
 //        $grid->disableActions();
 
+        $grid->actions(function ($actions) {
+
+            // 去掉删除
+//            $actions->disableDelete();
+
+            // 去掉编辑
+//            $actions->disableEdit();
+
+            // 去掉查看
+            $actions->disableView();
+        });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('姓名'));
         $grid->column('desc', __('描述'));
@@ -78,6 +90,25 @@ class TeachersController extends AdminController
     protected function form()
     {
         $form = new Form(new Teacher);
+
+        $form->footer(function ($footer) {
+
+            // 去掉`重置`按钮
+//            $footer->disableReset();
+
+            // 去掉`提交`按钮
+//            $footer->disableSubmit();
+
+            // 去掉`查看`checkbox
+            $footer->disableViewCheck();
+
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+
+            // 去掉`继续创建`checkbox
+            $footer->disableCreatingCheck();
+
+        });
 
         $form->text('name', __('姓名'))->rules('required|string|between:2,20');
         $form->password('password', __('密码'))->rules('required|between:6,30');
