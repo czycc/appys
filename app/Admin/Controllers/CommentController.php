@@ -55,10 +55,17 @@ class CommentController extends AdminController
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('article_id', __('文章'))->display(function ($article_id) {
-            return "<a href='/admin/admin_articles?&id={$article_id}'>{$this->article->title}</a>";
+            if ($this->article->title) {
+                return "<a href='/admin/admin_articles?&id={$article_id}'>{$this->article->title}</a>";
+            }else {
+                return '';
+            }
         });
         $grid->column('user_id', __('用户'))->display(function ($user_id) {
-            return "<a href='/admin/admin_users?&id={$user_id}'>{$this->user->nickname}</a>";
+            if ($this->user->nickname) {
+                return "<a href='/admin/admin_users?&id={$user_id}'>{$this->user->nickname}</a>";
+            }
+            return '';
         });
         $grid->column('content', __('内容'));
         $grid->column('created_at', __('创建'));
