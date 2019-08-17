@@ -25,7 +25,7 @@ class OrderTransformer extends TransformerAbstract
         if ($item->type == 'course') {
             $data['relation'] = Course::with(['teacher' => function ($query) {
                 $query->select(['id', 'name', 'desc']);
-            }])->select([
+            }])->withTrashed()->select([
                 'id', 'title', 'body', 'banner', 'teacher_id'
             ])
                 ->find($item->type_id);
@@ -34,6 +34,7 @@ class OrderTransformer extends TransformerAbstract
             $data['relation'] = Article::with(['user' => function ($query) {
                 $query->select(['id', 'nickname', 'avatar']);
             }])
+                ->withTrashed()
                 ->select(['id', 'title', 'top_img', 'user_id'])
                 ->find($item->type_id);
         }
