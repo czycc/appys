@@ -113,6 +113,7 @@ class AuthorizationsController extends Controller
         $user = [];
         switch ($type) {
             case 'weixin':
+            case 'wap':
                 $unionid = $oauthUser->offsetExists('unionid') ? $oauthUser
                     ->offsetGet('unionid') : null;
                 if ($unionid) {
@@ -130,6 +131,7 @@ class AuthorizationsController extends Controller
                         'wx_openid' => $oauthUser->getId(),
                         'wx_unionid' => $unionid,
                         'avatar' => $oauthUser->getAvatar(),
+                        'type' => $type
                     ], $expireAt);
 
                     return $this->response->array([
