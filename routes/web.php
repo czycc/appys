@@ -35,4 +35,6 @@ Route::get('type/{type}/id/{id}/user/{user_id}', function () {
 Route::get('admin/api/courses', 'AdminApiController@courses');
 Route::get('admin/api/teachers', 'AdminApiController@teachers');
 
-Route::get('dashboard/teacher', 'AdminTeacherController@index');
+Route::get('teacher', 'AdminTeacherController@index');
+Route::post('teacher/login', 'AdminTeacherController@login');
+Route::get('teacher/logout', 'AdminTeacherController@logout');

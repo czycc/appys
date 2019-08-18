@@ -6,52 +6,76 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <i class="glyphicon glyphicon-align-justify"></i> Course
-                        <a class="btn btn-success pull-right" href="{{ route('courses.create') }}"><i class="glyphicon glyphicon-plus"></i> Create</a>
+                        <i class="glyphicon glyphicon-align-justify"></i> 教师所属课程订单列表
+                        @if(session('teacher'))
+                            <a class="btn btn-danger pull-right" href="{{ url('teacher/logout') }}"><i
+                                        class="glyphicon glyphicon-plus"></i> 注销登陆</a>
+                        @endif
                     </h1>
                 </div>
 
                 <div class="panel-body">
-                    @if($courses->count())
-                        <table class="table table-condensed table-striped">
-                            <thead>
-                            <tr>
-                                <th class="text-center">#</th>
-                                <th>Title</th> <th>Banner</th> <th>Ori_price</th> <th>Now_price</th> <th>Body</th> <th>View_count</th>
-                                <th class="text-right">OPTIONS</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            @foreach($courses as $course)
+                    @if(session('teacher'))
+                        @if($orders->count())
+                            <table class="table table-condensed table-striped">
+                                <thead>
                                 <tr>
-                                    <td class="text-center"><strong>{{$course->id}}</strong></td>
-
-                                    <td>{{$course->title}}</td> <td>{{$course->banner}}</td> <td>{{$course->ori_price}}</td> <td>{{$course->now_price}}</td> <td>{{$course->body}}</td> <td>{{$course->view_count}}</td>
-
-                                    <td class="text-right">
-                                        <a class="btn btn-xs btn-primary" href="{{ route('courses.show', $course->id) }}">
-                                            <i class="glyphicon glyphicon-eye-open"></i>
-                                        </a>
-
-                                        <a class="btn btn-xs btn-warning" href="{{ route('courses.edit', $course->id) }}">
-                                            <i class="glyphicon glyphicon-edit"></i>
-                                        </a>
-
-                                        <form action="{{ route('courses.destroy', $course->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete? Are you sure?');">
-                                            {{csrf_field()}}
-                                            <input type="hidden" name="_method" value="DELETE">
-
-                                            <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> </button>
-                                        </form>
-                                    </td>
+                                    <th class="text-center">#</th>
+                                    <th>标题</th>
+                                    <th>订单号</th>
+                                    <th>金额</th>
+                                    <th>支付时间</th>
+                                    <th>支付方式</th>
+                                    <th>备注</th>
+                                    {{--<th class="text-right">OPTIONS</th>--}}
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        {!! $courses->render() !!}
+                                </thead>
+
+                                <tbody>
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td class="text-center"><strong>{{$order->id}}</strong></td>
+
+                                        <td>{{$order->title}}</td>
+                                        <td>{{$order->no}}</td>
+                                        <td>{{$order->total_amount}}</td>
+                                        <td>{{$order->paid_at}}</td>
+                                        <td>{{$order->pay_method}}</td>
+                                        <td>{{$order->extra}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            {!! $orders->render() !!}
+                        @else
+                            <h3 class="text-center alert alert-info">暂无订单！</h3>
+                        @endif
                     @else
-                        <h3 class="text-center alert alert-info">Empty!</h3>
+                        <div class="row">
+                            <form class="form-horizontal col-md-offset-4 col-md-4" method="POST"
+                                  action="{{ url('teacher/login') }}">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="name" id="inputEmail3"
+                                               placeholder="姓名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="inputPassword3" name="password"
+                                               placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default login ">登录</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     @endif
                 </div>
             </div>

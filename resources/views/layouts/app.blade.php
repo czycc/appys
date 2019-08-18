@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Starter Template</title>
+    <title>后台</title>
     
     <!-- META TAGs -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,11 +59,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Project name</a>
+                <a class="navbar-brand" href="#">教师端</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{route('company_posts.index')}}">CompanyPost</a></li>
                 </ul>
             </div>
         </div>
