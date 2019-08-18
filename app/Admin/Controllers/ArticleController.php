@@ -70,7 +70,7 @@ class ArticleController extends AdminController
         });
         $grid->column('media_type', __('媒体类型'))->using([
             'video' => '视频', 'audio' => '音频', 'topic' => '文章'
-        ])->hide();
+        ]);
         $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
             if (!$this->media_url) {
                 return '';

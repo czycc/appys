@@ -39,6 +39,8 @@ class CompanyPostsController extends Controller
             $query->recent();
         }
 
+        $query->recent();
+
         $paginate = $request->input('paginate') ?? 20;
         $posts = $query->paginate($paginate);
 

@@ -21,6 +21,7 @@ class FlowController extends Controller
     {
         $flows = Flow::select(['id', 'title', 'total_amount', 'created_at'])
             ->where('user_id', $this->user()->id)
+            ->where('total_amount', '>', 0)
             ->orderByDesc('id')
             ->paginate(20);
 
