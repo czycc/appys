@@ -97,7 +97,10 @@ class ArticlesController extends Controller
 
     public function update(ArticleRequest $request, Article $article)
     {
-        $this->authorize('update', $article);
+//        $this->authorize('update', $article);
+        if ($this->user()->id !== $article->user_id) {
+            return $this->response->errorBadRequest('不可以编辑他人文章');
+        }
         $article->update($request->all());
 
         return $this->response->item($article, new ArticleTransformer());
@@ -105,7 +108,9 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
-        $this->authorize('destroy', $article);
+        if ($this->user()->id !== $article->user_id) {
+            return $this->response->errorBadRequest('不可以删除他人文章');
+        }
         $article->delete();
         return $this->response->noContent();
     }

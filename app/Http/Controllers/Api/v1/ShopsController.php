@@ -59,8 +59,10 @@ class ShopsController extends Controller
 
     public function update(ShopRequest $request, Shop $shop)
     {
-        $this->authorize('update', $shop);
-
+//        $this->authorize('update', $shop);
+        if ($this->user()->id !== $shop->user_id) {
+            return $this->response->errorBadRequest('非店铺所属');
+        }
         $shop->update($request->all());
         if ($request->tags) {
             $shop->tags()->sync(json_decode($request->tags));
