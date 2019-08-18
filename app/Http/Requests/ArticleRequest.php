@@ -51,7 +51,18 @@ class ArticleRequest extends Request
     public function messages()
     {
         return [
-            // Validation messages
+            'title.required' => '标题必填',
+            'title.string' => '标题格式错误',
+            'body.required' => '内容必填',
+            'body.string' => '内容格式错误',
+            'price_id.exists' => '价格错误，请重试',
+            'price_id.required' => '价格必选',
+            'multi_imgs.required' => '图片至少上传一张',
+            'multi_imgs.json' => '图片上传有误',
+            'media_type.required' => '媒体类型必选',
+            'media_url.string' => '错误的媒体链接',
+            'tags.json' => '错误的标签，请重试'
+
         ];
     }
 }

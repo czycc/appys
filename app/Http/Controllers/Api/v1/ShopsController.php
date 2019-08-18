@@ -61,7 +61,7 @@ class ShopsController extends Controller
     {
 //        $this->authorize('update', $shop);
         if ($this->user()->id !== $shop->user_id) {
-            return $this->response->errorBadRequest('非店铺所属');
+            return $this->response->errorBadRequest('不可以修改他人店铺信息');
         }
         $shop->update($request->all());
         if ($request->tags) {

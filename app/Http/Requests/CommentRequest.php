@@ -12,7 +12,7 @@ class CommentRequest extends Request
             case 'POST':
             {
                 return [
-                    'content' => 'required|min:2',
+                    'content' => 'required|min:1',
                     'comment_id' => 'required_without:article_id|exists:comments,id',
                     'article_id' => 'required_without:comment_id|exists:articles,id'
                 ];
@@ -37,7 +37,8 @@ class CommentRequest extends Request
     public function messages()
     {
         return [
-            // Validation messages
+            'content.required' => '评论内容必填',
+            'content.min' => '评论内容至少一个字符',
         ];
     }
 }

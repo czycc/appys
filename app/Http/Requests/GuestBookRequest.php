@@ -21,7 +21,10 @@ class GuestBookRequest extends Request
     public function messages()
     {
         return [
-            'body.required' => '留言内容不能为空',
+            'body.required' => '留言内容必填',
+            'body.string' => '留言内容格式有误',
+            'user_id.exists' => '留言人不存在',
+            'top_guest_id.exists' => '回复的留言人不存在'
         ];
     }
 }

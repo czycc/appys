@@ -28,8 +28,9 @@ class AuthorizationRequest extends Request
     {
         return [
             'phone.regex' => '手机格式错误。',
+            'phone.required' => '手机格式错误。',
             'password.min' => '密码最少6位',
-            'password.required_without' => '密码不能为空',
+            'password.required_without' => '密码必填',
         ];
     }
 }

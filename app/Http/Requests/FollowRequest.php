@@ -23,7 +23,7 @@ class FollowRequest extends Request
     {
         return [
             'to_user_id.exists' => '关注用户不存在',
-            'type.in' => '类型只有follow，unfollow'
+            'type.in' => '只有follow关注，unfollow取关'
         ];
     }
 }

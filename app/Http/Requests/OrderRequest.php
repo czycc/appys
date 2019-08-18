@@ -33,10 +33,13 @@ class OrderRequest extends Request
     {
         return [
             'type.in' => '错误的购买类型',
-            'pay_method.' => '仅支持微信支付宝购买',
-            'type_id.exists' => 'id不存在',
-            'copper.max' => '不能超过当前铜币',
-            'copper.required' => '购买课程和章节时铜币值必须'
+            'type.required' => '错误的购买类型',
+            'pay_method.in' => '仅支持微信支付宝购买',
+            'pay_method.required' => '仅支持微信支付宝购买',
+            'type_id.exists' => '购买商品不存在，可能已经被删除',
+            'copper.max' => '不能超过当前持有铜币',
+            'copper.min' => '铜币不能为负数',
+            'copper.required' => '购买课程和章节时铜币抵扣值必填'
         ];
     }
 }

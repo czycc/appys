@@ -58,7 +58,7 @@ class UserTransformer extends TransformerAbstract
                 'id' => $item->id,
                 'nickname' => $item->nickname,
                 'phone' => substr_replace($item->phone, '****', 3, 4),
-                'code' => $item->code,
+                'code' => (string)$item->phone,
                 'avatar' => $item->avatar,
                 'bound_wechat' => ($item->wx_openid || $item->wx_unionid) ? true : false,
                 'vip' => $item->vip,
