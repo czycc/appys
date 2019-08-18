@@ -84,11 +84,12 @@ class AuthorizationsController extends Controller
 
         if ($type == 'wap') {
             //微信公众号h5
-            $driver = Socialite::driver('weixin')->setConfig(
+            $config = new \SocialiteProviders\Manager\Config(
                 config('services.wap.client_id'),
                 config('services.wap.client_secret'),
                 ''
             );
+            $driver = Socialite::driver('weixin')->setConfig($config);
         } else {
             //app
             $driver = Socialite::driver($type);
