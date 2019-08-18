@@ -33,7 +33,10 @@ class ShopsController extends Controller
 
     public function store(ShopRequest $request, Shop $shop)
     {
-        $this->authorize('create', $shop);
+        if ($this->user()->vip == '铜牌会员') {
+            //未注册vip
+            return $this->response()->errorBadRequest('需要成为银牌会员或代理会员才可以发布文章和申请店铺');
+        }
 
         $userId = $this->user()->id;
 
