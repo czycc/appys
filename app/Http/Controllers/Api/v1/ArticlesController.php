@@ -72,8 +72,10 @@ class ArticlesController extends Controller
 
     public function store(ArticleRequest $request, Article $article)
     {
-        $this->authorize('create', $article);
-
+        if ($this->user()->vip == '铜牌会员') {
+            //未注册vip
+            return $this->response()->errorBadRequest('需要成为银牌会员或代理会员才可以发布文章和申请店铺');
+        }
         $article->fill($request->all());
         $multi = json_decode($request->multi_imgs);
         $article->user_id = $this->user()->id;
