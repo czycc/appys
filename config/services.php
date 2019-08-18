@@ -41,4 +41,9 @@ return [
         'redirect' => env('WEIXIN_REDIRECT_URI'),
     ],
 
+    'wap' => [
+        'client_id' => env('WEIXIN_WAP_KEY'),
+        'client_secret' => env('WEIXIN_WAP_SECRET'),
+        'redirect' => env('WEIXIN_WAP_REDIRECT_URI'),
+    ],
 ];

@@ -76,13 +76,23 @@ class AuthorizationsController extends Controller
      */
     public function socialStore($type, SocialAuthorizationRequest $request)
     {
-        if (!in_array($type, ['weixin'])) {
+        if (!in_array($type, ['weixin', 'wap'])) {
             return $this->response->errorBadRequest('不可用的登陆方式');
         }
 
         //第三方登陆
 
-        $driver = Socialite::driver($type);
+        if ($type == 'wap') {
+            //微信公众号h5
+            $driver = Socialite::driver('weixin')->setConfig(
+                config('services.wap.client_id'),
+                config('services.wap.client_secret'),
+                ''
+            );
+        } else {
+            //app
+            $driver = Socialite::driver($type);
+        }
         try {
             if ($code = $request->code) {
                 $res = $driver->getAccessTokenResponse($code);
