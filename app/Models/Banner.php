@@ -10,6 +10,9 @@ class Banner extends Model
 //    protected $fillable = ['desc', 'img_url', 'type', 'type_id', 'order'];
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'desc' => 'string'
+    ];
     public function setImgUrlAttribute($img)
     {
         //用于后台上传保存完整地址
@@ -18,6 +21,13 @@ class Banner extends Model
         } else {
             $this->attributes['img_url'] = $img;
         }
+    }
 
+    public function getDescAttribute($desc)
+    {
+        if (is_null($desc)) {
+            return '';
+        }
+        return $desc;
     }
 }

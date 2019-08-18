@@ -39,6 +39,5 @@ class CompanyPost extends Model
         } else {
             $this->attributes['thumbnail'] = $thumbnail;
         }
-
     }
 }

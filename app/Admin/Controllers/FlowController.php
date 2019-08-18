@@ -8,6 +8,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Widgets\Table;
 
 class FlowController extends AdminController
 {
@@ -54,7 +55,7 @@ class FlowController extends AdminController
 //            $actions->disableView();
         });
 
-        $grid->filter(function($filter){
+        $grid->filter(function ($filter) {
 
             // 去掉默认的id过滤器
 //            $filter->disableIdFilter();
@@ -77,8 +78,20 @@ class FlowController extends AdminController
             'alipay' => '支付宝'
         ]);
         $grid->column('ali_account', __('支付宝账号'));
-        $grid->column('user_id', __('用户姓名'))->display(function ($user_id) {
+        $grid->column('user_id', __('用户'))->display(function ($user_id) {
             return User::find($user_id)->nickname;
+        })->expand(function ($model) {
+            $user = $model->user;
+            $extra = $user->extra()->select([
+                'name', 'idcard', 'idcard', 'health', 'extra', 'created_at'
+            ])->get();
+            if ($extra->isNotEmpty()) {
+                return new Table([
+                    '姓名', '身份证号', '健康', '备注', '创建时间'
+                ], $extra->toArray());
+            }
+
+
         });
         $grid->column('created_at', __('创建时间'));
 

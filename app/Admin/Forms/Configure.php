@@ -48,8 +48,8 @@ class Configure extends Form
 //        $this->number('pub_plat', __('购买文章平台分成'))->rules($distribute_rules);
         $this->number('pub_self', __('购买文章用户自己分成'))->rules($distribute_rules);
 
-        $this->decimal('vip2_price_n', __('银牌会员无上级购买价格'))->rules($price);
-        $this->decimal('vip2_price_y', __('银牌会员有上级购买价格'))->rules($price);
+        $this->decimal('vip2_price_n', __('购买银牌会员无上级价格'))->rules($price);
+        $this->decimal('vip2_price_y', __('购买银牌会员有上级价格'))->rules($price);
         $this->decimal('vip3_price', __('代理价格,线下缴费'))->rules($price);
         $this->number('invite_copper', __('邀请用户得铜币数'))->rules($num);
         $this->number('zan_copper', __('点赞得铜币数'))->rules($num);

@@ -149,14 +149,14 @@ class PostController extends AdminController
         });
 
         $date = date('Ym/d', time());
-        $form->text('title', __('标题'));
-        $form->editor('body', __('内容(图片10M以内)'));
+        $form->text('title', __('标题'))->required();
+        $form->editor('body', __('内容(图片10M以内)'))->required();
         $form->cropper('thumbnail', __('封面图(必传)'))
             ->move('backend/images/posts/' . $date)
             ->uniqueName()->rules('required');
         $form->select('media_type', __('媒体类型'))->options([
             'audio' => '音频',
-            'video' => '视频'
+            'video' => '视频',
         ])->required();
         $form->text('media_url', __('媒体链接'));
 //        $form->number('view_count', __(''));

@@ -122,7 +122,7 @@ class ChapterController extends AdminController
     {
         $form = new Form(new Chapter);
 
-        $form->text('title', __('标题'));
+        $form->text('title', __('标题'))->required();
         $form->decimal('price', __('价格'))->default(0.00);
         $form->select('media_type', __('媒体类型'))->options([
             'audio' => '音频',

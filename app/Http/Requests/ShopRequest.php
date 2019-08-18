@@ -69,6 +69,7 @@ class ShopRequest extends Request
         return [
             // Validation messages
             'phone.regex' => '手机号格式有问题',
+            'real_name' => '必填'
         ];
     }
 }

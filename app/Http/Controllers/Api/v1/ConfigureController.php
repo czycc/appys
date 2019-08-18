@@ -110,7 +110,9 @@ class ConfigureController extends Controller
             [
                 'data' => [
                         'menu' => $menu,
-                        'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id'])->get(),
+                        'banners' => Banner::select(['id', 'img_url', 'desc', 'type', 'type_id'])
+                            ->orderByDesc('order')
+                            ->get(),
                         'shops' => $shops,
                         'hots' => $hots,
                         'news' => $news,

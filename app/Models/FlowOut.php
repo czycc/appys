@@ -13,6 +13,11 @@ class FlowOut extends Model
         'out_status' => 'boolean',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function boot() {
 
         parent::boot();
