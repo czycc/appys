@@ -147,5 +147,7 @@ $api->version('v1', [
         $api->get('out/flows', 'FlowController@flowOutList');
         $api->post('out/flows', 'FlowController@flowOutStore');
 
+        //jssdk
+        $api->post('weixin/jssdk', 'JssdkController@jssdk');
     });});
 

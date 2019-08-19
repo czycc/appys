@@ -25,4 +25,16 @@ class UserObserver
             $user->avatar = 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/logo.png';
         }
     }
+
+    public function deleting(User $user)
+    {
+//        //删除关联文章
+//        $user->articles()->delete();
+//        //删除关联店铺
+//        $user->shop()->delete();
+//        //删除关联评论
+//        $user->comments()->delete();
+//        //取消所有绑定上级
+//        User::update(['bound_id' => 0, 'bound_status' => 0])->where('bound_id', $user->id);
+    }
 }
