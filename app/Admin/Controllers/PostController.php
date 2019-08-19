@@ -60,7 +60,7 @@ class PostController extends AdminController
             return make_excerpt($body, 30);
         });
         $grid->column('thumbnail', __('封面图'))->image(100, 100);
-        $grid->column('media_type', __('媒体类型'))->using(['video' => '视频', 'audio' => '音频']);
+        $grid->column('media_type', __('媒体类型'))->using(['video' => '视频', 'audio' => '音频', 'topic' => '文章']);
         $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
             if (!$this->media_url) {
                 return '';
@@ -159,6 +159,7 @@ class PostController extends AdminController
         $form->select('media_type', __('媒体类型'))->options([
             'audio' => '音频',
             'video' => '视频',
+            'topic' => '文章'
         ])->required();
         $form->text('media_url', __('媒体链接'));
 //        $form->number('view_count', __(''));
