@@ -64,7 +64,7 @@ class ConfigureController extends Controller
             $query->select(['id', 'name', 'desc']);
         }])->list()
             ->where('recommend', 1)
-            ->orderBy('id', 'desc')
+            ->orderByDesc('order')
             ->limit(15)
             ->get();
         foreach ($hots as $hot) {
@@ -88,9 +88,8 @@ class ConfigureController extends Controller
         }])
             ->select(['id', 'user_id', 'updated_at'])
             ->where('recommend', 1)
-            ->orderByDesc('order')
             ->where('expire_at', '>', Carbon::now())
-            ->orderBy('updated_at', 'desc')
+            ->orderByDesc('order')
             ->limit(15)
             ->get();
 
