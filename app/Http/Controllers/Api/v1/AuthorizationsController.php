@@ -34,9 +34,9 @@ class AuthorizationsController extends Controller
             if (!hash_equals($cerd['code'], $request->verify_code)) {
                 return $this->response->errorBadRequest('验证码错误');
             }
-            if ($cerd['phone'] != $request->phone) {
-                return $this->response->errorBadRequest('验证码和手机号不对应');
-            }
+//            if ($cerd['phone'] != $request->phone) {
+//                return $this->response->errorBadRequest('验证码和手机号不对应');
+//            }
 
             $user = User::where('phone', $cerd['phone'])->first();
 

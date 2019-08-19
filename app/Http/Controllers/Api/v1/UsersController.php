@@ -45,7 +45,7 @@ class UsersController extends Controller
             return $this->response->error('验证码已经失效', 422);
         }
         if (!hash_equals($verifyData['code'], $request->verify_code)) {
-            return $this->response->errorUnauthorized('验证码错误');
+            return $this->response->errorBadRequest('验证码错误');
         }
 
         $data = [
