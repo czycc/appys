@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\CompanyCategory;
 use App\Models\CompanyPost;
+use App\Models\Tag;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
