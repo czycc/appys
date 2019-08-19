@@ -165,6 +165,7 @@ class PostController extends AdminController
         $category = CompanyCategory::all()->toArray();
         $category = array_pluck($category, 'name', 'id');
         $form->select('category_id', __('分类'))->options($category)->required();
+        $form->multipleSelect('tags', '标签')->options(Tag::all()->pluck('name', 'id'));
 
         return $form;
     }

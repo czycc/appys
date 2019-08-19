@@ -126,20 +126,30 @@ class OrderController extends Controller
 //                'body' => $order->title,
 //            ]);
 
-        }
-        return $this->response->array([
-            'data' => [
-                'order' => Pay::alipay()->app([
-                    'out_trade_no' => $order->no,
-                    'total_amount' => $order->total_amount,
-                    'subject' => $order->title,
-                ])->getContent()
-            ]]);
+        } elseif ($request->pay_method === 'wap') {
+            return $this->response->array([
+                'data' => [
+                    'order' => Pay::wechat()->wap([
+                        'out_trade_no' => $order->no,
+                        'total_fee' => $order->total_amount * 100,
+                        'body' => $order->title,
+                    ])->getContent()
+                ]]);
+        } else {
+            return $this->response->array([
+                'data' => [
+                    'order' => Pay::alipay()->app([
+                        'out_trade_no' => $order->no,
+                        'total_amount' => $order->total_amount,
+                        'subject' => $order->title,
+                    ])->getContent()
+                ]]);
 //        return Pay::alipay()->web([
 //                   'out_trade_no' => $order->no,
 //                   'total_amount' => $order->total_amount,
 //                   'subject' => $order->title,
 //              ]);
+        }
     }
 
     public function copperToMoney($price, $copper)

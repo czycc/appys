@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\Tag;
 use App\Models\Teacher;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -191,6 +192,7 @@ class CourseController extends AdminController
         $category = array_pluck($category, 'name', 'id');
         $form->select('category_id', __('分类'))->options($category)->required();
 
+        $form->multipleSelect('tags', '标签')->options(Tag::all()->pluck('name', 'id'));
         return $form;
     }
 }

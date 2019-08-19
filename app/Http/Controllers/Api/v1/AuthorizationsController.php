@@ -127,12 +127,21 @@ class AuthorizationsController extends Controller
                     //缓存微信数据数据
                     $expireAt = now()->addDay();
                     $wx_id = $unionid ?? $oauthUser->getId();
-                    \Cache::put($wx_id, [
-                        'wx_openid' => $oauthUser->getId(),
-                        'wx_unionid' => $unionid,
-                        'avatar' => $oauthUser->getAvatar(),
-                        'type' => $type
-                    ], $expireAt);
+
+                    if ($type === 'weixin') {
+                        \Cache::put($wx_id, [
+                            'wx_openid' => $oauthUser->getId(),
+                            'wx_unionid' => $unionid,
+                            'avatar' => $oauthUser->getAvatar(),
+                        ], $expireAt);
+                    } else {
+                        \Cache::put($wx_id, [
+                            'wap_openid' => $oauthUser->getId(),
+                            'wx_unionid' => $unionid,
+                            'avatar' => $oauthUser->getAvatar(),
+                        ], $expireAt);
+                    }
+
 
                     return $this->response->array([
                         'message' => '用户未绑定手机号',

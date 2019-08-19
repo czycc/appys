@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('code', 50)->nullbale()->unique()->comment('推荐码');
             $table->string('nickname')->nullable()->comment('昵称');
             $table->text('avatar')->nullable()->comment('头像');
-            $table->string('wx_openid', 100)->nullable()->index()->comment('微信openid');
+            $table->string('wx_openid', 100)->nullable()->index()->comment('app微信openid');
+            $table->string('wap_openid', 100)->nullable()->index()->comment('公众号openid');
             $table->string('wx_unionid', 100)->nullable()->index()->comment('微信unionid');
             $table->integer('gold')->unsigned()->default(0)->comment('金币');
             $table->integer('silver')->unsigned()->default(0)->comment('银币');
