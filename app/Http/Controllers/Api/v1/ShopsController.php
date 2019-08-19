@@ -47,6 +47,7 @@ class ShopsController extends Controller
         $shop->fill($request->all());
         $shop->user_id = $userId;
         $shop->status = 2; //防止transformer返回null
+        $shop->expire_at = $this->user()->expire_at; //店铺过期时间一致
         $shop->save();
 
         if ($request->tags) {
