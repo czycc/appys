@@ -27,7 +27,7 @@ class ZanController extends Controller
                 $item = CompanyPost::find($request->id);
                 break;
             default:
-                return $this->response->errorBadRequest('类型错误');
+                return $this->response->errorBadRequest('错误的点赞类型');
 
         }
 
@@ -37,17 +37,20 @@ class ZanController extends Controller
             //判断是否已经点赞
             if (!$this->user()->hasUpVoted($item)) {
                 if (!$this->user()->hasDownVoted($item) && $type == 'article') {
-                    //第一次点赞,并且对象是用户文章,发放铜币
-                    $configure = Configure::first();
-                    $item->user()->increment('copper', $configure->zan_copper);
+                    if ($this->user()->id !== $item->user()->id) {
+                        //第一次点赞,并且对象是用户文章,发放铜币
+                        $configure = Configure::first();
+                        $item->user()->increment('copper', $configure->zan_copper);
 
-                    //发送点赞通知
-                    $item->user->msgNotify(new NormalNotify(
-                        '作品被点赞',
-                        "{$this->user()->nickname} 点赞了您的作品 {$item->title}",
-                        'normal',
-                        $item->id
-                    ));
+                        //发送点赞通知
+                        $item->user->msgNotify(new NormalNotify(
+                            '作品被点赞',
+                            "{$this->user()->nickname} 点赞了您的作品 {$item->title}",
+                            'normal',
+                            $item->id
+                        ));
+                    }
+
                 }
                 //文章点赞数+1
                 $item->increment('zan_count', 1);
@@ -55,7 +58,7 @@ class ZanController extends Controller
 
                 if ($type == 'article') {
                     //用户店铺总点赞数增加
-                    $this->user()->shop()->increment('zan_count', 1);
+                    $item->user()->shop()->increment('zan_count', 1);
                 }
 
                 $this->user()->upVote($item);
