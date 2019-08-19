@@ -88,6 +88,7 @@ class ConfigureController extends Controller
         }])
             ->select(['id', 'user_id', 'updated_at'])
             ->where('recommend', 1)
+            ->orderByDesc('order')
             ->where('expire_at', '>', Carbon::now())
             ->orderBy('updated_at', 'desc')
             ->limit(15)
