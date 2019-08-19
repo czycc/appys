@@ -37,7 +37,7 @@ class ZanController extends Controller
             //判断是否已经点赞
             if (!$this->user()->hasUpVoted($item)) {
                 if (!$this->user()->hasDownVoted($item) && $type == 'article') {
-                    if ($this->user()->id !== $item->user()->id) {
+                    if ($this->user()->id !== $item->user->id) {
                         //第一次点赞,并且对象是用户文章,发放铜币
                         $configure = Configure::first();
                         $item->user()->increment('copper', $configure->zan_copper);
@@ -58,7 +58,7 @@ class ZanController extends Controller
 
                 if ($type == 'article') {
                     //用户店铺总点赞数增加
-                    $item->user()->shop()->increment('zan_count', 1);
+                    $item->user->shop()->increment('zan_count', 1);
                 }
 
                 $this->user()->upVote($item);
