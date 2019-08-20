@@ -133,6 +133,7 @@ class OrderController extends Controller
                         'out_trade_no' => $order->no,
                         'total_fee' => $order->total_amount * 100,
                         'body' => $order->title,
+                        'openid' => $this->user()->wap_openid
                     ])->getContent()
                 ]]);
         } else {
