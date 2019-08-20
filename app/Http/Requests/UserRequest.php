@@ -27,7 +27,8 @@ class UserRequest extends Request
                 $userId = \Auth::guard('api')->id();
                 return [
                     'nickname' => 'between:2,20|string',
-                    'avatar' => 'string'
+                    'avatar' => 'string',
+                    'wx_id' => 'string',
                 ];
                 break;
         }
@@ -39,7 +40,7 @@ class UserRequest extends Request
         return [
             'verify_key' => '短信验证码 key',
             'verify_code' => '短信验证码',
-            'wx_id' => '微信openid或unionid',
+            'wx_id' => '微信',
         ];
     }
 

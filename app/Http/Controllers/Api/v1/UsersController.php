@@ -115,6 +115,15 @@ class UsersController extends Controller
 //            $img = Media::find($request->avatar_id);
 //            $attr['avatar'] = $img->media_url;
 //        }
+        //提取微信注册数据
+        if ($request->wx_id) {
+            $wx = \Cache::get($request->wx_id);
+            if ($wx) {
+                $data = array_merge($attr, $wx);
+                \Cache::forget($request->wx_id);
+            }
+        }
+
         $user->update($attr);
 
         return $this->response->item($user, new UserTransformer());
