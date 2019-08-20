@@ -46,4 +46,8 @@ return [
         'client_secret' => env('WEIXIN_WAP_SECRET'),
         'redirect' => env('WEIXIN_WAP_REDIRECT_URI'),
     ],
+    'jpush' => [
+        'app_key' => env('JPUSH_APPKEY'),
+        'app_secret' => env('JPUSH_SECRET')
+    ]
 ];

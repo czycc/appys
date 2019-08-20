@@ -1,0 +1,1 @@
+Send POST https://api.jpush.cn/v3/push, body:{"platform":"all","audience":"all","notification":{"alert":"\u6d4b\u8bd5"},"options":{"sendno":894517820,"apns_production":false}}, times:1

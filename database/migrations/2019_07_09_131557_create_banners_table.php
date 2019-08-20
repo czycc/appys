@@ -19,6 +19,7 @@ class CreateBannersTable extends Migration
             $table->text('desc')->nullable()->commit('banner描述');
             $table->enum('type', ['courses', 'company_posts'])->default('courses');
             $table->integer('type_id')->unsigned();
+            $table->tinyInteger('is_notify')->unsigned()->default(0);
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
         });

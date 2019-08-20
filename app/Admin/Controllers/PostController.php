@@ -150,6 +150,18 @@ class PostController extends AdminController
 //            $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
         });
 
+        $form->saving(function (Form $form) {
+            if ($form->is_notify) {
+                //发送通知
+                $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'));
+                $push = $client->push();
+                $push->setPlatform('all')
+                    ->addAllAudience()
+                    ->setNotificationAlert($form->title);
+                $push->send();
+            }
+            $form->is_notify = 0;
+        });
         $date = date('Ym/d', time());
         $form->text('title', __('标题'))->required();
         $form->editor('body', __('内容(图片10M以内)'))->required();
@@ -169,6 +181,7 @@ class PostController extends AdminController
         $category = array_pluck($category, 'name', 'id');
         $form->select('category_id', __('分类'))->options($category)->required();
         $form->multipleSelect('tags', '标签')->options(Tag::all()->pluck('name', 'id'));
+        $form->switch('is_notify', '是否推送');
 
         return $form;
     }
