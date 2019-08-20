@@ -129,7 +129,7 @@ class OrderController extends Controller
         } elseif ($request->pay_method === 'wap') {
             return $this->response->array([
                 'data' => [
-                    'order' => Pay::wechat()->wap([
+                    'order' => Pay::wechat()->mp([
                         'out_trade_no' => $order->no,
                         'total_fee' => $order->total_amount * 100,
                         'body' => $order->title,
