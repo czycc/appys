@@ -65,8 +65,8 @@ class ArticleController extends AdminController
         $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('标题'));
         $grid->column('top_img', __('大图'))->image('');
-        $grid->column('body', __('图文'))->display(function ($body) {
-            return make_excerpt($body, 10);
+        $grid->column('body', __('内容'))->limit(10)->modal('内容', function ($modal) {
+            return $modal->body;
         });
         $grid->column('media_type', __('媒体类型'))->using([
             'video' => '视频', 'audio' => '音频', 'topic' => '文章'
