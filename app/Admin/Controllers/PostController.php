@@ -153,7 +153,7 @@ class PostController extends AdminController
         $form->saving(function (Form $form) {
             if ($form->is_notify) {
                 //发送通知
-                $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'));
+                $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'), null);
                 $push = $client->push();
                 $push->setPlatform('all')
                     ->addAllAudience()
