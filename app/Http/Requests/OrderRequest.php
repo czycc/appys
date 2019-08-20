@@ -14,7 +14,7 @@ class OrderRequest extends Request
     {
         $rules = [
             'type' => 'required|in:chapter,article,course,vip',
-            'pay_method' => 'required|in:alipay,wechat',
+            'pay_method' => 'required|in:alipay,wechat,wap',
         ];
 
         if ($this->type == 'chapter') {
