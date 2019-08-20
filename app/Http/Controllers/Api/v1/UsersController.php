@@ -11,6 +11,7 @@ use App\Notifications\UserBound;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
+use Laravel\Socialite\Facades\Socialite;
 
 class UsersController extends Controller
 {
@@ -108,25 +109,44 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request)
     {
-        $user = $this->user();
 
         $attr = $request->only(['nickname', 'avatar']);
 //        if ($request->avatar_id) {
 //            $img = Media::find($request->avatar_id);
 //            $attr['avatar'] = $img->media_url;
 //        }
-        //提取微信注册数据
-        if ($request->wx_id) {
-            $wx = \Cache::get($request->wx_id);
-            if ($wx) {
-                $data = array_merge($attr, $wx);
-                \Cache::forget($request->wx_id);
+        //app已登陆微信绑定
+        if ($code = $request->code) {
+            try {
+                $driver = Socialite::driver('weixin');
+                $res = $driver->getAccessTokenResponse($code);
+                $token = array_get($res, 'access_token');
+                $oauthUser = $driver->userFromToken($token);
+
+            } catch (\Exception $e) {
+                return $this->response->errorBadRequest('授权登陆失败，请重试');
             }
+
+            $unionid = $oauthUser->offsetExists('unionid') ? $oauthUser
+                ->offsetGet('unionid') : null;
+            if ($unionid) {
+                $user = User::where('wx_unionid', $unionid)->first();
+            } else {
+                $user = User::where('wx_openid', $oauthUser->getId())->first();
+            }
+
+            //用户已绑定
+            if ($user) {
+                return $this->response->errorBadRequest('该微信已经绑定过用户');
+            }
+
+            $attr['wx_openid'] = $oauthUser->getId();
+            $attr['wx_unionid'] = $unionid;
         }
 
-        $user->update($attr);
+        $this->user()->update($attr);
 
-        return $this->response->item($user, new UserTransformer());
+        return $this->response->item($this->user(), new UserTransformer());
     }
 
     /**

@@ -28,7 +28,7 @@ class UserRequest extends Request
                 return [
                     'nickname' => 'between:2,20|string',
                     'avatar' => 'string',
-                    'wx_id' => 'string',
+                    'code' => 'string',
                 ];
                 break;
         }
@@ -41,6 +41,7 @@ class UserRequest extends Request
             'verify_key' => '短信验证码 key',
             'verify_code' => '短信验证码',
             'wx_id' => '微信',
+            'code' => '授权码'
         ];
     }
 
