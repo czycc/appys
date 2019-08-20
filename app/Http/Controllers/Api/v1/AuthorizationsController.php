@@ -149,6 +149,17 @@ class AuthorizationsController extends Controller
                     ])->setStatusCode(202);
                 }
 
+                //完善openid 用于企业付款
+                if ($type === 'weixin' && is_null($user->wx_openid)) {
+                    $user->update([
+                        'wx_openid' => $oauthUser->getId()
+                    ]);
+                } elseif ($type === 'weixin' && is_null($user->wap_openid)) {
+                    $user->update([
+                        'wap_openid' => $oauthUser->getId()
+                    ]);
+                }
+
                 break;
 
         }
