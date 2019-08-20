@@ -157,7 +157,7 @@ class PostController extends AdminController
                 $push = $client->push();
                 $push->setPlatform('all')
                     ->addAllAudience()
-                    ->setNotificationAlert('最新发布了' . $form->title);
+                    ->setNotificationAlert('新文章发布：' . $form->title);
                 $push->send();
             }
             $form->is_notify = 0;
