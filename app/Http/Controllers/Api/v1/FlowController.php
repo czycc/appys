@@ -54,6 +54,7 @@ class FlowController extends Controller
      */
     public function flowOutStore(FlowOutRequest $request, FlowOut $flowOut)
     {
+        return $this->response->errorBadRequest('提现将于近期开放，敬请期待');
         if (!$this->user()->extra) {
             $extra = new UserExtra();
 
