@@ -84,7 +84,11 @@ class ArticleController extends AdminController
         $grid->column('price', __('价格'))->editable();
         $grid->column('zan_count', __('赞数'));
         $grid->column('user.nickname', __('用户'));
-        $grid->column('status', __('审核'))->switch();
+        $grid->column('status', __('审核'))->editable('select', [
+            0 => '不通过',
+            1 => '审核通过',
+            2 => '未审核'
+        ]);
         $grid->column('created_at', __('创建'))->hide();
 
         return $grid;

@@ -138,7 +138,7 @@ class PayController extends Controller
                 //发送通知
                 $article->user->msgNotify(new NormalNotify(
                     '作品被购买',
-                    "{$article->title}被{$user->nickname}购买",
+                    "您的作品 {$article->title} 被 {$user->nickname} 购买",
                     'normal',
                     $article->id
                 ));

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Tag extends Model
 {
@@ -29,5 +30,14 @@ class Tag extends Model
     public function CompanyPosts()
     {
         return $this->morphedByMany(CompanyPost::class, 'taggable');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($model) {
+            DB::table('taggables')->where('tag_id', $model->id)->delete();
+        });
     }
 }

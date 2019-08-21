@@ -19,7 +19,7 @@ Route::group([
     $router->resource('home_banners', HomeBannerController::class);
 
     //标签管理
-    $router->resource('tags', TagsController::class, ['only' => ['index', 'show', 'create', 'store', 'edit', 'update']]);
+    $router->resource('tags', TagsController::class);
 
     //教师管理
     $router->resource('admin_teachers', TeachersController::class)->names('admin_teachers');
