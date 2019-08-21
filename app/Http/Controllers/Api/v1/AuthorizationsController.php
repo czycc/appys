@@ -154,7 +154,7 @@ class AuthorizationsController extends Controller
                     $user->update([
                         'wx_openid' => $oauthUser->getId()
                     ]);
-                } elseif ($type === 'weixin' && is_null($user->wap_openid)) {
+                } elseif ($type === 'wap' && is_null($user->wap_openid)) {
                     $user->update([
                         'wap_openid' => $oauthUser->getId()
                     ]);

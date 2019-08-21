@@ -79,7 +79,7 @@ class ShopController extends AdminController
         $grid->column('district', __('区'));
         $grid->column('address', __('详细'))->hide();
         $grid->column('wechat_qrcode', __('微信码'))
-            ->image('',80, 80)
+            ->image('', 80, 80)
             ->hide();
         $grid->column('zan_count', __('赞'))->sortable();
         $grid->column('order', __('权重'))->sortable();
@@ -135,8 +135,6 @@ class ShopController extends AdminController
     {
         $form = new Form(new Shop);
 
-//        $form->text('shop_phone', __('Shop phone'));
-//        $form->text('real_name', __('Real name'));
 //        $form->textarea('introduction', __('Introduction'));
 //        $form->text('banner', __('Banner'));
 //        $form->text('idcard', __('Idcard'));
@@ -147,15 +145,18 @@ class ShopController extends AdminController
         $form->switch('status', __('是否审核'))->default(2);
 //        $form->datetime('expire_at', __('Expire at'))->default(date('Y-m-d H:i:s'));
         $form->switch('recommend', __('是否推荐'));
-        $form->text('province', __('省'));
-        $form->text('city', __('市'));
-        $form->text('district', __('区'));
-        $form->text('address', __('详细'));
+        $form->number('zan_count', __('点赞数'));
+        $form->number('order', __('权重'));
+        $form->display('shop_phone', __('店铺手机号'));
+        $form->display('real_name', __('真实姓名'));
+        $form->display('province', __('省'));
+        $form->display('city', __('市'));
+        $form->display('district', __('区'));
+        $form->display('address', __('详细'));
         $form->cropper('wechat_qrcode', __('店铺二维码'))
             ->move('backend/images/posts/' . date('Ym/d', time()))
             ->uniqueName();
-        $form->number('zan_count', __('点赞数'));
-        $form->number('order', __('权重'));
+
 //        $form->number('user_id', __('User id'));
 
         return $form;
