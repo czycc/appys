@@ -37,6 +37,10 @@ class CloseOrder implements ShouldQueue
         \DB::transaction(function () {
             //关闭订单
             $this->order->update(['closed' => true]);
+            //返还铜币
+            if ($this->order->coin > 0) {
+                $this->order->user()->increment('copper', $this->order->coin);
+            }
         });
     }
 }

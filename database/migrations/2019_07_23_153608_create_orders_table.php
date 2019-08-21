@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('pay_method')->nullable();
             $table->string('pay_no')->nullable();
             $table->boolean('closed')->default(false);
+            $table->unsignedInteger('coin')->default(0);
             $table->enum('type', [
                 'video', 'topic', 'audio', 'course', 'chapter', 'vip'
             ])->index()->comment('购买类型');
