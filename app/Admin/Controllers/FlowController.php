@@ -83,7 +83,7 @@ class FlowController extends AdminController
         })->expand(function ($model) {
             $user = $model->user;
             $extra = $user->extra()->select([
-                'name', 'idcard', 'idcard', 'health', 'extra', 'created_at'
+                'name', 'idcard', 'health', 'extra', 'created_at'
             ])->get();
             if ($extra->isNotEmpty()) {
                 return new Table([

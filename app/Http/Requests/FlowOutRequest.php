@@ -24,12 +24,23 @@ class FlowOutRequest extends Request
 
         //首次提现填写信息
         if (!\Auth::guard('api')->user()->extra) {
-            $rules['name'] = 'required|string';
-            $rules['idcard'] = 'required|string';
+            $rules['name'] = 'required|string|between:2,5';
+            $rules['idcard'] = 'required|regex:/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/';
             $rules['health'] = 'required|string';
             $rules['extra'] = 'string';
         }
         return $rules;
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => '姓名',
+            'idcard' => '身份',
+            'health' => '健康信息',
+            'extra' => '备注',
+            'ali_account' => '支付宝账号'
+        ];
     }
 
     public function messages()
@@ -40,7 +51,8 @@ class FlowOutRequest extends Request
             'name.required' => '首次提现需完善用户信息-姓名',
             'idcard.required' => '首次提现需完善用户信息-身份证号',
             'health.required' => '首次提现需完善用户信息-健康状态',
-            'bound_wechat.required' => '微信需要绑定账号'
+            'bound_wechat.required' => '微信需要绑定账号',
+            'idcard.regex' => '身份证号格式错误'
         ];
     }
 }

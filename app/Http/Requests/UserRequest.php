@@ -20,7 +20,7 @@ class UserRequest extends Request
                     'verify_key' => 'required|string',
                     'verify_code' => 'required|string',
                     'wx_id' => 'string',
-                    'bound_id' => 'exists:users,id'
+                    'bound_id' => 'exists:users,phone'
                 ];
                 break;
             case 'PATCH':
@@ -41,7 +41,8 @@ class UserRequest extends Request
             'verify_key' => '短信验证码 key',
             'verify_code' => '短信验证码',
             'wx_id' => '微信',
-            'code' => '授权码'
+            'code' => '授权码',
+            'bound_id' => '推荐码'
         ];
     }
 

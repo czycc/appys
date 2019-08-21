@@ -13,7 +13,7 @@ class BoundScanRequest extends Request
     public function rules()
     {
         return [
-            'code' => 'required|string|exists:users,code'
+            'code' => 'required|string|exists:users,phone'
         ];
     }
 

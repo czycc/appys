@@ -49,12 +49,15 @@ class UsersController extends Controller
             return $this->response->errorBadRequest('验证码错误');
         }
 
+        //bound_id改为用户手机号，用于绑定上级
+        $bound = User::where('phone', $request->bound_id)->first();
+
         $data = [
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
             'code' => uniqid(),
             'nickname' => str_random(5),
-            'bound_id' => $request->bound_id,
+            'bound_id' => $bound->id,
         ];
 
         //提取微信注册数据
