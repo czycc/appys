@@ -206,7 +206,7 @@ class UsersController extends Controller
             return $this->response->errorBadRequest('您已经提交过绑定申请，等待确认');
         }
 
-        $user = User::where('code', $code)->first();
+        $user = User::where('phone', $code)->first();
 
         //自己的二维码
         if ($user->id == $this->user()->id) {

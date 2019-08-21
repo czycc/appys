@@ -18,7 +18,7 @@ class FlowOutRequest extends Request
             $rules['ali_account'] = 'required|string';
         }
         //微信需要绑定用户
-        if ($this->out_method == 'wechat' && !\Auth::guard('api')->user()->wx_openid) {
+        if ($this->out_method == 'wechat' && !\Auth::guard('api')->user()->wx_unionid) {
             $rules['bound_wechat'] = 'required';
         }
 

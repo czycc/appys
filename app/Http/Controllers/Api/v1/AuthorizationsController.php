@@ -186,7 +186,11 @@ class AuthorizationsController extends Controller
      */
     public function destory()
     {
-        \Auth::guard('api')->logout();
+        try {
+            \Auth::guard('api')->logout();
+        } catch (\Exception $exception) {
+
+        }
 
         return $this->response->noContent();
     }
