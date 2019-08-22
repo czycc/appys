@@ -157,7 +157,19 @@ class PostController extends AdminController
                 $push = $client->push();
                 $push->setPlatform('all')
                     ->addAllAudience()
-                    ->setNotificationAlert('新文章发布：' . $form->title);
+                    ->setNotificationAlert('新文章发布：' . $form->title)
+                    ->androidNotification('新文章发布：' . $form->title, [
+                        'intent' => 'com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew',
+                        'extras' => [
+                            'id' => $form->id
+                        ]
+                    ])->iosNotification('新文章发布：' . $form->title, [
+                        'extras' => [
+                            'id' => $form->id,
+                            'type' => 'company_post',
+                            'title' => $form->title
+                        ]
+                    ]);
                 $push->send();
             }
             $form->is_notify = 0;
