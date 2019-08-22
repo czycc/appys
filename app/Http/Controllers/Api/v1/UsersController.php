@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Requests\BoundScanRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\BoundScan;
+use App\Models\Configure;
 use App\Models\Media;
 use App\Models\User;
 use App\Notifications\UserBound;
@@ -59,9 +60,14 @@ class UsersController extends Controller
             'code' => uniqid(),
             'nickname' => str_random(5),
         ];
+
+        //绑定
         if ($bound) {
             $data['bound_id'] = $bound->id;
             $data['bound_status'] = 1;
+
+            //上级增加铜币
+            $bound->increment('copper', Configure::first()->invite_copper);
         }
 
         //提取微信注册数据
@@ -259,6 +265,9 @@ class UsersController extends Controller
         //确认绑定 判断bound_id+bound_status
         if ($confirm = $request->confirm) {
             $user->bound_status = 1;
+            //该用户增加铜币
+            $this->user()->increment('copper', Configure::first()->invite_copper);
+
         } else {
             //取消上级绑定
             $user->bound_id = 0;
