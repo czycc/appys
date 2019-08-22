@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelFollow\Traits\CanBeVoted;
 
@@ -9,7 +10,7 @@ class CompanyPost extends Model
 {
     use CanBeVoted;
 
-    protected $fillable = ['title', 'body', 'thumbnail', 'media_type', 'media_url', 'category_id', 'view_count', 'zan_count', 'weight'];
+    protected $fillable = ['title', 'body', 'thumbnail', 'media_type', 'is_notify', 'media_url', 'category_id', 'view_count', 'zan_count', 'weight'];
     public function category()
     {
         return $this->belongsTo(CompanyCategory::class, 'category_id');
@@ -44,7 +45,7 @@ class CompanyPost extends Model
     {
         parent::boot();
 
-        static::saving(function (CompanyPost $post) {
+        static::saved(function (CompanyPost $post) {
             if ($post->is_notify) {
                 //发送通知
                 $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'), null);
@@ -67,8 +68,9 @@ class CompanyPost extends Model
                     ]);
                 $push->send();
             }
-
-            $post->is_notify = 0;
+            DB::table('company_posts')->where('id', $post->id)->update([
+                'is_notify' => 0
+            ]);
         });
     }
 }
