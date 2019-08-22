@@ -25,7 +25,10 @@ class FlowOutRequest extends Request
         //首次提现填写信息
         if (!\Auth::guard('api')->user()->extra) {
             $rules['name'] = 'required|string|between:2,5';
-            $rules['idcard'] = 'required|regex:/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/';
+            $rules['idcard'] = [
+                'required',
+                'regex:/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/'
+            ];
             $rules['health'] = 'required|string';
             $rules['extra'] = 'string';
         }
