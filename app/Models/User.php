@@ -137,9 +137,20 @@ class User extends Authenticatable implements JWTSubject
                         '代理会员到期时间：'. $model->expire_at,
                         'vip'
                     ));
+
+                    //上级获币，银牌得银币，代理得金币
+                    if ($model->bound_status) {
+                        $top = User::find($model->id);
+
+                        $configure = Configure::first();
+                        if ($top->vip === '银牌会员') {
+                            $top->increment('silver', $configure->buy_vip3_top_vip2);
+                        } elseif ($top->vip === '代理会员') {
+                            $top->increment('gold', $configure->buy_vip3_top_vip3);
+                        }
+                    }
                 }
             }
-
 
         });
     }

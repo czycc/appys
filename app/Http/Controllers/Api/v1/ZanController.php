@@ -72,7 +72,7 @@ class ZanController extends Controller
                 $item->decrement('zan_count', 1);
                 if ($type == 'article') {
                     //用户店铺总点赞数减少
-                    $this->user()->shop()->decrement('zan_count', 1);
+                    $item->user->shop()->decrement('zan_count', 1);
                 }
             }
         }
