@@ -176,6 +176,7 @@ class PostController extends AdminController
             $form->is_notify = 0;
         });
         $date = date('Ym/d', time());
+        $form->hidden('id');
         $form->text('title', __('标题'))->required();
         $form->editor('body', __('内容(图片10M以内)'))->required();
         $form->cropper('thumbnail', __('封面图(必传)'))
