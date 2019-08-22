@@ -157,23 +157,26 @@ class OrderController extends Controller
 
     public function copperToMoney($price, $copper)
     {
-        $configure = Configure::first();
+        $deduction = 0;
+        if ($copper > 0) {
+            $configure = Configure::first();
 
-        //最大抵扣金额
-        $max_deduction = big_num($price)
-            ->multiply($configure['copper_pay_percent'] / 100)
-            ->getValue();
+            //最大抵扣金额
+            $max_deduction = big_num($price)
+                ->multiply($configure['copper_pay_percent'] / 100)
+                ->getValue();
 
-        //实际抵扣金额
-        $deduction = big_num(1)->multiply($copper / $configure['copper_pay_num'])->getValue();
+            //实际抵扣金额
+            $deduction = big_num(1)->multiply($copper / $configure['copper_pay_num'])->getValue();
 
-        //不能超过最大抵扣
-        if ($max_deduction < $deduction) {
-            $deduction = $max_deduction;
+            //不能超过最大抵扣
+            if ($max_deduction < $deduction) {
+                $deduction = $max_deduction;
+            }
+            //扣除当前用户铜币
+            $this->user()
+                ->decrement('copper', $deduction * $configure['copper_pay_num']);
         }
-        //扣除当前用户铜币
-        $this->user()
-            ->decrement('copper', $deduction * $configure['copper_pay_num']);
 
         return $deduction;
     }
