@@ -52,14 +52,17 @@ class UsersController extends Controller
         //bound_id改为用户手机号，用于绑定上级
         $bound = User::where('phone', $request->bound_id)->first();
 
+
         $data = [
             'phone' => $verifyData['phone'],
             'password' => bcrypt($request->password),
             'code' => uniqid(),
             'nickname' => str_random(5),
-            'bound_id' => $bound ? $bound->id : 0,
-            'bound_status' => $bound ? 1 : 0
         ];
+        if ($bound) {
+            $data['bound_id'] = $bound->id;
+            $data['bound_status'] = 1;
+        }
 
         //提取微信注册数据
         if ($request->wx_id) {
