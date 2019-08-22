@@ -20,7 +20,7 @@ class UserRequest extends Request
                     'verify_key' => 'required|string',
                     'verify_code' => 'required|string',
                     'wx_id' => 'string',
-//                    'bound_id' => 'exists:users,phone'
+                    'bound_id' => 'nullable|exists:users,phone'
                 ];
                 break;
             case 'PATCH':
