@@ -160,6 +160,7 @@ class PostController extends AdminController
                     ->setNotificationAlert('新文章发布：' . $form->title)
                     ->androidNotification('新文章发布：' . $form->title, [
                         'intent' => 'com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew',
+                        'large_icon' => 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/logo.png',
                         'extras' => [
                             'id' => $form->id
                         ]
