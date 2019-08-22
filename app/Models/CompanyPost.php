@@ -54,12 +54,13 @@ class CompanyPost extends Model
                     ->addAllAudience()
                     ->setNotificationAlert('新文章发布：' . $post->title)
                     ->androidNotification('新文章发布：' . $post->title, [
-                        'intent' => [
-                            'url' => 'intent:#Intent;component=com.ahaiba.keephealth/com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew;end'
-                        ],
+//                        'intent' => [
+//                            'url' => 'intent:#Intent;component=com.ahaiba.keephealth/com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew;end'
+//                        ],
                         'large_icon' => 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/logo.png',
                         'extras' => [
-                            'id' => "{$post->id}"
+                            'id' => "{$post->id}",
+                            "activity" => "com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew"
                         ]
                     ])->iosNotification('新文章发布：' . $post->title, [
                         'extras' => [
