@@ -39,4 +39,36 @@ class CompanyPost extends Model
             $this->attributes['thumbnail'] = $thumbnail;
         }
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (CompanyPost $post) {
+            if ($post->is_notify) {
+                //发送通知
+                $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'), null);
+                $push = $client->push();
+                $push->setPlatform('all')
+                    ->addAllAudience()
+                    ->setNotificationAlert('新文章发布：' . $post->title)
+                    ->androidNotification('新文章发布：' . $post->title, [
+                        'intent' => 'com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew',
+                        'large_icon' => 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/logo.png',
+                        'extras' => [
+                            'id' => $post->id
+                        ]
+                    ])->iosNotification('新文章发布：' . $post->title, [
+                        'extras' => [
+                            'id' => $post->id,
+                            'type' => 'company_post',
+                            'title' => $post->title
+                        ]
+                    ]);
+                $push->send();
+            }
+
+            $post->is_notify = 0;
+        });
+    }
 }

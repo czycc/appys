@@ -151,29 +151,29 @@ class PostController extends AdminController
         });
 
         $form->saved(function (Form $form) {
-            if ($form->is_notify) {
-                //发送通知
-                $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'), null);
-                $push = $client->push();
-                $push->setPlatform('all')
-                    ->addAllAudience()
-                    ->setNotificationAlert('新文章发布：' . $form->title)
-                    ->androidNotification('新文章发布：' . $form->title, [
-                        'intent' => 'com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew',
-                        'large_icon' => 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/logo.png',
-                        'extras' => [
-                            'id' => $form->id
-                        ]
-                    ])->iosNotification('新文章发布：' . $form->title, [
-                        'extras' => [
-                            'id' => $form->id,
-                            'type' => 'company_post',
-                            'title' => $form->title
-                        ]
-                    ]);
-                $push->send();
-            }
-            $form->is_notify = 0;
+//            if ($form->is_notify) {
+//                //发送通知
+//                $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'), null);
+//                $push = $client->push();
+//                $push->setPlatform('all')
+//                    ->addAllAudience()
+//                    ->setNotificationAlert('新文章发布：' . $form->title)
+//                    ->androidNotification('新文章发布：' . $form->title, [
+//                        'intent' => 'com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew',
+//                        'large_icon' => 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/logo.png',
+//                        'extras' => [
+//                            'id' => $form->id
+//                        ]
+//                    ])->iosNotification('新文章发布：' . $form->title, [
+//                        'extras' => [
+//                            'id' => $form->id,
+//                            'type' => 'company_post',
+//                            'title' => $form->title
+//                        ]
+//                    ]);
+//                $push->send();
+//            }
+//            $form->is_notify = 0;
         });
         $date = date('Ym/d', time());
         $form->hidden('id');
