@@ -93,6 +93,7 @@ class OrderController extends Controller
                 //抵扣
                 $deduction = $this->copperToMoney($chapter->price, $request->copper);
                 $order->deduction = $deduction;
+                $order->coin = $request->copper; //抵扣铜币
                 $price = big_num($chapter->price)->subtract($deduction)->getValue();
                 break;
             default:
