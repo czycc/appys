@@ -40,7 +40,7 @@ class VerificationCodesController extends Controller
 
         //缓存验证码，3分钟过期
         $key = 'verificationCode_' . uniqid();
-        $expireAt = now()->addMinute(3);
+        $expireAt = now()->addMinute(5);
 
         \Cache::put($key, ['phone' => $phone, 'code' => $code], $expireAt);
 
