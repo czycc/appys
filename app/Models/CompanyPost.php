@@ -55,11 +55,11 @@ class CompanyPost extends Model
                     ->setNotificationAlert('新文章发布：' . $post->title)
                     ->androidNotification('新文章发布：' . $post->title, [
                         'intent' => [
-                            'url' => 'com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew'
+                            'url' => 'intent:#Intent;component=com.ahaiba.keephealth/com.ahaiba.keephealth.mvvm.view.activity.ArticleDetailActivityNew;end'
                         ],
                         'large_icon' => 'https://woheniys.oss-cn-hangzhou.aliyuncs.com/logo.png',
                         'extras' => [
-                            'id' => $post->id
+                            'id' => "{$post->id}"
                         ]
                     ])->iosNotification('新文章发布：' . $post->title, [
                         'extras' => [
