@@ -50,7 +50,8 @@ class UserRequest extends Request
     {
         return [
             'password.min' => '密码至少6位',
-            'nickname' => '昵称在2-20个字符以内'
+            'nickname' => '昵称在2-20个字符以内',
+            'bound_id.exists' => '请检查推荐码是否输入有误'
         ];
     }
 }
