@@ -58,6 +58,7 @@ class UsersController extends Controller
             'code' => uniqid(),
             'nickname' => str_random(5),
             'bound_id' => $bound ? $bound->id : 0,
+            'bound_status' => $bound ? 1 : 0
         ];
 
         //提取微信注册数据
