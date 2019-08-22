@@ -150,7 +150,7 @@ class PostController extends AdminController
 //            $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
         });
 
-        $form->saving(function (Form $form) {
+        $form->saved(function (Form $form) {
             if ($form->is_notify) {
                 //发送通知
                 $client = new \JPush\Client(config('services.jpush.app_key'), config('services.jpush.app_secret'), null);
