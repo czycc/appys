@@ -14,7 +14,7 @@ class VipController extends Controller
         $data['vip3_price'] = $config['vip3_price'];
 
         //根据是否有上级返回不同价格
-        if ($this->user()->top_id) {
+        if ($this->user()->bound_status) {
             $data['vip2_price'] = $config['vip2_price_y'];
         } else {
             $data['vip2_price'] = $config['vip2_price_n'];
