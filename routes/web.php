@@ -11,26 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-   return view('welcome');
-});
-
-Route::get('alipay', function () {
-    $order = [
-        'out_trade_no' => '20190807144036509814',
-        'total_amount' => '4.00',
-        'subject' => '购买 Tempora illo illum voluptatem.',
-    ];
-
-    return \Pay::alipay()->web($order);
-});
-
 //editor 上传图片
 Route::post('editor/upload', 'EditorUploadImgController@upload');
 
-Route::get('type/{type}/id/{id}/user/{user_id}', function () {
-    return '分享成功';
-});
+Route::get('type/{type}/id/{id}/user/{user_id}', 'ShareController@share');
 
 Route::get('admin/api/courses', 'AdminApiController@courses');
 Route::get('admin/api/teachers', 'AdminApiController@teachers');
