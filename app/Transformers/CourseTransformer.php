@@ -35,10 +35,11 @@ class CourseTransformer extends TransformerAbstract
                 'created_at' => $post->created_at->toDateTimeString(),
             ];
         }
-        $bought = $this->permission;
-        if ($post->now_price === '0.00') {
+        if ($post->now_price === '0.00' || \Auth::guard('api')->user()->vip !== '铜牌会员') {
             $this->permission = true;
         }
+        $bought = $this->permission;
+
         return [
             'id' => $post->id,
             'title' => $post->title,
