@@ -126,8 +126,17 @@ class PayController extends Controller
             case 'video':
             case 'topic':
                 $article = Article::find($order->type_id);
+                if ($article->type == 'audio') {
+                    $titleType = '音频购买';
+                } elseif ($article->type == 'video') {
+                    $titleType = '小视频';
+                } elseif ($article->type == 'topic') {
+                    $titleType = '文章';
+                } else {
+                    $titleType = '作品';
+                }
                 Flow::create([
-                    'title' => '作品被购买收益',
+                    'title' => $titleType . '收益',
                     'user_id' => $article->user_id,
                     'order_id' => $order->id,
                     'total_amount' => big_num($order->total_amount)
@@ -172,7 +181,7 @@ class PayController extends Controller
 
                     //会员购买三级分销
                     Flow::create([
-                        'title' => '邀请会员购买银牌收益',
+                        'title' => '会员邀请收益',
                         'user_id' => $top->id,
                         'order_id' => $order->id,
                         'total_amount' => big_num($order->total_amount)
@@ -184,7 +193,7 @@ class PayController extends Controller
                     if ($top->bound_id) {
                         $top2 = User::find($top->bound_id);
                         Flow::create([
-                            'title' => '邀请会员购买银牌收益',
+                            'title' => '会员邀请收益',
                             'user_id' => $top2->id,
                             'order_id' => $order->id,
                             'total_amount' => big_num($order->total_amount)
@@ -195,7 +204,7 @@ class PayController extends Controller
                         if ($top2->bound_id) {
                             $top3 = User::find($top2->bound_id);
                             Flow::create([
-                                'title' => '邀请会员购买银牌收益',
+                                'title' => '会员邀请收益',
                                 'user_id' => $top3->id,
                                 'order_id' => $order->id,
                                 'total_amount' => big_num($order->total_amount)
@@ -223,7 +232,7 @@ class PayController extends Controller
                     $top = User::find($user->bound_id);
                     //收益
                     Flow::create([
-                        'title' => '邀请会员购买课程收益',
+                        'title' => '课程购买收益',
                         'user_id' => $top->id,
                         'order_id' => $order->id,
                         'total_amount' => big_num($order->total_amount)
@@ -235,7 +244,7 @@ class PayController extends Controller
                         $top2 = User::find($top->bound_id);
                         //收益
                         Flow::create([
-                            'title' => '邀请会员购买课程收益',
+                            'title' => '课程购买收益',
                             'user_id' => $top2->id,
                             'order_id' => $order->id,
                             'total_amount' => big_num($order->total_amount)
@@ -248,7 +257,7 @@ class PayController extends Controller
                             $top3 = User::find($top2->bound_id);
                             //收益
                             Flow::create([
-                                'title' => '邀请会员购买课程收益',
+                                'title' => '课程购买收益',
                                 'user_id' => $top3->id,
                                 'order_id' => $order->id,
                                 'total_amount' => big_num($order->total_amount)

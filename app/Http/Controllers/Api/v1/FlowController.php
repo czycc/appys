@@ -27,7 +27,8 @@ class FlowController extends Controller
 
         return $this->response
             ->paginator($flows, new FlowTransformer())
-            ->addMeta('balance', $this->user()->balance);
+            ->addMeta('balance', $this->user()->balance)
+            ->addMeta('bound_extra', (boolean)$this->user()->extra);
     }
 
     /**
