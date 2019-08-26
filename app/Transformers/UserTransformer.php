@@ -25,7 +25,6 @@ class UserTransformer extends TransformerAbstract
                 'nickname' => $item->nickname,
                 'avatar' => $item->avatar,
                 'vip' => $item->vip,
-//                'shop_status' => (int)$item->shop->status,
             ];
         }
 
