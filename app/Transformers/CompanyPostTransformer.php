@@ -33,6 +33,7 @@ class CompanyPostTransformer extends TransformerAbstract
             'id' => $post->id,
             'title' => $post->title,
             'body' => $post->body,
+            'excerpt' => make_excerpt($post->body, 30),
             'thumbnail' => (string)$post->thumbnail,
             'media_type' => $post->media_type,
             'media_url' => (string)$post->media_url,
