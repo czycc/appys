@@ -142,7 +142,7 @@ class PayController extends Controller
                     'total_amount' => big_num($order->total_amount)
                         ->multiply($configure['pub_self'] / 100)
                         ->getValue(),
-                    'extra' => $article->type,
+                    'extra' => $article->media_type,
                 ]);
                 //发送通知
                 $article->user->msgNotify(new NormalNotify(
