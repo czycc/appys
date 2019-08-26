@@ -58,22 +58,12 @@ class UserController extends AdminController
         $grid->quickSearch('phone')->placeholder('按手机号搜索');
 
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('phone', __('手机号'));
-        $grid->column('nickname', __('昵称'))->expand(function ($model) {
-            $extra = $model->extra()->select([
-                'name', 'idcard', 'idcard', 'health', 'extra', 'created_at'
-            ])->get();
-            if ($extra->isNotEmpty()) {
-                return new Table([
-                    '姓名', '身份证号', '健康', '备注', '创建时间'
-                ], $extra->toArray());
-            }
-
-        });
+        $grid->column('phone', __('手机号'))->filter('like');
+        $grid->column('nickname', __('昵称'))->filter('like');
         $grid->column('avatar', __('头像'))->image(80, 80);
-        $grid->column('gold', __('金币'));
-        $grid->column('silver', __('银币'));
-        $grid->column('copper', __('铜币'));
+        $grid->column('gold', __('金币'))->sortable();
+        $grid->column('silver', __('银币'))->sortable();
+        $grid->column('copper', __('铜币'))->sortable();
         $grid->column('bound_id', __('上级'))->display(function ($boundId) {
             if ($boundId) {
                 $user = User::find($boundId);
@@ -81,8 +71,8 @@ class UserController extends AdminController
             }
         });
         $grid->column('vip', __('Vip'));
-        $grid->column('expire_at', __('到期'));
-        $grid->column('balance', __('收益'));
+        $grid->column('expire_at', __('到期'))->filter('range', 'datetime');
+        $grid->column('balance', __('收益'))->sortable();
         $grid->column('created_at', __('创建'));
 
         return $grid;

@@ -23,6 +23,9 @@ class ShareController extends Controller
             case 'company_post':
                 $url = 'http://api.woheni99.com/CompanyArticleDetail?id=' . $id;
                 break;
+            case 'shop':
+                $url = 'http://api.woheni99.com/Shop?id=' . $id;
+                break;
             default:
                 abort(404);
         }

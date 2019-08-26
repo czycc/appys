@@ -52,11 +52,11 @@ class TeachersController extends AdminController
             $actions->disableView();
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('name', __('姓名'));
+        $grid->column('name', __('姓名'))->filter('like');
         $grid->column('desc', __('描述'));
         $grid->column('video_url', __('视频简介'))->video(['videoWidth' => 720, 'videoHeight' => 480]);
         $grid->column('imgs', __('多图简介'))->carousel();
-        $grid->column('created_at', __('Created at'));
+        $grid->column('created_at', __('创建时间'));
 
         return $grid;
     }

@@ -67,10 +67,10 @@ class CourseController extends AdminController
 
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('title', __('标题'));
+        $grid->column('title', __('标题'))->filter('like');
         $grid->column('banner', __('大图'))->image('', 100, 100);
-        $grid->column('ori_price', __('原价'));
-        $grid->column('now_price', __('现价'));
+        $grid->column('ori_price', __('原价'))->sortable();
+        $grid->column('now_price', __('现价'))->sortable();
         $grid->column('body', __('图文'))->display(function ($body) {
             return make_excerpt($body, 15);
         });
@@ -84,10 +84,13 @@ class CourseController extends AdminController
         $grid->column('recommend', __('是否推荐'))->using([
             '0' => '否',
             '1' => '是'
+        ])->filter([
+            '0' => '否',
+            '1' => '是'
         ]);
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('teacher.name', __('教师'));
-        $grid->column('category.name', __('类别'));
+        $grid->column('teacher.name', __('教师'))->filter('like');
+        $grid->column('category.name', __('类别'))->filter('like');
         $grid->column('created_at', __('创建'));
 //        $grid->column('updated_at', __('Updated at'));
 

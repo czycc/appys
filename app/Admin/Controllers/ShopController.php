@@ -53,9 +53,21 @@ class ShopController extends AdminController
             $actions->disableView();
         });
 
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+//            $filter->disableIdFilter();
+
+            // 在这里添加字段过滤器
+            $filter->like('shop_phone', '手机');
+            $filter->like('real_name', '姓名');
+
+
+        });
+
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('shop_phone', __('手机'));
-        $grid->column('real_name', __('姓名'));
+        $grid->column('shop_phone', __('手机'))->filter('like');
+        $grid->column('real_name', __('姓名'))->filter('like');
         $grid->column('introduction', __('介绍'))->display(function ($intro) {
             return make_excerpt($intro, 10);
         });
@@ -69,21 +81,28 @@ class ShopController extends AdminController
             '0' => '未通过',
             '1' => '通过',
             '2' => '未审核'
+        ])->filter([
+            '0' => '未通过',
+            '1' => '通过',
+            '2' => '未审核'
         ]);
         $grid->column('recommend', __('推荐'))->using([
             '0' => '否',
             '1' => '是',
+        ])->filter([
+            '0' => '否',
+            '1' => '是',
         ]);
-        $grid->column('province', __('省'));
-        $grid->column('city', __('市'));
-        $grid->column('district', __('区'));
+        $grid->column('province', __('省'))->filter('like');
+        $grid->column('city', __('市'))->filter('like');
+        $grid->column('district', __('区'))->filter('like');
         $grid->column('address', __('详细'))->hide();
         $grid->column('wechat_qrcode', __('微信码'))
             ->image('', 80, 80)
             ->hide();
         $grid->column('zan_count', __('赞'))->sortable();
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('user.nickname', __('所属人'));
+        $grid->column('user.nickname', __('所属人'))->filter('like');
         $grid->column('created_at', __('创建'));
 
         return $grid;
@@ -169,27 +188,38 @@ class ShopController extends AdminController
 //            $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
         });
 
-//        $form->textarea('introduction', __('Introduction'));
-//        $form->text('banner', __('Banner'));
 //        $form->text('idcard', __('Idcard'));
-//        $form->text('license', __('License'));
 //        $form->text('shop_imgs', __('Shop imgs'));
 //        $form->decimal('longitude', __('Longitude'));
 //        $form->decimal('latitude', __('Latitude'));
         $form->switch('status', __('是否审核'))->default(2);
 //        $form->datetime('expire_at', __('Expire at'))->default(date('Y-m-d H:i:s'));
         $form->switch('recommend', __('是否推荐'));
+        $form->textarea('introduction', __('店铺介绍'));
         $form->number('zan_count', __('点赞数'));
         $form->number('order', __('权重'));
-        $form->display('shop_phone', __('店铺手机号'));
-        $form->display('real_name', __('真实姓名'));
-        $form->display('province', __('省'));
-        $form->display('city', __('市'));
-        $form->display('district', __('区'));
-        $form->display('address', __('详细'));
-        $form->cropper('wechat_qrcode', __('店铺二维码'))
-            ->move('backend/images/posts/' . date('Ym/d', time()))
+        $form->text('shop_phone', __('店铺手机号'));
+        $form->text('real_name', __('真实姓名'));
+        $form->text('province', __('省'));
+        $form->text('city', __('市'));
+        $form->text('district', __('区'));
+        $form->text('address', __('详细'));
+
+        $form->cropper('banner', __('大图'))
+            ->move('backend/images/shops/' . date('Ym/d', time()))
+            ->uniqueName();;
+
+        $form->cropper('license', __('营业执照'))
+            ->move('backend/images/shops/' . date('Ym/d', time()))
             ->uniqueName();
+        $form->cropper('idcard', __('身份证'))
+            ->move('backend/images/shops/' . date('Ym/d', time()))
+            ->uniqueName();
+
+        $form->cropper('wechat_qrcode', __('店铺二维码'))
+            ->move('backend/images/shops/' . date('Ym/d', time()))
+            ->uniqueName();
+        $form->multipleImage('shop_imgs', __('店铺图片'))->removable();
 
 //        $form->number('user_id', __('User id'));
 

@@ -65,8 +65,8 @@ class ChapterController extends AdminController
 
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('title', __('标题'));
-        $grid->column('price', __('价格'));
+        $grid->column('title', __('标题'))->filter('like');
+        $grid->column('price', __('价格'))->sortable();
 //        $grid->column('media_type', __('媒体类型'));
         $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
             if (!$this->media_url) {

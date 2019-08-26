@@ -55,12 +55,16 @@ class PostController extends AdminController
             $actions->disableView();
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('title', __('标题'));
+        $grid->column('title', __('标题'))->filter('like');
         $grid->column('body', __('图文内容'))->display(function ($body) {
             return make_excerpt($body, 30);
         });
         $grid->column('thumbnail', __('封面图'))->image(100, 100);
-        $grid->column('media_type', __('媒体类型'))->using(['video' => '视频', 'audio' => '音频', 'topic' => '文章']);
+        $grid->column('media_type', __('媒体类型'))->using([
+            'video' => '视频', 'audio' => '音频', 'topic' => '文章'
+        ])->filter([
+            'video' => '视频', 'audio' => '音频', 'topic' => '文章'
+        ]);
         $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
             if (!$this->media_url) {
                 return '';
@@ -73,7 +77,7 @@ class PostController extends AdminController
 //        $grid->column('view_count', __(''));
         $grid->column('zan_count', __('点赞数量'))->sortable();
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('category.name', __('分类'));
+        $grid->column('category.name', __('分类'))->filter('like');
 //        $grid->column('tags.name', '标签');
         $grid->column('created_at', __('创建时间'));
 //        $grid->column('updated_at', __('更新时间'));

@@ -53,7 +53,7 @@ class ArticleController extends AdminController
             $actions->disableView();
         });
 
-        $grid->filter(function($filter){
+        $grid->filter(function ($filter) {
 
             // 去掉默认的id过滤器
 //            $filter->disableIdFilter();
@@ -63,12 +63,14 @@ class ArticleController extends AdminController
 
         });
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('title', __('标题'));
+        $grid->column('title', __('标题'))->filter('like');
         $grid->column('top_img', __('大图'))->image('');
         $grid->column('body', __('内容'))->limit(10)->modal('内容', function ($modal) {
             return $modal->body;
         });
         $grid->column('media_type', __('媒体类型'))->using([
+            'video' => '视频', 'audio' => '音频', 'topic' => '文章'
+        ])->filter([
             'video' => '视频', 'audio' => '音频', 'topic' => '文章'
         ]);
         $grid->column('media_url', __('媒体链接'))->display(function ($media_url, $column) {
@@ -80,11 +82,15 @@ class ArticleController extends AdminController
             }
             return $column->audio(['audioWidth' => 240]);
         })->width(100);
-        $grid->column('multi_imgs', __('多图'))->carousel(150,150)->hide();
-        $grid->column('price', __('价格'))->editable();
-        $grid->column('zan_count', __('赞数'));
-        $grid->column('user.nickname', __('用户'));
+        $grid->column('multi_imgs', __('多图'))->carousel(150, 150)->hide();
+        $grid->column('price', __('价格'))->editable()->sortable();
+        $grid->column('zan_count', __('赞数'))->sortable();
+        $grid->column('user.nickname', __('用户'))->filter('like');
         $grid->column('status', __('审核'))->editable('select', [
+            0 => '不通过',
+            1 => '审核通过',
+            2 => '未审核'
+        ])->filter([
             0 => '不通过',
             1 => '审核通过',
             2 => '未审核'

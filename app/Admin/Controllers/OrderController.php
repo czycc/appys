@@ -89,6 +89,12 @@ class OrderController extends AdminController
             'topic' => '用户文章',
             'course' => '平台课程',
             'vip' => '会员'
+        ])->filter([
+            'audio' => '用户音频',
+            'video' => '用户视频',
+            'topic' => '用户文章',
+            'course' => '平台课程',
+            'vip' => '会员'
         ]);
 //        $grid->column('type_id', __('Type id'));
         $grid->column('extra', __('备注'));
