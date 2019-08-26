@@ -82,7 +82,7 @@ class ArticleController extends AdminController
             }
             return $column->audio(['audioWidth' => 240]);
         })->width(100);
-        $grid->column('multi_imgs', __('多图'))->carousel(150, 150)->hide();
+        $grid->column('multi_imgs', __('多图'))->carousel(150, 150);
         $grid->column('price', __('价格'))->editable()->sortable();
         $grid->column('zan_count', __('赞数'))->sortable();
         $grid->column('user.nickname', __('用户'))->filter('like');
@@ -95,7 +95,7 @@ class ArticleController extends AdminController
             1 => '审核通过',
             2 => '未审核'
         ]);
-        $grid->column('created_at', __('创建'))->hide();
+        $grid->column('created_at', __('创建'));
 
         return $grid;
     }
