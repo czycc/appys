@@ -64,6 +64,8 @@ class CourseController extends AdminController
             // 在这里添加字段过滤器
             $filter->like('teacher.name', '按教师名');
             $filter->like('title', '按标题');
+            $filter->in('category.name', '按分类')->multipleSelect(CourseCategory::all()->pluck('name', 'name'));
+            $filter->like('category.name', '按教师名');
 
         });
         $grid->column('id', __('Id'))->sortable();
@@ -80,6 +82,9 @@ class CourseController extends AdminController
         $grid->column('show', __('是否显示'))->using([
             '0' => '否',
             '1' => '是'
+        ])->filter([
+            '0' => '否',
+            '1' => '是'
         ]);
         $grid->column('recommend', __('是否推荐'))->using([
             '0' => '否',
@@ -89,8 +94,8 @@ class CourseController extends AdminController
             '1' => '是'
         ]);
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('teacher.name', __('教师'))->filter('like');
-        $grid->column('category.name', __('类别'))->filter('like');
+        $grid->column('teacher.name', __('教师'));
+        $grid->column('category.name', __('类别'));
         $grid->column('created_at', __('创建'));
 //        $grid->column('updated_at', __('Updated at'));
 

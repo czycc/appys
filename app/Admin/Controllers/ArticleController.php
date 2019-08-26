@@ -59,8 +59,7 @@ class ArticleController extends AdminController
 //            $filter->disableIdFilter();
 
             // 在这里添加字段过滤器
-
-
+            $filter->like('user.nickname', '按用户昵称');
         });
         $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('标题'))->filter('like');
@@ -85,7 +84,7 @@ class ArticleController extends AdminController
         $grid->column('multi_imgs', __('多图'))->carousel(150, 150);
         $grid->column('price', __('价格'))->editable()->sortable();
         $grid->column('zan_count', __('赞数'))->sortable();
-        $grid->column('user.nickname', __('用户'))->filter('like');
+        $grid->column('user.nickname', __('用户'));
         $grid->column('status', __('审核'))->editable('select', [
             0 => '不通过',
             1 => '审核通过',

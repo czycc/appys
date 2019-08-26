@@ -61,6 +61,7 @@ class ShopController extends AdminController
             // 在这里添加字段过滤器
             $filter->like('shop_phone', '手机');
             $filter->like('real_name', '姓名');
+            $filter->like('user.nickname', '按所属用户昵称');
 
 
         });
@@ -102,7 +103,7 @@ class ShopController extends AdminController
             ->hide();
         $grid->column('zan_count', __('赞'))->sortable();
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('user.nickname', __('所属人'))->filter('like');
+        $grid->column('user.nickname', __('所属人'));
         $grid->column('created_at', __('创建'));
 
         return $grid;
