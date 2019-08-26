@@ -126,11 +126,11 @@ class PayController extends Controller
             case 'video':
             case 'topic':
                 $article = Article::find($order->type_id);
-                if ($article->type == 'audio') {
+                if ($article->media_type == 'audio') {
                     $titleType = '音频购买';
-                } elseif ($article->type == 'video') {
+                } elseif ($article->media_type == 'video') {
                     $titleType = '小视频';
-                } elseif ($article->type == 'topic') {
+                } elseif ($article->media_type == 'topic') {
                     $titleType = '文章';
                 } else {
                     $titleType = '作品';
