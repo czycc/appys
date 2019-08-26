@@ -69,7 +69,7 @@ class OrderController extends Controller
                 //根据是否有上级来决定vip价格
                 $configure = Configure::select(['vip2_price_n', 'vip2_price_y'])
                     ->first();
-                if ($this->user()->top_id) {
+                if ($this->user()->bound_status) {
                     $price = $configure['vip2_price_y'];
                 } else {
                     $price = $configure['vip2_price_n'];

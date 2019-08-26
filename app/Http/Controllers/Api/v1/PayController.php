@@ -167,7 +167,7 @@ class PayController extends Controller
                 }
                 $user->save();
 
-                if ($user->bound_id) {
+                if ($user->bound_status) {
 
                     //上级是代理得金币，是银牌得银币
                     $top = User::find($user->bound_id);
@@ -179,39 +179,47 @@ class PayController extends Controller
                     }
                     $top->save();
 
-                    //会员购买三级分销
-                    Flow::create([
-                        'title' => '会员邀请收益',
-                        'user_id' => $top->id,
-                        'order_id' => $order->id,
-                        'total_amount' => big_num($order->total_amount)
-                            ->multiply($configure->distribute1_vip / 100)
-                            ->getValue(),
-                        'extra' => '会员一级分销',
-                    ]);
-
-                    if ($top->bound_id) {
-                        $top2 = User::find($top->bound_id);
+                    if ($top->vip !== '铜牌会员') {
+                        //会员购买三级分销
                         Flow::create([
                             'title' => '会员邀请收益',
-                            'user_id' => $top2->id,
+                            'user_id' => $top->id,
                             'order_id' => $order->id,
                             'total_amount' => big_num($order->total_amount)
-                                ->multiply($configure->distribute2_vip / 100)
+                                ->multiply($configure->distribute1_vip / 100)
                                 ->getValue(),
-                            'extra' => '会员二级分销'
+                            'extra' => '会员一级分销',
                         ]);
-                        if ($top2->bound_id) {
-                            $top3 = User::find($top2->bound_id);
+                    }
+
+
+                    if ($top->bound_status) {
+                        $top2 = User::find($top->bound_id);
+                        if ($top2->vip !== '铜牌会员') {
                             Flow::create([
                                 'title' => '会员邀请收益',
-                                'user_id' => $top3->id,
+                                'user_id' => $top2->id,
                                 'order_id' => $order->id,
                                 'total_amount' => big_num($order->total_amount)
-                                    ->multiply($configure->distribute3_vip / 100)
+                                    ->multiply($configure->distribute2_vip / 100)
                                     ->getValue(),
-                                'extra' => '会员三级级分销'
+                                'extra' => '会员二级分销'
                             ]);
+                        }
+                        if ($top2->bound_status) {
+                            $top3 = User::find($top2->bound_id);
+
+                            if ($top3->vip !== '铜牌会员') {
+                                Flow::create([
+                                    'title' => '会员邀请收益',
+                                    'user_id' => $top3->id,
+                                    'order_id' => $order->id,
+                                    'total_amount' => big_num($order->total_amount)
+                                        ->multiply($configure->distribute3_vip / 100)
+                                        ->getValue(),
+                                    'extra' => '会员三级级分销'
+                                ]);
+                            }
                         }
                     }
                 }
@@ -228,43 +236,51 @@ class PayController extends Controller
                 }
 
                 //购买课程或章节， 三级分销
-                if ($user->bound_id) {
+                if ($user->bound_status) {
                     $top = User::find($user->bound_id);
-                    //收益
-                    Flow::create([
-                        'title' => '课程购买收益',
-                        'user_id' => $top->id,
-                        'order_id' => $order->id,
-                        'total_amount' => big_num($order->total_amount)
-                            ->multiply($configure->distribute1_course / 100)
-                            ->getValue(),
-                        'extra' => '课程一级分销',
-                    ]);
-                    if ($top->bound_id) {
-                        $top2 = User::find($top->bound_id);
+                    if ($top->vip !== '铜牌会员') {
                         //收益
                         Flow::create([
                             'title' => '课程购买收益',
-                            'user_id' => $top2->id,
+                            'user_id' => $top->id,
                             'order_id' => $order->id,
                             'total_amount' => big_num($order->total_amount)
-                                ->multiply($configure->distribute2_course / 100)
+                                ->multiply($configure->distribute1_course / 100)
                                 ->getValue(),
-                            'extra' => '课程二级分销',
+                            'extra' => '课程一级分销',
                         ]);
+                    }
+                    if ($top->bound_status) {
+                        $top2 = User::find($top->bound_id);
 
-                        if ($top->bound_id) {
-                            $top3 = User::find($top2->bound_id);
+                        if ($top2->vip !== '铜牌会员') {
                             //收益
                             Flow::create([
                                 'title' => '课程购买收益',
-                                'user_id' => $top3->id,
+                                'user_id' => $top2->id,
                                 'order_id' => $order->id,
                                 'total_amount' => big_num($order->total_amount)
-                                    ->multiply($configure->distribute3_course / 100)
+                                    ->multiply($configure->distribute2_course / 100)
                                     ->getValue(),
-                                'extra' => '课程三级分销',
+                                'extra' => '课程二级分销',
                             ]);
+                        }
+
+                        if ($top->bound_status) {
+                            $top3 = User::find($top2->bound_id);
+
+                            if ($top3->vip !== '铜牌会员') {
+                                //收益
+                                Flow::create([
+                                    'title' => '课程购买收益',
+                                    'user_id' => $top3->id,
+                                    'order_id' => $order->id,
+                                    'total_amount' => big_num($order->total_amount)
+                                        ->multiply($configure->distribute3_course / 100)
+                                        ->getValue(),
+                                    'extra' => '课程三级分销',
+                                ]);
+                            }
                         }
                     }
                 }
