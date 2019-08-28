@@ -62,7 +62,7 @@ class PostController extends AdminController
 
             // 在这里添加字段过滤器
             $filter->like('title', '按标题');
-            $filter->in('category.name', '按分类')->multipleSelect(CompanyPost::all()->pluck('name', 'name'));
+            $filter->in('category.name', '按分类')->multipleSelect(CompanyCategory::all()->pluck('name', 'name'));
 
         });
 
