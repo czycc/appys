@@ -77,7 +77,8 @@ $api->version('v1', [
         //用户发布文章可选价格
         $api->get('price/article', 'ConfigureController@articlePrice');
 
-
+        //jssdk
+        $api->post('weixin/jssdk', 'JssdkController@jssdk');
 
     });
 
@@ -147,7 +148,5 @@ $api->version('v1', [
         $api->get('out/flows', 'FlowController@flowOutList');
         $api->post('out/flows', 'FlowController@flowOutStore');
 
-        //jssdk
-        $api->post('weixin/jssdk', 'JssdkController@jssdk');
     });});
 
