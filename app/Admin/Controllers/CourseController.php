@@ -65,7 +65,7 @@ class CourseController extends AdminController
             $filter->like('teacher.name', '按教师名');
             $filter->like('title', '按标题');
             $filter->in('category.name', '按分类')->multipleSelect(CourseCategory::all()->pluck('name', 'name'));
-            $filter->like('category.name', '按教师名');
+            $filter->like('teacher.name', '按教师名');
 
         });
         $grid->column('id', __('Id'))->sortable();

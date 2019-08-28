@@ -54,6 +54,18 @@ class PostController extends AdminController
             // 去掉查看
             $actions->disableView();
         });
+
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+//            $filter->disableIdFilter();
+
+            // 在这里添加字段过滤器
+            $filter->like('title', '按标题');
+            $filter->in('category.name', '按分类')->multipleSelect(CompanyPost::all()->pluck('name', 'name'));
+
+        });
+
         $grid->column('id', __('Id'))->sortable();
         $grid->column('title', __('标题'))->filter('like');
         $grid->column('body', __('图文内容'))->display(function ($body) {
@@ -77,7 +89,7 @@ class PostController extends AdminController
 //        $grid->column('view_count', __(''));
         $grid->column('zan_count', __('点赞数量'))->sortable();
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('category.name', __('分类'))->filter('like');
+        $grid->column('category.name', __('分类'));
 //        $grid->column('tags.name', '标签');
         $grid->column('created_at', __('创建时间'));
 //        $grid->column('updated_at', __('更新时间'));

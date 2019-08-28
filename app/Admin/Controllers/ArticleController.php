@@ -94,7 +94,7 @@ class ArticleController extends AdminController
             1 => '审核通过',
             2 => '未审核'
         ]);
-        $grid->column('created_at', __('创建'));
+        $grid->column('created_at', __('创建'))->filter('range', 'datetime');
 
         return $grid;
     }
