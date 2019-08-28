@@ -35,16 +35,6 @@ class FlowOutRequest extends Request
         return $rules;
     }
 
-    public function attributes()
-    {
-        return [
-            'name' => '姓名',
-            'idcard' => '身份',
-            'health' => '健康信息',
-            'extra' => '备注',
-            'ali_account' => '支付宝账号'
-        ];
-    }
 
     public function messages()
     {
@@ -54,7 +44,8 @@ class FlowOutRequest extends Request
             'name.required' => '首次提现需完善用户信息-姓名',
             'idcard.required' => '首次提现需完善用户信息-身份证号',
             'health.required' => '首次提现需完善用户信息-健康状态',
-            'bound_wechat.required' => '微信需要绑定账号',
+            'health.string' => '首次提现需完善用户信息-健康状态',
+            'bound_wechat.required' => '提现需要绑定微信账号',
             'idcard.regex' => '身份证号格式错误'
         ];
     }

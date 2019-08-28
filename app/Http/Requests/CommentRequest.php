@@ -39,6 +39,7 @@ class CommentRequest extends Request
         return [
             'content.required' => '评论内容必填',
             'content.min' => '评论内容至少一个字符',
+            'comment_id.required_without' => '回复的评论不存在',
         ];
     }
 }

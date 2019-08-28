@@ -20,7 +20,8 @@ class BoundScanRequest extends Request
     public function messages()
     {
         return [
-            'code.exists' => '用户不存在，请检查二维码是否有误'
+            'code.exists' => '用户不存在，请检查二维码是否有误',
+            'code.string' => '错误的二维码格式'
         ];
     }
 }

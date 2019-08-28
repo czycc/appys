@@ -31,6 +31,8 @@ class AuthorizationRequest extends Request
             'phone.required_without' => '手机格式错误。',
             'password.min' => '密码最少6位',
             'password.required_without' => '密码必填',
+            'verify_key.string' => '错误的验证码格式',
+            'verify_code.string' => '错误的验证码格式',
         ];
     }
 }

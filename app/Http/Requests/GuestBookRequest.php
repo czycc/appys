@@ -24,6 +24,7 @@ class GuestBookRequest extends Request
             'body.required' => '留言内容必填',
             'body.string' => '留言内容格式有误',
             'user_id.exists' => '留言人不存在',
+            'user_id.required' => '留言人id发送有误',
             'top_guest_id.exists' => '回复的留言人不存在'
         ];
     }
