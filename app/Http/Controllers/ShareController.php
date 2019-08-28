@@ -21,7 +21,7 @@ class ShareController extends Controller
                 $url = 'http://api.woheni99.com/UserArticleDetail?id=' . $id;
                 break;
             case 'company_post':
-                $url = 'http://api.woheni99.com/CompanyArticleDetail?id=' . $id;
+                $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5d2b37e7c2938683&redirect_uri=http://api.woheni99.com/CompanyArticleDetail?id={$id}&response_type=code&scope=snsapi_base&state=share#wechat_redirect";
                 break;
             case 'shop':
                 $url = 'http://api.woheni99.com/Shop?id=' . $id;
@@ -30,8 +30,8 @@ class ShareController extends Controller
                 abort(404);
         }
 
-        if ($user_id) {
-            $url .= '&code=' . User::find($user_id)->phone;
+        if ($user = User::find($user_id)) {
+            $url .= '&code=' . $user->phone;
         }
 
         return redirect($url);
