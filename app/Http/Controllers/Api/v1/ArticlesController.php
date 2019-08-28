@@ -25,7 +25,7 @@ class ArticlesController extends Controller
             $query->where('user_id', $this->user()->id)
                 ->where('status', $request->input('status'));
         } else {
-            //查询审核痛过
+            //查询审核通过
             $query->where('status', 1);
         }
 

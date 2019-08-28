@@ -38,7 +38,7 @@ class VerificationCodesController extends Controller
             }
         }
 
-        //缓存验证码，3分钟过期
+        //缓存验证码，5分钟过期
         $key = 'verificationCode_' . uniqid();
         $expireAt = now()->addMinute(5);
 
