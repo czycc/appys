@@ -22,7 +22,8 @@ class ShareController extends Controller
                 break;
             case 'company_post':
                 if ($user = User::find($user_id)) {
-                    $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5d2b37e7c2938683&redirect_uri=http://api.woheni99.com/CompanyArticleDetail?id={$id}&bound_id={$user->phone}&response_type=code&scope=snsapi_base&state=share";
+                    $redirect_uri = urlencode("http://api.woheni99.com/CompanyArticleDetail?id={$id}&bound_id={$user->phone}");
+                    $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5d2b37e7c2938683&redirect_uri={$redirect_uri}&response_type=code&scope=snsapi_base&state=share";
                 } else {
                     $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5d2b37e7c2938683&redirect_uri=http://api.woheni99.com/CompanyArticleDetail?id={$id}&response_type=code&scope=snsapi_base&state=share";
                 }
