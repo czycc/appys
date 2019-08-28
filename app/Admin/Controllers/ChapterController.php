@@ -85,7 +85,7 @@ class ChapterController extends AdminController
             return '';
         });
         $grid->column('order', __('权重'))->sortable();
-        $grid->column('created_at', __('创建'));
+        $grid->column('created_at', __('创建'))->filter('range', 'datetime');
 
         return $grid;
     }

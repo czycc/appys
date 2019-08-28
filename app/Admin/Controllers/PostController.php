@@ -91,7 +91,7 @@ class PostController extends AdminController
         $grid->column('order', __('权重'))->sortable();
         $grid->column('category.name', __('分类'));
 //        $grid->column('tags.name', '标签');
-        $grid->column('created_at', __('创建时间'));
+        $grid->column('created_at', __('创建时间'))->filter('range', 'datetime');
 //        $grid->column('updated_at', __('更新时间'));
 
         return $grid;

@@ -73,7 +73,7 @@ class UserController extends AdminController
         $grid->column('vip', __('Vip'));
         $grid->column('expire_at', __('到期'))->filter('range', 'datetime');
         $grid->column('balance', __('收益'))->sortable();
-        $grid->column('created_at', __('创建'));
+        $grid->column('created_at', __('创建'))->filter('range', 'datetime')  ;
 
         return $grid;
     }

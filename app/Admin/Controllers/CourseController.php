@@ -96,7 +96,7 @@ class CourseController extends AdminController
         $grid->column('order', __('权重'))->sortable();
         $grid->column('teacher.name', __('教师'));
         $grid->column('category.name', __('类别'));
-        $grid->column('created_at', __('创建'));
+        $grid->column('created_at', __('创建'))->filter('range', 'datetime');
 //        $grid->column('updated_at', __('Updated at'));
 
         return $grid;

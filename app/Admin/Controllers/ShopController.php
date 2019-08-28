@@ -104,7 +104,7 @@ class ShopController extends AdminController
         $grid->column('zan_count', __('赞'))->sortable();
         $grid->column('order', __('权重'))->sortable();
         $grid->column('user.nickname', __('所属人'));
-        $grid->column('created_at', __('创建'));
+        $grid->column('created_at', __('创建'))->filter('range', 'datetime');
 
         return $grid;
     }

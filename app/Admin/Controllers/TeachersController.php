@@ -56,7 +56,7 @@ class TeachersController extends AdminController
         $grid->column('desc', __('描述'));
         $grid->column('video_url', __('视频简介'))->video(['videoWidth' => 720, 'videoHeight' => 480]);
         $grid->column('imgs', __('多图简介'))->carousel();
-        $grid->column('created_at', __('创建时间'));
+        $grid->column('created_at', __('创建时间'))->filter('range', 'datetime');
 
         return $grid;
     }

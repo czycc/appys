@@ -62,6 +62,10 @@ class OrderController extends AdminController
             // 在这里添加字段过滤器
             $filter->like('no', '按订单号');
             $filter->between('paid_at', '按支付时间')->dateTime();
+            $filter->in('pay_method', '支付时间')->multipleSelect([
+                'alipay' => '支付宝',
+                'wechat' => '微信'
+            ]);
 
         });
 
@@ -98,7 +102,7 @@ class OrderController extends AdminController
         ]);
 //        $grid->column('type_id', __('Type id'));
         $grid->column('extra', __('备注'));
-        $grid->column('created_at', __('创建'));
+        $grid->column('created_at', __('创建'))->filter('range', 'datetime');
 //        $grid->column('updated_at', __('Updated at'));
 
         return $grid;

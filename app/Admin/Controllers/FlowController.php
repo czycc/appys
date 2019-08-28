@@ -93,7 +93,7 @@ class FlowController extends AdminController
 
 
         });
-        $grid->column('created_at', __('创建时间'));
+        $grid->column('created_at', __('创建时间'))->filter('range', 'datetime');
 
         return $grid;
     }
