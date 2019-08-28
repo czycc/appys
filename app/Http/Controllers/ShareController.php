@@ -31,7 +31,7 @@ class ShareController extends Controller
         }
 
         if ($user = User::find($user_id)) {
-            $url .= '&code=' . $user->phone;
+            $url .= '&bound_id=' . $user->phone;
         }
 
         return redirect($url);
