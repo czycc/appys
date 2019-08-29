@@ -12,7 +12,7 @@ class ArticleRequest extends Request
             case 'POST':
             {
                 $userId = \Auth::guard('api')->id();
-                return [
+                $rules =  [
                     // CREATE ROLES
                     'title' => 'required|string',
                     'body' => 'required|string',
@@ -23,6 +23,12 @@ class ArticleRequest extends Request
                     'media_url' => 'string',
                     'tags' => 'json'
                 ];
+
+                if ($this->media_type !== 'topic') {
+                    $rules['media_url'] = 'required|string';
+                }
+
+                return $rules;
             }
             // UPDATE
             case 'PUT':
@@ -61,6 +67,7 @@ class ArticleRequest extends Request
             'multi_imgs.json' => '图片上传有误',
             'media_type.required' => '媒体类型必选',
             'media_url.string' => '错误的媒体链接',
+            'media_url.required' => '必须上传媒体文件',
             'tags.json' => '错误的标签，请重试'
 
         ];
