@@ -207,7 +207,7 @@ class UsersController extends Controller
         $code = $request->input('code');
 
         //判断是否绑定上级
-        if ($this->user()->bound_id !== 0) {
+        if ($this->user()->bound_status !== 0) {
             return $this->response->errorBadRequest('您已经绑定过上级');
         }
 
@@ -220,6 +220,12 @@ class UsersController extends Controller
         }
 
         $user = User::where('phone', $code)->first();
+
+        //不能循环上下级
+        if ($user->bound_id === $this->user()->id) {
+            return $this->response->errorBadRequest('不能循环绑定上下级');
+        }
+
 
         //自己的二维码
         if ($user->id == $this->user()->id) {
@@ -248,7 +254,7 @@ class UsersController extends Controller
      * @return \Dingo\Api\Http\Response|void
      * @throws \Exception
      *
-     * 扫码绑定上级
+     * 确认绑定上级
      */
     public function scanConfirm(DatabaseNotification $notify, Request $request)
     {
