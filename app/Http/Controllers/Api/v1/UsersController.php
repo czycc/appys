@@ -222,10 +222,17 @@ class UsersController extends Controller
         $user = User::where('phone', $code)->first();
 
         //不能循环上下级
-        if ($user->bound_id === $this->user()->id) {
-            return $this->response->errorBadRequest('不能循环绑定上下级');
+        if ($user->bound_id) {
+            if ($user->bound_id === $this->user()->id) {
+                return $this->response->errorBadRequest('不能循环绑定上下级');
+            } else {
+                if ($top = User::find($user->bound_id)) {
+                    if ($top->bound_id === $this->user()->id) {
+                        return $this->response->errorBadRequest('不能循环绑定上下级');
+                    }
+                }
+            }
         }
-
 
         //自己的二维码
         if ($user->id == $this->user()->id) {
