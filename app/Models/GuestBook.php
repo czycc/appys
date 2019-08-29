@@ -38,7 +38,7 @@ class GuestBook extends Model
                 $user = User::find($model->user_id);
                 $user->msgNotify(new NormalNotify(
                     '新的店铺留言',
-                    "{$model->user->nickname} 留言:{$model->body}",
+                    "{$model->guest->nickname} 留言:{$model->body}",
                     'normal'
                 ));
             }
