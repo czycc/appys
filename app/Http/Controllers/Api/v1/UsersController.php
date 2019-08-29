@@ -292,7 +292,7 @@ class UsersController extends Controller
         $bound->status = 1;
         $bound->save();
 
-//        $notify->delete();
+        $notify->delete();
 
         return $this->response->noContent();
     }
