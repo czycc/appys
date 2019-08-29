@@ -102,7 +102,7 @@ class OrderController extends Controller
         if ($price == 0) {
             return $this->response->errorBadRequest('该商品免费，无需购买');
         }
-        $order->title = '购买 ' . $title;
+        $order->title = '购买 ' . emoji_reject($title);
         $order->total_amount = $price;
         $order->type_id = (int)$request->type_id;
         $order->save();

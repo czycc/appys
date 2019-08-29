@@ -29,3 +29,22 @@ function make_excerpt($value, $length = 50)
 function big_num($num, $scale = 2) {
     return new \Moontoast\Math\BigNumber($num, $scale);
 }
+
+/**
+ * @param $text
+ * @return string
+ *
+ * 去除表情
+ */
+function emoji_reject($text)
+{
+    $len = mb_strlen($text);
+    $new_text = '';
+    for ($i = 0; $i < $len; $i++) {
+        $word = mb_substr($text, $i, 1);
+        if (strlen($word) <= 3) {
+            $new_text .= $word;
+        }
+    }
+    return $new_text;
+}
