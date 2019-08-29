@@ -28,9 +28,9 @@ class GuestBook extends Model
             if ($model->guest_book_id) {
                 //回复留言发送通知
                 $guestBook = GuestBook::find($model->guest_book_id);
-                $user = User::find($guestBook->user_id);
+                $user = User::find($guestBook->guest_id);
                 $user->msgNotify(new NormalNotify(
-                    '留言被回复',
+                    '您的留言被回复',
                     "{$model->user->nickname} 回复:{$model->body}",
                     'normal'
                 ));
