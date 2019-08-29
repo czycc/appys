@@ -22,6 +22,9 @@ class CommentsController extends Controller
         if ($request->article_id) {
             //查询文章下所有回复
             $article = Article::find($request->article_id);
+            if (!$article) {
+                return $this->response->errorBadRequest('文章可能已被删除');
+            }
             $comments = $article->comments()->with('replies')
                 ->orderBy('id', 'desc')->paginate(20);
         } else {
