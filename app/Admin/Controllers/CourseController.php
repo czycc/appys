@@ -179,7 +179,7 @@ class CourseController extends AdminController
         $form->text('title', __('标题'));
         $form->cropper('banner', __('封面图'))
             ->move('backend/images/courses/' . date('Ym/d', time()))
-            ->uniqueName()->rules('required|max:1048576', [
+            ->uniqueName()->rules('required|max:10485760', [
                 'max' => '上传图片不能超过10m'
             ]);
         $form->decimal('ori_price', __('原价'))->default(0.00);

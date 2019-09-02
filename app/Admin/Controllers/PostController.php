@@ -197,7 +197,7 @@ class PostController extends AdminController
         $form->editor('body', __('内容(图片10M以内)'))->required();
         $form->cropper('thumbnail', __('封面图(必传)'))
             ->move('backend/images/posts/' . $date)
-            ->uniqueName()->rules('required|max:1048576', [
+            ->uniqueName()->rules('required|max:10485760', [
                 'max' => '上传图片不能超过10m'
             ]);
         $form->select('media_type', __('媒体类型'))->options([
