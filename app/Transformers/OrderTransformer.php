@@ -26,7 +26,7 @@ class OrderTransformer extends TransformerAbstract
             $data['relation'] = Course::with(['teacher' => function ($query) {
                 $query->withTrashed()->select(['id', 'name', 'desc']);
             }])->withTrashed()->select([
-                'id', 'title', 'body', 'banner', 'teacher_id'
+                'id', 'title', 'body', 'banner', 'teacher_id', 'deleted_at'
             ])
                 ->find($item->type_id);
             $data['relation']->body = make_excerpt($data['relation']->body);
@@ -35,7 +35,7 @@ class OrderTransformer extends TransformerAbstract
                 $query->withTrashed()->select(['id', 'nickname', 'avatar']);
             }])
                 ->withTrashed()
-                ->select(['id', 'title', 'top_img', 'user_id'])
+                ->select(['id', 'title', 'top_img', 'user_id', 'deleted_at'])
                 ->find($item->type_id);
         }
 

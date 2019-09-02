@@ -193,7 +193,11 @@ class ShopController extends AdminController
 //        $form->text('shop_imgs', __('Shop imgs'));
 //        $form->decimal('longitude', __('Longitude'));
 //        $form->decimal('latitude', __('Latitude'));
-        $form->switch('status', __('是否审核'))->default(2);
+        $form->select('status', __('审核状态'))->options([
+            0 => '审核不通过',
+            1 => '审核通过',
+            2 => '未审核'
+        ]);
 //        $form->datetime('expire_at', __('Expire at'))->default(date('Y-m-d H:i:s'));
         $form->switch('recommend', __('是否推荐'));
         $form->textarea('introduction', __('店铺介绍'));
