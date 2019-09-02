@@ -197,7 +197,9 @@ class PostController extends AdminController
         $form->editor('body', __('内容(图片10M以内)'))->required();
         $form->cropper('thumbnail', __('封面图(必传)'))
             ->move('backend/images/posts/' . $date)
-            ->uniqueName()->rules('required');
+            ->uniqueName()->rules('required|max:1048576', [
+                'max' => '上传图片不能超过10m'
+            ]);
         $form->select('media_type', __('媒体类型'))->options([
             'audio' => '音频',
             'video' => '视频',
@@ -212,6 +214,7 @@ class PostController extends AdminController
         $form->select('category_id', __('分类'))->options($category)->required();
         $form->multipleSelect('tags', '标签')->options(Tag::all()->pluck('name', 'id'));
         $form->switch('is_notify', '是否推送');
+
 
         return $form;
     }

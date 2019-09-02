@@ -378,7 +378,7 @@ return [
 
             // 编辑器的配置
             'config' => [
-                'debug' => true,
+                'debug' => false,
                 'uploadImgServer' => '/editor/upload',
                 'uploadImgMaxLength' => 1,
                 'uploadImgMaxSize' => 10 * 1024 * 1024,
