@@ -90,9 +90,8 @@ class FlowController extends AdminController
                     '姓名', '身份证号', '健康', '备注', '创建时间'
                 ], $extra->toArray());
             }
-
-
         });
+
         $grid->column('created_at', __('创建时间'))->filter('range', 'datetime');
 
         return $grid;
