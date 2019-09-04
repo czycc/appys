@@ -6,6 +6,7 @@ use App\Http\Requests\AuthorizationRequest;
 use App\Http\Requests\SocialAuthorizationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthorizationsController extends Controller
@@ -97,6 +98,7 @@ class AuthorizationsController extends Controller
 //        try {
             if ($code = $request->code) {
                 $res = $driver->getAccessTokenResponse($code);
+                Log::info('微信错误' . $res);
                 $token = array_get($res, 'access_token');
             } else {
                 $token = $request->access_token;
