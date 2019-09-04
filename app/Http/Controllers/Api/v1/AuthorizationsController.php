@@ -95,11 +95,8 @@ class AuthorizationsController extends Controller
             //app
             $driver = Socialite::driver($type);
         }
-//        try {
+        try {
             if ($code = $request->code) {
-                Log::error('测试', [
-                    'code' => $code,
-                ]);
                 $res = $driver->getAccessTokenResponse($code);
                 $token = array_get($res, 'access_token');
 
@@ -110,9 +107,13 @@ class AuthorizationsController extends Controller
                 }
             }
             $oauthUser = $driver->userFromToken($token);
-//        } catch (\Exception $e) {
-//            return $this->response->errorBadRequest('授权登陆失败，请重试');
-//        }
+        } catch (\Exception $e) {
+            Log::error('测试', [
+                'code' => $code,
+                'e' => $e
+            ]);
+            return $this->response->errorBadRequest('授权登陆失败，请重试');
+        }
 
 
         $user = [];
