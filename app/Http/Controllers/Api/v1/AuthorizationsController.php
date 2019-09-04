@@ -95,7 +95,6 @@ class AuthorizationsController extends Controller
             //app
             $driver = Socialite::driver($type);
         }
-        return $this->response->errorBadRequest('正在维护中，请稍后再试');
 
         try {
             if ($code = $request->code) {
