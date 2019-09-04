@@ -99,6 +99,12 @@ class AuthorizationsController extends Controller
             if ($code = $request->code) {
                 $res = $driver->getAccessTokenResponse($code);
                 $token = array_get($res, 'access_token');
+                Log::error('测试', [
+                    'code' => $res,
+                    'token' => $token,
+                    'res' => $res,
+                ]);
+
             } else {
                 $token = $request->access_token;
                 if ($type == 'weixin') {
