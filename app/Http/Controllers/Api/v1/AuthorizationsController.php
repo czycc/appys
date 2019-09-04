@@ -100,7 +100,7 @@ class AuthorizationsController extends Controller
                 $res = $driver->getAccessTokenResponse($code);
                 $token = array_get($res, 'access_token');
                 Log::error('测试', [
-                    'code' => $res,
+                    'code' => $code,
                     'token' => $token,
                     'res' => $res,
                 ]);
