@@ -110,10 +110,6 @@ class AuthorizationsController extends Controller
             }
             $oauthUser = $driver->userFromToken($token);
         } catch (\Exception $e) {
-            Log::error('测试', [
-                'code' => $code,
-                'e' => $e
-            ]);
             return $this->response->errorBadRequest('授权登陆失败，请重试');
         }
 
