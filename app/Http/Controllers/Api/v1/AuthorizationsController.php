@@ -97,7 +97,6 @@ class AuthorizationsController extends Controller
 //        try {
             if ($code = $request->code) {
                 $res = $driver->getAccessTokenResponse($code);
-                dd($res);
                 $token = array_get($res, 'access_token');
             } else {
                 $token = $request->access_token;
