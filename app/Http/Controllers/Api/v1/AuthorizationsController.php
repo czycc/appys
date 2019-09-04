@@ -97,6 +97,8 @@ class AuthorizationsController extends Controller
         }
         try {
             if ($code = $request->code) {
+                return $this->response->errorBadRequest('正在维护中，请稍后再试');
+
                 $res = $driver->getAccessTokenResponse($code);
                 $token = array_get($res, 'access_token');
 
