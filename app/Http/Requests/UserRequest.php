@@ -42,7 +42,7 @@ class UserRequest extends Request
             'verify_code' => '短信验证码',
             'wx_id' => '微信',
             'code' => '授权码',
-            'bound_id' => '推荐码'
+            'bound_id' => '邀请者手机号'
         ];
     }
 
@@ -51,7 +51,7 @@ class UserRequest extends Request
         return [
             'password.min' => '密码至少6位',
             'nickname' => '昵称限制2-8个字符以内',
-            'bound_id.exists' => '请检查推荐码是否输入有误'
+            'bound_id.exists' => '请检查邀请者手机号是否输入有误'
         ];
     }
 }
