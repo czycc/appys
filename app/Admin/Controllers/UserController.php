@@ -54,6 +54,15 @@ class UserController extends AdminController
             $actions->disableView();
         });
 
+        $grid->filter(function ($filter) {
+
+            // 去掉默认的id过滤器
+//            $filter->disableIdFilter();
+
+            // 在这里添加字段过滤器
+            $filter->equal('bound_id', '按上级用户id查询');
+        });
+
         //快速查询
         $grid->quickSearch('phone')->placeholder('按手机号搜索');
 
@@ -65,15 +74,19 @@ class UserController extends AdminController
         $grid->column('silver', __('银币'))->sortable();
         $grid->column('copper', __('铜币'))->sortable();
         $grid->column('bound_id', __('上级'))->display(function ($boundId) {
+            $status = '';
+            if (!$this->bound_status) {
+                $status = '(未确认)';
+            }
             if ($boundId) {
                 $user = User::find($boundId);
-                return "<a href='admin_users?&id={$user->id}'>" . $user->nickname . "</a>";
+                return "<a href='admin_users?&id={$user->id}'>" . $user->nickname . $status . "</a>";
             }
         });
         $grid->column('vip', __('Vip'));
         $grid->column('expire_at', __('到期'))->filter('range', 'datetime');
         $grid->column('balance', __('收益'))->sortable();
-        $grid->column('created_at', __('创建'))->filter('range', 'datetime')  ;
+        $grid->column('created_at', __('创建'))->filter('range', 'datetime');
 
         return $grid;
     }
