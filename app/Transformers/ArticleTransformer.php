@@ -21,15 +21,15 @@ class ArticleTransformer extends TransformerAbstract
 
     public function transform(Article $item)
     {
-        if ($this->list) {
-
-            $official = false;
-            $shop = Shop::where('user_id', $item->user_id)->first();
-            if ($shop) {
-                if ($shop->status === 1) {
-                    $official = true;
-                }
+        $official = false;
+        $shop = Shop::where('user_id', $item->user_id)->first();
+        if ($shop) {
+            if ($shop->status === 1) {
+                $official = true;
             }
+        }
+
+        if ($this->list) {
 
             //列表形式
             return [
@@ -67,6 +67,7 @@ class ArticleTransformer extends TransformerAbstract
             'multi_imgs' => $this->permission ? $item->multi_imgs : [],
             'user' => $item->userBrief(),
             'tags' => $item->getTags(),
+            'official' => $official,
         ];
 
         return $data;
