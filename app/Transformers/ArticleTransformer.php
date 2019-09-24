@@ -2,6 +2,7 @@
 
 namespace App\Transformers;
 
+use App\Models\Shop;
 use League\Fractal\TransformerAbstract;
 use App\Models\Article;
 
@@ -21,6 +22,15 @@ class ArticleTransformer extends TransformerAbstract
     public function transform(Article $item)
     {
         if ($this->list) {
+
+            $official = false;
+            $shop = Shop::where('user_id', $item->user_id)->first();
+            if ($shop) {
+                if ($shop->status === 1) {
+                    $official = true;
+                }
+            }
+
             //列表形式
             return [
                 'id' => $item->id,
@@ -33,6 +43,7 @@ class ArticleTransformer extends TransformerAbstract
                 'status' => (int)$item->status == 2 ? '待审核' : ($item->status == 1 ? '已通过' : '未通过'),
                 'created_at' => $item->created_at->toDateTimeString(),
                 'user' => $item->userBrief(),
+                'official' => $official
             ];
         }
 

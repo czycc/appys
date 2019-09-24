@@ -22,6 +22,7 @@ class ShopTransformer extends TransformerAbstract
                 'id' => $item->id,
                 'user_id' => $item->user_id,
                 'updated_at' => $item->updated_at->toDateTimeString(),
+                'official' => $item->status === 1,
                 'user' => $item->user()->select(['id', 'nickname', 'avatar'])->first(),
             ];
         }
