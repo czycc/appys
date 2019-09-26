@@ -57,12 +57,12 @@ class OrderController extends AdminController
         $grid->filter(function($filter){
 
             // 去掉默认的id过滤器
-//            $filter->disableIdFilter();
-
+            $filter->disableIdFilter();
+            $filter->equal('user_id', '按用户id');
             // 在这里添加字段过滤器
             $filter->like('no', '按订单号');
             $filter->between('paid_at', '按支付时间')->dateTime();
-            $filter->in('pay_method', '支付时间')->multipleSelect([
+            $filter->in('pay_method', '支付方式')->multipleSelect([
                 'alipay' => '支付宝',
                 'wechat' => '微信'
             ]);
