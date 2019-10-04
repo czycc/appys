@@ -134,7 +134,39 @@ class FlowController extends AdminController
     protected function form()
     {
         $form = new Form(new FlowOut);
+        $form->footer(function ($footer) {
 
+            // 去掉`重置`按钮
+//            $footer->disableReset();
+
+            // 去掉`提交`按钮
+//            $footer->disableSubmit();
+
+            // 去掉`查看`checkbox
+            $footer->disableViewCheck();
+
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+
+            // 去掉`继续创建`checkbox
+            $footer->disableCreatingCheck();
+
+        });
+
+        $form->tools(function (Form\Tools $tools) {
+
+            // 去掉`列表`按钮
+//            $tools->disableList();
+
+            // 去掉`删除`按钮
+            $tools->disableDelete();
+
+            // 去掉`查看`按钮
+            $tools->disableView();
+
+            // 添加一个按钮, 参数可以是字符串, 或者实现了Renderable或Htmlable接口的对象实例
+//            $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+        });
 //        $form->decimal('total_amount', __(''));
         $form->switch('status', __('审核状态'));
         $form->switch('is_offline', __('是否线下处理'));
