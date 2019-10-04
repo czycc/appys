@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use Pay;
 
 class FlowOut extends Model
 {
@@ -29,6 +31,18 @@ class FlowOut extends Model
             //扣除用户提现金额
             \Auth::guard('api')->user()->balance -= $model->total_amount;
             \Auth::guard('api')->user()->save();
+        });
+
+        static::updating(function ($model) {
+            //用户提现
+            if ($model->status == 1 && $model->out_status != 1) {
+                if ($model->out_method === 'wechat') {
+                    Pay::wechat()->transfer($model->out_info);
+                    $model->out_status = 1;
+                }
+
+            }
+
         });
     }
 }

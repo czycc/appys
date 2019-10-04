@@ -66,8 +66,9 @@ class FlowController extends Controller
                 'partner_trade_no' => uniqid(),
                 'openid' => $this->user()->wap_openid,
                 'amount' => $request->total_amount * 100,
-                'desc' => '用户余额微信提现'
-            ];
+                'desc' => '用户余额微信提现',
+                "check_name" => "NO_CHECK",
+                ];
         }
         if (!$this->user()->extra) {
             $extra = new UserExtra();
