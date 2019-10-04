@@ -55,7 +55,20 @@ class FlowController extends Controller
      */
     public function flowOutStore(FlowOutRequest $request, FlowOut $flowOut)
     {
-        return $this->response->errorBadRequest('提现将于近期开放，敬请期待');
+        if ($request->out_method == 'alipay') {
+            return $this->response->errorBadRequest('支付宝提现将于近期开放，敬请期待');
+        }else {
+            //微信提现
+            if (!$this->user()->wap_openid) {
+                return $this->response->errorBadRequest('受微信官方限制，首次微信提现请先前往网页端');
+            }
+            $out_info = [
+                'partner_trade_no' => uniqid(),
+                'openid' => $this->user()->wap_openid,
+                'amount' => $request->total_amount * 100,
+                'desc' => '用户余额微信提现'
+            ];
+        }
         if (!$this->user()->extra) {
             $extra = new UserExtra();
 
@@ -67,10 +80,15 @@ class FlowController extends Controller
             $extra->save();
         }
 
-        $flowOut->fill($request->all());
+        $flowOut->total_amount = $request->total_amount;
+        $flowOut->out_method = $request->out_method;
+
         $flowOut->user_id = $this->user()->id;
         $flowOut->status = 0;
         $flowOut->out_status = 0;
+
+        //提现字段信息
+        $flowOut->out_info = $out_info;
         $flowOut->save();
         return $this->response->array(['data' => $flowOut])->setStatusCode(201);
     }

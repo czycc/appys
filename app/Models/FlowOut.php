@@ -11,6 +11,8 @@ class FlowOut extends Model
     public $casts =[
         'status' => 'boolean',
         'out_status' => 'boolean',
+        'is_offline' => 'boolean',
+        'out_info' => 'json'
     ];
 
     public function user()
