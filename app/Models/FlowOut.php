@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Pay;
+use App\Notifications\NormalNotify;
 
 class FlowOut extends Model
 {
