@@ -61,6 +61,23 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Shop::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     *
+     * 个人持有虚拟币
+     */
+    public function userCoin()
+    {
+        return $this->hasOne(UserCoin::class);
+    }
+
+    public function coin()
+    {
+        if ($userCoin = $this->userCoin()->first()) {
+            return $userCoin->coin;
+        }
+        return 0;
+    }
     public function getShop()
     {
         return $this->shop()

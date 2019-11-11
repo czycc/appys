@@ -68,6 +68,7 @@ class UserTransformer extends TransformerAbstract
                 'gold' => $item->gold,
                 'silver' => $item->silver,
                 'copper' => $item->copper,
+                'coin' => \Auth::guard('api')->user()->coin(),
                 'expire_at' => (string)$item->expire_at,
                 'created_at' => $item->created_at->toDateTimeString(),
                 'shop' => (object)$item->getShop()->first(),

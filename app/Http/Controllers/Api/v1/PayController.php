@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\ApplePayOrder;
 use App\Models\Article;
 use App\Models\Chapter;
 use App\Models\Configure;
@@ -9,6 +10,7 @@ use App\Models\Course;
 use App\Models\Flow;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\UserCoin;
 use App\Notifications\NormalNotify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,6 +30,7 @@ class PayController extends Controller
             ->first()->toArray();
 
         $configure['user_copper'] = $this->user()->copper;
+        $configure['coin'] = $this->user()->coin();
         return $this->response->array(['data' => $configure]);
     }
 
@@ -288,4 +291,93 @@ class PayController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     *
+     * 虚拟币充值
+     */
+    public function iosPayCoin(Request $request)
+    {
+        $this->validate($request, [
+            'receipt' => 'required|string'
+        ], [], [
+            'receipt' => '支付票据'
+        ]);
+
+        $data = $this->acurl($request->input('receipt'), true);
+        if (!is_array($data) && !isset($data['status'])) {
+            return $this->response->error('获取苹果服务器支付数据失败', 408);
+        }
+        // 判断是否购买成功
+        if ($data['status'] === 0) {
+            $ios = config('pay.ios');
+            if (array_key_exists($product_id = $data['receipt']['in_app'][0]['product_id'], $ios)) {
+                //判断是否已经记录
+                if (ApplePayOrder::where('transaction_id', $data['receipt']['in_app'][0]['transaction_id'])->first()) {
+                    return $this->response->array([
+                        'data' => [
+                            'coin' => $this->user()->coin()
+                        ]
+                    ]);
+                }
+                $ord = new ApplePayOrder();
+                $ord->coin = $ios[$product_id];
+                $ord->transaction_id = $data['receipt']['in_app'][0]['transaction_id'];
+                $ord->extra = $data;
+                $ord->user_id = $this->user()->id;
+                $ord->save();
+                //增加当前用户虚拟币
+                if ($userCoin = $this->user()->userCoin()->first()) {
+                    $userCoin->coin += $ios[$product_id];
+                    $userCoin->save();
+                } else {
+                    $userCoin = new UserCoin();
+                    $userCoin->user_id = $this->user()->id;
+                    $userCoin->coin = $ios[$product_id];
+                    $userCoin->save();
+                }
+                return $this->response->array([
+                    'data' => [
+                        'coin' => $userCoin->coin
+                    ]
+                ]);
+            } else {
+                return $this->response->errorBadRequest('不存在的充值金额');
+            }
+        } else {
+            return $this->response->errorBadRequest($data['status']);
+        }
+    }
+
+    /**
+     * @param $receipt_data
+     * @param bool $sandbox
+     * @return bool|string
+     *
+     * 请求票据
+     */
+    protected function acurl($receipt_data, $sandbox = false)
+    {
+        //小票信息
+        $POSTFIELDS = array("receipt-data" => $receipt_data);
+        $POSTFIELDS = json_encode($POSTFIELDS);
+        //正式购买地址 沙盒购买地址
+        $url_buy = "https://buy.itunes.apple.com/verifyReceipt";
+        $url_sandbox = "https://sandbox.itunes.apple.com/verifyReceipt";
+        $url = $sandbox ? $url_sandbox : $url_buy;
+
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $url);
+        curl_setopt($curl_handle, CURLOPT_TIMEOUT, '6');
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl_handle, CURLOPT_HEADER, 0);
+        curl_setopt($curl_handle, CURLOPT_POST, true);
+        curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $POSTFIELDS);
+        curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, 0);
+        $result = curl_exec($curl_handle);
+        curl_close($curl_handle);
+
+        return json_decode($result, true);
+    }
 }

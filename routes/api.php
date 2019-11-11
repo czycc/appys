@@ -148,5 +148,7 @@ $api->version('v1', [
         $api->get('out/flows', 'FlowController@flowOutList');
         $api->post('out/flows', 'FlowController@flowOutStore');
 
+        //增加ios内购相关接口
+        $api->post('ios/pay/coin', 'PayController@iosPayCoin');//充值
     });});
 

@@ -67,4 +67,13 @@ return [
         // 'hk' 时为东南亚节点
         // 'mode' => 'dev',
     ],
+    'ios' => [
+        'HealthPlat_1' => 600,
+        'HealthPlat_2' => 1200,
+        'HealthPlat_3' => 3000,
+        'HealthPlat_4' => 6800,
+        'HealthPlat_5' => 12800,
+        'HealthPlat_6' => 32800,
+        'HealthPlat_7' => 64800,
+    ]
 ];
