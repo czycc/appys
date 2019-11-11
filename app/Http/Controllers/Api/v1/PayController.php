@@ -344,7 +344,7 @@ class PayController extends Controller
             } else {
                 return $this->response->errorBadRequest('不存在的充值金额');
             }
-        } elseif ($data['status'] === '21007') {
+        } elseif ($data['status'] === 21007) {
             //用于测试审核
             return $this->response->array([
                 'data' => [
