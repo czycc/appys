@@ -304,7 +304,7 @@ class PayController extends Controller
             'receipt' => '支付票据'
         ]);
 
-        $data = $this->acurl($request->input('receipt'), true);
+        $data = $this->acurl($request->input('receipt'), false);
         if (!is_array($data) && !isset($data['status'])) {
             return $this->response->error('获取苹果服务器支付数据失败', 408);
         }
