@@ -9,7 +9,7 @@ class FlowOutRequest extends Request
     public function rules()
     {
         $rules =  [
-            'total_amount' => 'required|numeric|max:' . \Auth::guard('api')->user()->balance,
+            'total_amount' => 'required|numeric|min:1.0|max:' . \Auth::guard('api')->user()->balance,
             'out_method' => 'required|in:alipay,wechat',
         ];
 
@@ -40,6 +40,7 @@ class FlowOutRequest extends Request
     {
         return [
             'total_amount.required' => '提现金额不能为空',
+            'total_amount.min' => '提现金额不能小于1元',
             'total_amount.max' => '提现金额不能超过当前收益余额',
             'name.required' => '首次提现需完善用户信息-姓名',
             'idcard.required' => '首次提现需完善用户信息-身份证号',

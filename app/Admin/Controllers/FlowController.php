@@ -41,18 +41,18 @@ class FlowController extends AdminController
 //        $grid->disableRowSelector();
 //        $grid->disableColumnSelector();
         //禁用操作
-        $grid->disableActions();
+//        $grid->disableActions();
 
         $grid->actions(function ($actions) {
 
             // 去掉删除
-//            $actions->disableDelete();
+            $actions->disableDelete();
 
             // 去掉编辑
 //            $actions->disableEdit();
 
             // 去掉查看
-//            $actions->disableView();
+            $actions->disableView();
         });
 
         $grid->filter(function ($filter) {
@@ -67,30 +67,36 @@ class FlowController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('total_amount', __('总金额'));
         $grid->column('status', __('审核状态'))->switch();
+        $grid->column('is_offline', __('是否线下处理'))->switch();
         $grid->column('out_status', __('提现状态'))->display(function ($out_status) {
             if ($out_status == 1) {
-                return '成功';
+                return '成功提现';
+            }
+            if ($this->status == 1) {
+                return '提现失败';
             }
             return '未提现';
         });
         $grid->column('out_method', __('提现方式'))->using([
             'wechat' => '微信',
             'alipay' => '支付宝'
-        ]);
-        $grid->column('ali_account', __('支付宝账号'));
+        ])->filter();
+//        $grid->column('ali_account', __('支付宝账号'));
         $grid->column('user_id', __('用户'))->display(function ($user_id) {
             return User::find($user_id)->nickname;
         })->expand(function ($model) {
             $user = $model->user;
             $extra = $user->extra()->select([
-                'name', 'idcard', 'health', 'extra', 'created_at'
+                'user_id', 'name', 'idcard', 'health', 'extra', 'created_at'
             ])->get();
             if ($extra->isNotEmpty()) {
                 return new Table([
-                    '姓名', '身份证号', '健康', '备注', '创建时间'
+                    '用户ID', '姓名', '身份证号', '健康', '备注', '创建时间'
                 ], $extra->toArray());
             }
         });
+
+
 
         $grid->column('created_at', __('创建时间'))->filter('range', 'datetime');
 
@@ -128,13 +134,52 @@ class FlowController extends AdminController
     protected function form()
     {
         $form = new Form(new FlowOut);
+        $form->footer(function ($footer) {
 
+            // 去掉`重置`按钮
+//            $footer->disableReset();
+
+            // 去掉`提交`按钮
+//            $footer->disableSubmit();
+
+            // 去掉`查看`checkbox
+            $footer->disableViewCheck();
+
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+
+            // 去掉`继续创建`checkbox
+            $footer->disableCreatingCheck();
+
+        });
+
+        $form->tools(function (Form\Tools $tools) {
+
+            // 去掉`列表`按钮
+//            $tools->disableList();
+
+            // 去掉`删除`按钮
+            $tools->disableDelete();
+
+            // 去掉`查看`按钮
+            $tools->disableView();
+
+            // 添加一个按钮, 参数可以是字符串, 或者实现了Renderable或Htmlable接口的对象实例
+//            $tools->add('<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;delete</a>');
+        });
 //        $form->decimal('total_amount', __(''));
         $form->switch('status', __('审核状态'));
-        $form->switch('out_status', __('Out status'));
-        $form->text('out_method', __('Out method'));
-        $form->text('ali_account', __('Ali account'));
-        $form->number('user_id', __('User id'));
+        $form->switch('is_offline', __('是否线下处理'));
+//        $form->switch('out_status', __('提现状态'));
+        $form->text('out_method', __('提现方式'))->readonly();
+        $form->text('user_id', __('用户id'))->readonly();
+        $form->embeds('out_info', '支付信息', function ($form) {
+            $form->text('partner_trade_no','微信订单号')->readonly();
+            $form->text('openid', '微信id')->readonly();
+            $form->text('amount', '提现金额（单位：分）')->readonly();
+            $form->text('desc', '描述')->readonly();
+            $form->text('check_name')->readonly();
+        });
 
         return $form;
     }
