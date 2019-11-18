@@ -385,6 +385,24 @@ class PayController extends Controller
         $result = curl_exec($curl_handle);
         curl_close($curl_handle);
 
-        return json_decode($result, true);
+        $result = json_decode($result, true);
+        if ($result['status'] == 21007) {
+            //测试地址
+            $url = $url_sandbox;
+            $curl_handle = curl_init();
+            curl_setopt($curl_handle, CURLOPT_URL, $url);
+            curl_setopt($curl_handle, CURLOPT_TIMEOUT, '6');
+            curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl_handle, CURLOPT_HEADER, 0);
+            curl_setopt($curl_handle, CURLOPT_POST, true);
+            curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $POSTFIELDS);
+            curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, 0);
+            $result = curl_exec($curl_handle);
+            curl_close($curl_handle);
+            $result = json_decode($result, true);
+
+        }
+        return $result;
     }
 }
