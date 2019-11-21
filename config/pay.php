@@ -75,5 +75,8 @@ return [
         'HealthPlat_5' => 12800,
         'HealthPlat_6' => 32800,
         'HealthPlat_7' => 64800,
+        'HealthPlat_10' => 44800, //会员
+        'HealthPlat_11' => 48800, //会员
+
     ]
 ];

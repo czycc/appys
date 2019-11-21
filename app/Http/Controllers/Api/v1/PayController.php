@@ -320,12 +320,29 @@ class PayController extends Controller
                         ]
                     ]);
                 }
+
+                //正常虚拟币充值
                 $ord = new ApplePayOrder();
                 $ord->coin = $ios[$product_id];
                 $ord->transaction_id = $data['receipt']['in_app'][0]['transaction_id'];
                 $ord->extra = $data;
                 $ord->user_id = $this->user()->id;
                 $ord->save();
+
+                //处理会员充值情况
+                if ($product_id == 'HealthPlat_11' || $product_id == 'HealthPlat_10') {
+
+                    if ($this->user()->vip == '代理会员') {
+                        return $this->response->errorBadRequest('您已经是代理会员，无法购买银牌会员');
+                    }
+
+                    $order = new Order();
+                    $order->type = 'vip';
+                    $order->user_id = $this->user()->id;
+                    $order->
+                }
+
+
                 //增加当前用户虚拟币
                 if ($userCoin = $this->user()->userCoin()->first()) {
                     $userCoin->coin += $ios[$product_id];
