@@ -300,13 +300,15 @@ class PayController extends Controller
     {
         $this->validate($request, [
             'receipt' => 'required|string'
-        ], [], [
+        ], [
+//            'receipt.required' => '支付票据必须'
+        ], [
             'receipt' => '支付票据'
         ]);
 
         $data = $this->acurl($request->input('receipt'), false);
         if (!is_array($data) && !isset($data['status'])) {
-            return $this->response->error('获取苹果服务器支付数据失败', 408);
+            return $this->response->error('获取苹果服务器支付数据失败，请重试', 408);
         }
         // 判断是否购买成功
         if ($data['status'] === 0) {
@@ -314,9 +316,45 @@ class PayController extends Controller
             if (array_key_exists($product_id = $data['receipt']['in_app'][0]['product_id'], $ios)) {
                 //判断是否已经记录
                 if (ApplePayOrder::where('transaction_id', $data['receipt']['in_app'][0]['transaction_id'])->first()) {
+                    return $this->response->errorBadRequest('重复提交数据');
+                }
+
+
+                //处理会员充值情况
+                if ($product_id == 'HealthPlat_11' || $product_id == 'HealthPlat_10') {
+
+                    if ($this->user()->vip == '代理会员') {
+                        return $this->response->errorBadRequest('您已经是代理会员，无法购买银牌会员');
+                    }
+
+                    //验证是否有上级 金额是否正确
+                    if (($this->user()->bound_status && $product_id == 'HealthPlat_11') || (!$this->user()->bound_status && $product_id == 'HealthPlat_10')) {
+                        return $this->response->errorBadRequest('会员充值金额不匹配');
+                    }
+                    $order = new Order();
+                    $order->type = 'vip';
+                    $order->user_id = $this->user()->id;
+                    $order->title = '购买银牌会员';
+                    $order->total_amount = $ios[$product_id] / 100;
+                    $order->type_id = (int)$request->type_id;
+                    $order->paid_at = Carbon::now();
+                    $order->pay_method = 'ios';
+                    $order->pay_no = time();
+                    $order->save();
+
+                    $this->cps($order, $order->user);
+
+                    $ord = new ApplePayOrder();
+                    $ord->coin = $ios[$product_id];
+                    $ord->transaction_id = $data['receipt']['in_app'][0]['transaction_id'];
+                    $ord->extra = $data;
+                    $ord->user_id = $this->user()->id;
+                    $ord->save();
+
                     return $this->response->array([
                         'data' => [
-                            'coin' => $this->user()->coin()
+                            'vip' => $this->user()->vip,
+                            'expire_at' => $this->user()->expire_at->toDateTimeString()
                         ]
                     ]);
                 }
@@ -328,20 +366,6 @@ class PayController extends Controller
                 $ord->extra = $data;
                 $ord->user_id = $this->user()->id;
                 $ord->save();
-
-                //处理会员充值情况
-                if ($product_id == 'HealthPlat_11' || $product_id == 'HealthPlat_10') {
-
-                    if ($this->user()->vip == '代理会员') {
-                        return $this->response->errorBadRequest('您已经是代理会员，无法购买银牌会员');
-                    }
-
-                    $order = new Order();
-                    $order->type = 'vip';
-                    $order->user_id = $this->user()->id;
-                    $order->
-                }
-
 
                 //增加当前用户虚拟币
                 if ($userCoin = $this->user()->userCoin()->first()) {

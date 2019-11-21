@@ -150,5 +150,6 @@ $api->version('v1', [
 
         //增加ios内购相关接口
         $api->post('ios/pay/coin', 'PayController@iosPayCoin');//充值
+        $api->post('ios/pay/vip', 'PayController@iosPayCoin'); // vip充值
     });});
 

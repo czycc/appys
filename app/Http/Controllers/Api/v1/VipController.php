@@ -20,6 +20,8 @@ class VipController extends Controller
             $data['vip2_price'] = $config['vip2_price_n'];
         }
 
+        $data['bound_status'] = $this->user()->bound_status;
+
         return $this->response->array($data);
     }
 }
