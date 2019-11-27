@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Course;
 use App\Transformers\CourseTransformer;
+use App\Transformers\FreeCourseTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests\CourseRequest;
 use App\Models\Order;
@@ -74,4 +75,15 @@ class CoursesController extends Controller
         return $this->response->item($course, new CourseTransformer(false, $permission));
     }
 
+    /**
+     * @param Course $course
+     * @return \Dingo\Api\Http\Response
+     *
+     * 用于ios未登录查看
+     */
+    public function freeShow(Course $course)
+    {
+        $permission = false;
+        return $this->response->item($course, new FreeCourseTransformer(false, $permission));
+    }
 }

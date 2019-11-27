@@ -80,6 +80,8 @@ $api->version('v1', [
         //jssdk
         $api->post('weixin/jssdk', 'JssdkController@jssdk');
 
+        //ios显示免费课程
+        $api->get('free/course/{id}', 'CoursesController@freeShow');
     });
 
     $api->group([
