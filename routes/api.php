@@ -81,7 +81,7 @@ $api->version('v1', [
         $api->post('weixin/jssdk', 'JssdkController@jssdk');
 
         //ios显示免费课程
-        $api->get('free/course/{id}', 'CoursesController@freeShow');
+        $api->get('free/course/{course}', 'CoursesController@freeShow');
     });
 
     $api->group([
