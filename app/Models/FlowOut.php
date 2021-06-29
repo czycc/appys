@@ -47,6 +47,15 @@ class FlowOut extends Model
                         '您已成功提现' . $model->total_amount,
                         'flow_out'
                     ));
+                } elseif ('$model->out_method === alipay') {
+                    Pay::alipay()->transfer($model->out_info);
+                    $model->out_status = 1;
+                    $user = User::find($model->user_id);
+                    $user->msgNotify(new NormalNotify(
+                        '提现成功',
+                        '您已成功提现' . $model->total_amount,
+                        'flow_out'
+                    ));
                 }
 
             }

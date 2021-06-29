@@ -56,8 +56,18 @@ class FlowController extends Controller
     public function flowOutStore(FlowOutRequest $request, FlowOut $flowOut)
     {
         if ($request->out_method == 'alipay') {
-            return $this->response->errorBadRequest('支付宝提现将于近期开放，敬请期待');
+//            return $this->response->errorBadRequest('支付宝提现将于近期开放，敬请期待');
+            $out_info = [
+                'out_biz_no' => time(),
+                'trans_amount' => $request->total_amount,
+                'product_code' => 'TRANS_ACCOUNT_NO_PWD',
+                'payee_info' => [
+                    'identity' => $request->ali_account,
+                    'identity_type' => 'ALIPAY_LOGON_ID'
+                ]
+            ];
         }else {
+            return $this->response->errorBadRequest('微信提现暂时关闭，敬请期待');
             //微信提现
             if (!$this->user()->wap_openid) {
                 return $this->response->errorBadRequest('受微信官方限制，首次微信提现请先前往网页端');
