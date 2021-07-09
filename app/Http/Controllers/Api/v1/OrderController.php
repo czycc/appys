@@ -51,6 +51,9 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
+        if ($request->pay_method === 'wechat') {
+            return $this->response->errorBadRequest('微信支付升级中，请使用支付宝支付');
+        }
         $order = new Order();
         $order->user_id = $this->user()->id;
         $order->type = $request->type;
