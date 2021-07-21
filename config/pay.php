@@ -16,10 +16,12 @@ return [
 
         // 自己的私钥，签名时使用
         'app_secret_cert' => env('ALI_PRIVATE_KEY', ''),
+        //应用公钥
         'app_public_cert_path' => env('APP_PUBLIC_CERT', ''),
         // 支付宝公钥证书 路径
         'alipay_public_cert_path' => env('ALI_PUBLIC_CERT', ''),
-
+        //根证书
+        'alipay_root_cert_path' => env('ALI_ROOT_CERT', ''),
         // optional，默认 warning；日志路径为：sys_get_temp_dir().'/logs/yansongda.pay.log'
         'log' => [
             'file' => storage_path('logs/alipay.log'),
