@@ -15,7 +15,10 @@ return [
         'ali_public_key' => env('ALI_PUBLIC_KEY', ''),
 
         // 自己的私钥，签名时使用
-        'private_key' => env('ALI_PRIVATE_KEY', ''),
+        'app_secret_cert' => env('ALI_PRIVATE_KEY', ''),
+        'app_public_cert_path' => env('APP_PUBLIC_CERT', ''),
+        // 支付宝公钥证书 路径
+        'alipay_public_cert_path' => env('ALI_PUBLIC_CERT', ''),
 
         // optional，默认 warning；日志路径为：sys_get_temp_dir().'/logs/yansongda.pay.log'
         'log' => [
