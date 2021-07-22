@@ -31,6 +31,7 @@
         "socialiteproviders/weixin": "^4.0",
         "tymon/jwt-auth": "1.0.0-rc.2",
         "yansongda/laravel-pay": "^2.0"
+
     },
     "require-dev": {
         "filp/whoops": "~2.0",
