@@ -14,6 +14,8 @@ return [
 
             // 阿里公共密钥，验证签名时使用
             'ali_public_key' => env('ALI_PUBLIC_KEY', ''),
+            // 自己的私钥，签名时使用
+            'private_key' => env('ALI_PRIVATE_KEY', ''),
 
             // 自己的私钥，签名时使用
             'app_secret_cert' => env('ALI_PRIVATE_KEY', ''),

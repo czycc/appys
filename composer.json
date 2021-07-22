@@ -29,7 +29,8 @@
         "phpdocumentor/reflection-docblock": " 3.3.2",
         "predis/predis": "^1.1",
         "socialiteproviders/weixin": "^4.0",
-        "tymon/jwt-auth": "1.0.0-rc.2"
+        "tymon/jwt-auth": "1.0.0-rc.2",
+        "yansongda/laravel-pay": "^2.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -77,7 +78,6 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true,
-        "minimum-stability": "dev"
+        "optimize-autoloader": true
     }
 }
