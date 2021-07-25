@@ -17,7 +17,7 @@ return [
         'private_key' => env('ALI_PRIVATE_KEY', ''),
 
         // 自己的私钥，签名时使用
-        'app_secret_cert' => env('ALI_PRIVATE_KEY', ''),
+//        'app_secret_cert' => env('ALI_PRIVATE_KEY', ''),
         //应用公钥
         'app_cert_public_key' => env('APP_PUBLIC_CERT', ''),
         // 支付宝公钥证书 路径
