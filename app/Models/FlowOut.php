@@ -36,6 +36,7 @@ class FlowOut extends Model
         });
 
         static::updating(function ($model) {
+
             //用户提现
             if ($model->status == 1 && $model->out_status != 1) {
                 if ($model->out_method === 'wechat') {
@@ -58,6 +59,9 @@ class FlowOut extends Model
                     ));
                 }
 
+            }
+            if ($model->is_offline) {
+                $model->status = 1;
             }
 
         });
