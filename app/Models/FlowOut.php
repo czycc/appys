@@ -62,6 +62,7 @@ class FlowOut extends Model
             }
             if ($model->is_offline) {
                 $model->status = 1;
+                $model->out_status = 1;
             }
 
         });
