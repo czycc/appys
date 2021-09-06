@@ -72,6 +72,9 @@ class FlowController extends AdminController
             if ($out_status == 1) {
                 return '成功提现';
             }
+            if ($this->is_offline == 1) {
+                return '提现失败';
+            }
             if ($this->status == 1) {
                 return '提现失败';
             }
